@@ -203,7 +203,7 @@
 				 ${insCourseTimeSvc.getOneInsCourseTime(insCourseVO.inscId).inscMFD}
 <%-- 				<c:forEach var="insCourseTimeVO" items="${insCourseTimeSvc.getOneInsCourseTime(insCourseVO.inscId)}">   --%>
 <%-- 	            <c:if test="${insCourseVO.inscId==insCourseTimeVO.inscId}"> --%>
-<%-- 	                        ${insCourseTimeVO.inscMFD}          --%>
+<%-- 	                        ${insCourseTimeVO.inscMFD}             --%>
 <%--                     </c:if> --%>
 <%--                 </c:forEach> --%>
                 
