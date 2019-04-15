@@ -1,8 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.withdrawalrecord.model.*"%>
-<%-- ¦¹­¶½m²ß±Ä¥Î EL ªº¼gªk¨ú­È --%>
+<%-- ç”‡æ—¥ï¿½ï¿½èºæ¸¡ï¿½ï¿½âˆ ï¿½ï¿½ EL ï¿½ï¿½æ’–æ€¥ï¿½ï¿½ï¿½ï¿½ï¿½ --%>
 
 <%
 WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
@@ -13,7 +13,7 @@ WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
 
 <html>
 <head>
-<title>©Ò¦³­û¤u¸ê®Æ - listAllEmp.jsp</title>
+<title>æ‰€æœ‰äº¤æ˜“ç´€éŒ„è³‡æ–™ - listAllEmp.jsp</title>
 
 <style>
   table#table-1 {
@@ -51,17 +51,17 @@ WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
 </head>
 <body bgcolor='white'>
 
-<h4>¦¹­¶½m²ß±Ä¥Î EL ªº¼gªk¨ú­È:</h4>
+<h4>æ­¤é ç·´ç¿’æ¡ç”¨ EL çš„å¯«æ³•å–å€¼:</h4>
 <table id="table-1">
 	<tr><td>
-		 <h3>©Ò¦³­û¤u¸ê®Æ - listAllEmp.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a></h4>
+		 <h3>æ‰€æœ‰æœƒå“¡äº¤æ˜“ç´€éŒ„è³‡æ–™- listAllEmp.jsp</h3>
+		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -71,10 +71,10 @@ WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
 
 <table>
 	<tr>
-		<th>¥æ©ö¬ö¿ı½s¸¹</th>
-		<th>·|­û±b¸¹</th>
-		<th>¥æ©öª÷ÃB</th>
-		<th>¥æ©ö®É¶¡</th>
+		<th>è¨‚å–®ç·¨è™Ÿ</th>
+		<th>æœƒå“¡å¸³è™Ÿ</th>
+		<th>äº¤æ˜“é‡‘é¡</th>
+		<th>äº¤æ˜“æ—¥æœŸ</th>
 		
 	</tr>
 	<%@ include file="page1.file" %> 
@@ -85,19 +85,18 @@ WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
 			<td>${withdrawalRecordVO.memid}</td>
 			<td>${withdrawalRecordVO.wrmoney}</td>
 			<td>${withdrawalRecordVO.wrtime}</td>
-			
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalrecord/withdrawalRecord.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="­×§ï">
-			     <input type="hidden" name="wrnum"  value="${withdrawalRecordVO.wrnum}">
-			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-			</td>
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalrecord/withdrawalRecord.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="§R°£">
-			     <input type="hidden" name="wrnum"  value="${withdrawalRecordVO.wrnum}">
-			     <input type="hidden" name="action" value="delete"></FORM>
-			</td>
+<!-- 			<td> -->
+<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalrecord/withdrawalRecord.do" style="margin-bottom: 0px;"> --%>
+<!-- 			     <input type="submit" value="ä¿®æ”¹"> -->
+<%-- 			     <input type="hidden" name="wrnum"  value="${withdrawalRecordVO.wrnum}"> --%>
+<!-- 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> -->
+<!-- 			</td> -->
+<!-- 			<td> -->
+<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalrecord/withdrawalRecord.do" style="margin-bottom: 0px;"> --%>
+<!-- 			     <input type="submit" value="ä¿®æ”¹"> -->
+<%-- 			     <input type="hidden" name="wrnum"  value="${withdrawalRecordVO.wrnum}"> --%>
+<!-- 			     <input type="hidden" name="action" value="delete"></FORM> -->
+<!-- 			</td> -->
 		</tr>
 	</c:forEach>
 </table>

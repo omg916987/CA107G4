@@ -1,9 +1,10 @@
 eclipse.preferences.version=1
 encoding//WebContent/team/page1.file=MS950
 encoding//WebContent/team/page2.file=MS950
-encoding//WebContent/withdrawalrecord/page1.file=MS950
-encoding//WebContent/withdrawalrecord/page2.file=MS950
-encoding//WebContent/withdrawalrecord/select_page.jsp=Big5
+encoding//WebContent/withdrawalrecord/listOneEmp.jsp=UTF-8
+encoding//WebContent/withdrawalrecord/page1.file=UTF-8
+encoding//WebContent/withdrawalrecord/page2.file=UTF-8
+encoding//WebContent/withdrawalrecord/select_page.jsp=UTF-8
 encoding//src/com/withdrawalrecord/contoller=MS950
 encoding//src/com/withdrawalrecord/contoller/WithdrawalRecordServlet.java=UTF-8
 encoding//src/com/withdrawalrecord/model=UTF-8

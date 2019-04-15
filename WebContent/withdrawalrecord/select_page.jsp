@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
@@ -35,11 +35,11 @@
 
 <p>This is the Home page for IBM WithdrawalRecord: Home</p>
 
-<h3>¸ê®Æ¬d¸ß:</h3>
+<h3>è³‡æ–™æŸ¥è©¢:</h3>
 	
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 	    <c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -48,15 +48,15 @@
 </c:if>
 
 <ul>
-  <li><a href='listAllWithdrawalRecord.jsp'>List</a> all WithdrawalRecords.  <br><br></li>
+  <li><a href='listAllEmp.jsp'>List</a> all WithdrawalRecords.  <br><br></li>
   
   
   <li>
     <FORM METHOD="post" ACTION="withdrawalRecord.do" >
-        <b>¿é¤J­û¤u½s¸¹ (¦p7001):</b>
+        <b>è¼¸å…¥è¨‚å–®ç·¨è™Ÿ (å¦‚WI00001):</b>
         <input type="text" name="wrnum">
         <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="submit" value="°e¥X">
+        <input type="submit" value="é€å‡º">
     </FORM>
   </li>
 
@@ -64,33 +64,33 @@
    
   <li>
      <FORM METHOD="post" ACTION="withdrawalRecord.do" >
-       <b>¿ï¾Ü·|­û±b¸¹:</b>
+       <b>é¸æ“‡è¨‚å–®ç·¨è™Ÿ:</b>
        <select size="1" name="wrnum">
          <c:forEach var="withdrawalRecordVO" items="${wrnumSvc.all}" > 
           <option value="${withdrawalRecordVO.wrnum}">${withdrawalRecordVO.wrnum}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="°e¥X">
+       <input type="submit" value="é€å‡º">
     </FORM>
   </li>
   
   <li>
      <FORM METHOD="post" ACTION="withdrawalRecord.do" >
-       <b>¿ï¾Ü·|­û±b¸¹:</b>
+       <b>é¸æ“‡æœƒå“¡å¸³è™Ÿ:</b>
        <select size="1" name="wrnum">
          <c:forEach var="withdrawalRecordVO" items="${withdrawalRecordSvc.all}" > 
           <option value="${withdrawalRecordVO.wrnum}">${withdrawalRecordVO.memid}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="°e¥X">
+       <input type="submit" value="é€å‡º">
      </FORM>
   </li>
 </ul>
 
 
-<h3>­û¤uºŞ²z</h3>
+<h3>æœƒå“¡ç®¡ç†</h3>
 
 <ul>
   <li><a href='addEmp.jsp'>Add</a> a new WithdrawalRecord.</li>
