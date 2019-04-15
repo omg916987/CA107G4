@@ -103,8 +103,6 @@
 }
 .page2{
     text-align:center;
-    width:500px;
-    margin:auto;
 }
 </style>
 </head>
