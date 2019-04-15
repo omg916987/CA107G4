@@ -87,13 +87,13 @@ WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
 			<td>${withdrawalRecordVO.wrtime}</td>
 			
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalRecord/withdrawalRecord.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalrecord/withdrawalRecord.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="­×§ï">
 			     <input type="hidden" name="wrnum"  value="${withdrawalRecordVO.wrnum}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalRecord/withdrawalRecord.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalrecord/withdrawalRecord.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="§R°£">
 			     <input type="hidden" name="wrnum"  value="${withdrawalRecordVO.wrnum}">
 			     <input type="hidden" name="action" value="delete"></FORM>
