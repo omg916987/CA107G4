@@ -103,6 +103,13 @@
 }
 .page2{
     text-align:center;
+    width:500px;
+    margin:auto;
+}
+.form-row {
+     margin-left: 5px;
+     margin-top: 5px;
+
 }
 </style>
 </head>
@@ -159,23 +166,26 @@
 
 			<div class="form-row">
 				<div class="form-group col-md-4">
-					<FORM METHOD="post" ACTION="insCourseVO.do">
-						<select prompt="選課程" class="form-control"><option
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/team/team.do">
+						<select prompt="請選擇課程" class="form-control"><option
 								value="1"></option> ${insCourseSvc1}
 							
 							<c:forEach var="insCourseVO" items="${insCourseSvc1.all}">
-								<option value="${insCourseVO.inscId}">${insCourseVO.inscId}
+								<option value="${insCourseVO.inscLang}">${insCourseVO.inscLang}
 							</c:forEach>
 						</select>
 
 						<div class="form-row">
+						
+						<input type="hidden" name="action"	value="getOne_For_Update">
+						
 							<input type="submit" name="commit" value="查詢"
 								class="btn btn-info submit" data-disable-with="查詢" />
 						</div>
 				</div>
 			</div>
 
-			</form>
+			</Form>
 		</div>
 	</div>
 

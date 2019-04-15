@@ -46,7 +46,8 @@ public class WithdrawalRecordService {
 		return dao.findByPrimaryKey(wrnum);
 	}
 	
-//	public List<WithdrawalRecordVO> getAll() {
-//		return dao.getAll();
+	public List<WithdrawalRecordVO> getAll() {
+		return dao.getAll();
 	}
+}
 

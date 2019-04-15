@@ -12,7 +12,7 @@ public interface WithdrawalRecordDAO_interface {
 	       public void update(WithdrawalRecordVO withdrawalRecordVO);
 //	       public void delete(String withdrawalRecordVO);
 	       public WithdrawalRecordVO findByPrimaryKey(String withdrawalRecordVO);
-//	       public List<WithdrawalRecordVO> getAll();
+	       public List<WithdrawalRecordVO> getAll();
 	    
 
 	}
