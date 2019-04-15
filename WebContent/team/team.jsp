@@ -101,6 +101,11 @@
 	margin-left: 900px;
 	margin-top: -40px;
 }
+.page2{
+    text-align:center;
+    width:500px;
+    margin:auto;
+}
 </style>
 </head>
 <body>
@@ -188,7 +193,7 @@
 			<div class="plan_info">
 				<h4>
 				
-				${insCourseVO.inscId}
+				${insCourseVO.inscLang}
 				
 				
 				
