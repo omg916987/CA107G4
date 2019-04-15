@@ -66,7 +66,7 @@
      <FORM METHOD="post" ACTION="withdrawalRecord.do" >
        <b>選擇訂單編號:</b>
        <select size="1" name="wrnum">
-         <c:forEach var="withdrawalRecordVO" items="${wrnumSvc.all}" > 
+         <c:forEach var="withdrawalRecordVO" items="${withdrawalRecordSvc.all}" > 
           <option value="${withdrawalRecordVO.wrnum}">${withdrawalRecordVO.wrnum}
          </c:forEach>   
        </select>
@@ -93,7 +93,7 @@
 <h3>會員管理</h3>
 
 <ul>
-  <li><a href='addEmp.jsp'>Add</a> a new WithdrawalRecord.</li>
+  <li><a href='addWithdrawalRecord.jsp'>Add</a> a new WithdrawalRecord.</li>
 </ul>
 
 </body>

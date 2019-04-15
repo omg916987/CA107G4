@@ -243,43 +243,43 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 		WithdrawalRecordJDBCDAO dao = new WithdrawalRecordJDBCDAO();
 
 
-//		WithdrawalRecordVO WithdrawalRecordVO1 = new WithdrawalRecordVO();
-//		
-//		WithdrawalRecordVO1.setMemid("weshare01");
-//		WithdrawalRecordVO1.setwrmoney(1000);
-//		WithdrawalRecordVO1.setWrtime(java.sql.Date.valueOf("2019-03-25"));
-//		dao.insert(WithdrawalRecordVO1);
-//
-
-		WithdrawalRecordVO WithdrawalRecordVO2 = new WithdrawalRecordVO();
-
-		WithdrawalRecordVO2.setMemid("weshare04");
-		WithdrawalRecordVO2.setWrmoney(16000);
-		WithdrawalRecordVO2.setWrtime(java.sql.Date.valueOf("2019-03-25"));
-		WithdrawalRecordVO2.setWrnum("WI00004");
-		dao.update(WithdrawalRecordVO2);
-
-
-
-		WithdrawalRecordVO WithdrawalRecordVO3 = dao.findByPrimaryKey("WI00001");
-		System.out.print(WithdrawalRecordVO3.getWrnum() + ",");
-		System.out.print(WithdrawalRecordVO3.getMemid() + ",");
-		System.out.print(WithdrawalRecordVO3.getWrmoney() + ",");
-		System.out.println(WithdrawalRecordVO3.getWrtime());
-//
-		System.out.println("---------------------");
-
-	
-
+		WithdrawalRecordVO WithdrawalRecordVO1 = new WithdrawalRecordVO();
 		
-		  List<WithdrawalRecordVO> list = dao.getAll();
-	   for (WithdrawalRecordVO aWithdrawalRecord : list) {
-		System.out.print(aWithdrawalRecord.getWrnum() + ",");
-		System.out.print(aWithdrawalRecord.getMemid() + ",");
-		System.out.print(aWithdrawalRecord.getWrmoney() + ",");
-		System.out.println(aWithdrawalRecord.getWrtime());
-		System.out.println("---------------------");
-	}
+		WithdrawalRecordVO1.setMemid("weshare01");
+		WithdrawalRecordVO1.setWrmoney(9000);
+		WithdrawalRecordVO1.setWrtime(java.sql.Date.valueOf("2019-03-25"));
+		dao.insert(WithdrawalRecordVO1);
+//
+
+//		WithdrawalRecordVO WithdrawalRecordVO2 = new WithdrawalRecordVO();
+//
+//		WithdrawalRecordVO2.setMemid("weshare04");
+//		WithdrawalRecordVO2.setWrmoney(16000);
+//		WithdrawalRecordVO2.setWrtime(java.sql.Date.valueOf("2019-03-25"));
+//		WithdrawalRecordVO2.setWrnum("WI00004");
+//		dao.update(WithdrawalRecordVO2);
+//		System.out.println("---------------------");
+//
+//
+//		WithdrawalRecordVO WithdrawalRecordVO3 = dao.findByPrimaryKey("WI00003");
+//		System.out.print(WithdrawalRecordVO3.getWrnum() + ",");
+//		System.out.print(WithdrawalRecordVO3.getMemid() + ",");
+//		System.out.print(WithdrawalRecordVO3.getWrmoney() + ",");
+//		System.out.println(WithdrawalRecordVO3.getWrtime());
+////
+//		System.out.println("---------------------");
+//
+//	
+//
+//		
+//		  List<WithdrawalRecordVO> list = dao.getAll();
+//	   for (WithdrawalRecordVO aWithdrawalRecord : list) {
+//		System.out.print(aWithdrawalRecord.getWrnum() + ",");
+//		System.out.print(aWithdrawalRecord.getMemid() + ",");
+//		System.out.print(aWithdrawalRecord.getWrmoney() + ",");
+//		System.out.println(aWithdrawalRecord.getWrtime());
+//		System.out.println("---------------------");
+//	}
 
 	}
 

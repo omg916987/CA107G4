@@ -26,11 +26,11 @@ public class WithdrawalRecordService {
 		return withdrawalRecordVO;
 	}
 	
-	public WithdrawalRecordVO updateWithdrawalRecord(String wrnum,String memid, 
+	public WithdrawalRecordVO updateWithdrawalRecord(String memid, 
 			Integer wrmoney, Date wrtime) {
 		WithdrawalRecordVO withdrawalRecordVO = new WithdrawalRecordVO();
 		
-		withdrawalRecordVO.setWrnum(wrnum);
+		
 		withdrawalRecordVO.setMemid(memid);
 		withdrawalRecordVO.setWrmoney(wrmoney);
 		withdrawalRecordVO.setWrtime(wrtime);

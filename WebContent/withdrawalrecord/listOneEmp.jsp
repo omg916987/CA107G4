@@ -3,7 +3,7 @@
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
-	WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribute("withdrawalRecordVO");
+  WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribute("withdrawalRecordVO");
 %>
 
 <html>
@@ -54,10 +54,9 @@ th, td {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>會員交易紀錄 - ListOneWithdrawalRecord.jsp</h3>
+				<h3>會員交易紀錄 - ListOneEmp.jsp</h3>
 				<h4>
-					<a href="select_page.jsp"><img src="images/back1.gif"
-						width="100" height="32" border="0">回首頁</a>
+					<a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -68,7 +67,7 @@ th, td {
 			<th>訂單編號</th>
 			<th>會員帳號</th>
 			<th>交易金額</th>
-			<th>教意日期</th>
+			<th>交易日期</th>
 		</tr>
 		<tr>
 			<td><%=withdrawalRecordVO.getWrnum()%></td> 

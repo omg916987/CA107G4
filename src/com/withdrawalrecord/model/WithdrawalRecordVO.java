@@ -21,8 +21,8 @@ public class WithdrawalRecordVO implements java.io.Serializable{
 	public Integer getWrmoney() {
 		return wrmoney;
 	}
-	public void setWrmoney(Integer number) {
-		this.wrmoney = number;
+	public void setWrmoney(Integer wrmoney) {
+		this.wrmoney = wrmoney;
 	}
 	public Date getWrtime() {
 		return wrtime;
