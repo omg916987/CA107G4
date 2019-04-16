@@ -19,6 +19,7 @@ public interface WithdrawalRecordDAO_interface {
 	       public List<WithdrawalRecordVO> getAll();
 	       
 	       public WithdrawalRecordVO findByPrimaryKey(String withdrawalRecordVO);
+		
 
 	       
 	}

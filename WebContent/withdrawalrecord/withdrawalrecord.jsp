@@ -4,7 +4,7 @@
 <%@ page import="com.withdrawalrecord.model.*"%>
 
 <%
-WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribute("withdrawalRecordVO"); 
+	WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribute("withdrawalRecordVO");
 %>
 
 <!doctype html>
@@ -38,7 +38,7 @@ WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribut
 
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-		<img src="img/logo.png" width="80" height="60" alt="" /><a
+		<img src="img/icon/logo.png" width="80" height="60" alt="" /><a
 			class="navbar-brand" href="#">教育共享平台</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
@@ -93,93 +93,93 @@ WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribut
 			</ul>
 		</c:if>
 
+   
+		
 
-<FORM METHOD="post" ACTION="withdrawalRecord.do" name="form1">
-
-		<div class="row">
-			<div class="col-md-3 order-md-2 mb-4">
-				<h4 class="d-flex justify-content-between align-items-center mb-3">
-					<span class="text-muted">查詢您的訂單</span>
-				</h4>
-				<ul class="list-group mb-1">
-					<li class="list-group-item d-flex "><span></span> <strong><button
-								type="button" class="btn btn-primary">查看交易紀錄</button></strong></li>
-					</li>
-					</li>
-				</ul>
-			</div>
-			<!-- ---------------------表單-------------------------- -->
-
-
-			<%--    <jsp:useBean id="withdrawalRecordSvc" scope="page" class="com.withdrawalrecord.model.WithdrawalRecordService" /> --%>
-
-			<div class="col-md-8 order-md-1">
-				<h4 class="mb-3">信用卡付款</h4>
-
-				<div class="money">
-
-					<label for="memId">請輸入儲值金額</label>
+			<div class="row">
+				<div class="col-md-3 order-md-2 mb-4">
+				 <FORM METHOD="post" ACTION="withdrawalRecord.do" name="form1">
+					<h4 class="d-flex justify-content-between align-items-center mb-3">
+						<span class="text-muted">查詢您的訂單</span>
+					</h4>
 					
-						<input type="text" class="form-control" id="wrmoney" name="wrmoney"
-							placeholder="輸入儲值金額" value="<%= (withdrawalRecordVO==null)? "" : withdrawalRecordVO.getWrmoney()%>" />
-						
+						<ul class="list-group mb-1">
+						<input type="hidden" name="action" value="insert">
+							<a href="#" class="btn btn-primary" role="button" >
+							查看交易紀錄</a>
+							
+							</li>
+						</ul>
+						</FORM>
 				</div>
+				<!-- ---------------------表單-------------------------- -->
 
-				<form class="needs-validation return checkForm()">
-					<div class="row">
-						<div class="col-md-6 mb-3">
+ 
+				<%--    <jsp:useBean id="withdrawalRecordSvc" scope="page" class="com.withdrawalrecord.model.WithdrawalRecordService" /> --%>
 
-							<label for="Memid">會員帳號</label>
+				<div class="col-md-8 order-md-1">
+				<FORM METHOD="post" ACTION="withdrawalRecord.do" name="form1">
+					<h4 class="mb-3">信用卡付款</h4>
 
-							
-								<input type="text" class="form-control" id="MEMID" name="memid"
-									placeholder="請輸入會員帳號" 
-									value="<%= (withdrawalRecordVO==null)? "" : withdrawalRecordVO.getMemid()%>" />
-							
-						</div>
-						<div class="col-md-6 mb-3">
-							<label for="cc-number">卡號</label>
-							
-								<input type="text" class="form-control" id="cc-name"
-									name="cc-name" placeholder="請輸入卡號">
-								
-						</div>
+					<div class="money">
+
+						<label for="memId">請輸入儲值金額</label> <input type="text"
+							class="form-control" id="wrmoney" name="wrmoney"
+							placeholder="輸入儲值金額"
+							value="<%=(withdrawalRecordVO == null) ? "" : withdrawalRecordVO.getWrmoney()%>" />
 
 					</div>
-					<div class="row">
-						<div class="col-md-4 mb-3">
-							<label for="date">到期日</label> <input class="form-control"
-								type="date" id="wrtime" name="wrtime" page[end_date]="">
+
+					<div class="needs-validation return checkForm()">
+						<div class="row">
+							<div class="col-md-6 mb-3">
+
+								<label for="Memid">會員帳號</label> <input type="text"
+									class="form-control" id="MEMID" name="memid"
+									placeholder="請輸入會員帳號"
+									value="<%=(withdrawalRecordVO == null) ? "" : withdrawalRecordVO.getMemid()%>" />
+
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="cc-number">卡號</label> <input type="text"
+									class="form-control" id="cc-name" name="cc-name"
+									placeholder="請輸入卡號">
+
+							</div>
+
 						</div>
-						<div class=" col-md-4 mb-3">
-							<label for="cc-cvv">CVV</label> <input type="text"
-								class="form-control" id="cc-cvv" name="cc-cvv"
-								placeholder="請輸入CVV碼">
+						<div class="row">
+							<div class="col-md-4 mb-3">
+								<label for="date">到期日</label> <input class="form-control"
+									type="date" id="wrtime" name="wrtime" page[end_date]="">
+							</div>
+							<div class=" col-md-4 mb-3">
+								<label for="cc-cvv">CVV</label> <input type="text"
+									class="form-control" id="cc-cvv" name="cc-cvv"
+									placeholder="請輸入CVV碼">
+							</div>
 						</div>
-					</div>
 
-					<hr class="mb-4">
+						<hr class="mb-4">
 
-                    <input type="hidden" name="action" value="insert">
-					<button class="btn btn-primary btn-lg btn-block" type="submit"
-						id="submit">付款</button>
-
-
-
-
-					<input id="magic" name="magic" type="button" onclick="Magic()"
-						class="btn btn-link"></FORM>
-
-
-				</form>
-			</div>
-		</div>
+						
+						
+					
+						<input type="hidden" name="action" value="insert">
+						<button class="btn btn-primary btn-lg btn-block" type="submit"
+							id="submit">付款</button>
+							
+						<input id="magic" name="magic" type="button" onclick="Magic()"
+						class="btn btn-link">
+				</FORM>
+  				</div>
+	</div>
+	</div>
 
 
 
-		<!-- -------------------------------------------------------------------------------------------------------------- -->
-		<footer class="my-5 pt-5 text-muted text-center text-small">
-		</footer>
+	<!-- -------------------------------------------------------------------------------------------------------------- -->
+	<footer class="my-5 pt-5 text-muted text-center text-small"> </footer>
 	</div>
 	<footer class="section footer-classic context-dark bg-image"
 		style="background: #74b49b;">
@@ -269,7 +269,7 @@ WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribut
 		function Magic() {
 			document.getElementById("MEMID").value = "weshare01";
 			document.getElementById("cc-name").value = "447708570857";
-
+			document.getElementById("wrmoney").value = "9000"
 			document.getElementById("cc-cvv").value = "957";
 		}
 

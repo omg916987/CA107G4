@@ -55,7 +55,7 @@
     <FORM METHOD="post" ACTION="withdrawalRecord.do" >
         <b>輸入訂單編號 (如WI00001):</b>
         <input type="text" name="wrnum">
-        <input type="hidden" name="action" value="getOne_For_Display">
+        <input type="hidden" name="action" value="findByKey"><!--value="findByKey" -->
         <input type="submit" value="送出">
     </FORM>
   </li>
@@ -70,7 +70,7 @@
           <option value="${withdrawalRecordVO.wrnum}">${withdrawalRecordVO.wrnum}
          </c:forEach>   
        </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
+       <input type="hidden" name="action" value="findByKey">
        <input type="submit" value="送出">
     </FORM>
   </li>
@@ -83,7 +83,7 @@
           <option value="${withdrawalRecordVO.wrnum}">${withdrawalRecordVO.memid}
          </c:forEach>   
        </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
+       <input type="hidden" name="action" value="findByKey">
        <input type="submit" value="送出">
      </FORM>
   </li>
