@@ -79,7 +79,7 @@
      <FORM METHOD="post" ACTION="withdrawalRecord.do" >
        <b>選擇會員帳號:</b>
        <select size="1" name="wrnum">
-         <c:forEach var="withdrawalRecordVO" items="${withdrawalRecordSvc.all}" > 
+         <c:forEach var="withdrawalRecordVO" items="${withdrawalRecordSvc.all}"> 
           <option value="${withdrawalRecordVO.wrnum}">${withdrawalRecordVO.memid}
          </c:forEach>   
        </select>

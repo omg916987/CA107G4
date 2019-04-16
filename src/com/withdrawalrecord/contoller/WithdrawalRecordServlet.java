@@ -172,7 +172,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("withdrawalRecordVO", withdrawalRecordVO); // 含有輸入格式錯誤的withdrawalRecordVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/withdrawalrecord/addWithdrawalRecord.jsp");
+							.getRequestDispatcher("/withdrawalrecord/withdrawalrecord.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}

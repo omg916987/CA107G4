@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.withdrawalrecord.model.*"%>
-<%-- 甇日��蝺渡��∠�� EL ��撖急����� --%>
+
 
 <%
 WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
