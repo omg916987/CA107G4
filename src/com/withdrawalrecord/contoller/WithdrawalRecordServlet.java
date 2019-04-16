@@ -131,6 +131,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String memid = req.getParameter("memid");
 
+
 				
 
 				String memidReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
@@ -147,7 +148,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 					wrmoney = 0;
 					errorMsgs.add("交易金額請填數字.");
 				}
-				
+//				
 				
 				
 				
@@ -178,7 +179,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 *****************************************/
 				WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
-				withdrawalRecordVO = withdrawalRecordSvc.updateWithdrawalRecord(memid, wrmoney, wrtime);
+				withdrawalRecordVO = withdrawalRecordSvc.addWithdrawalRecord(memid, wrmoney, wrtime);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				String url = "/withdrawalrecord/listAllEmp.jsp";

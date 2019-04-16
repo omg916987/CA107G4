@@ -44,6 +44,9 @@ WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribut
   th, td {
     padding: 1px;
   }
+  form{
+  text-align:center;
+  }
 </style>
 
 </head>
@@ -51,7 +54,7 @@ WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribut
 
 <table id="table-1">
 	<tr><td>
-		 <h3>課程資料新增 - addEmp.jsp</h3></td><td>
+		 <h3>資料新增 - addEmp.jsp</h3></td><td>
 		 <h4><a href="select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -75,17 +78,17 @@ WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribut
 	
 	<tr>
 		<td>會員帳號:</td>
-		<td><input type="TEXT" name="courseId" size="45"
+		<td><input type="TEXT" name="memid" size="45"
 			 value="<%= (withdrawalRecordVO==null)? "weshare01" : withdrawalRecordVO.getMemid()%>" /></td>
 	</tr>
 	<tr>
 		<td>儲值金額:</td>
-		<td><input type="TEXT" name="inscLoc" size="45"
+		<td><input type="TEXT" name="wrmoney" size="45"
 			 value="<%= (withdrawalRecordVO==null)? "1000" : withdrawalRecordVO.getWrmoney()%>" /></td>
 	</tr>
 	<tr>
 		<td>交易時間:</td>
-		<td><input name="hiredate" id="f_date1" type="text"></td>
+		<td><input name="wrtime" id="f_date1" type="text"></td>
 	</tr>
 	
 </table>
@@ -95,11 +98,11 @@ WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribut
 </body>
 
 <% 
-  java.sql.Date hiredate = null;
+  java.sql.Date wrtime = null;
   try {
-	    hiredate = withdrawalRecordVO.getWrtime();
+	  wrtime = withdrawalRecordVO.getWrtime();
    } catch (Exception e) {
-	    hiredate = new java.sql.Date(System.currentTimeMillis());
+	   wrtime = new java.sql.Date(System.currentTimeMillis());
    }
 %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
@@ -122,7 +125,7 @@ WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribut
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=hiredate%>', // value:   new Date(),
+		   value: '<%=wrtime%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
