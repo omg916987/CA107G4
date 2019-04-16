@@ -22,7 +22,7 @@
   }
   h4 {
     color: blue;
-    display: inline;
+    display: inline; 
   }
 </style>
 
