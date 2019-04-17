@@ -404,13 +404,13 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 //	
 //
 //		
-//		  List<WithdrawalRecordVO> list = dao.getAll();
-//	   for (WithdrawalRecordVO aWithdrawalRecord : list) {
-//		System.out.print(aWithdrawalRecord.getWrnum() + ",");
-//		System.out.print(aWithdrawalRecord.getMemid() + ",");
-//		System.out.print(aWithdrawalRecord.getWrmoney() + ",");
-//		System.out.println(aWithdrawalRecord.getWrtime());
-//		System.out.println("---------------------");
+		  List<WithdrawalRecordVO> list = dao.getAll();
+	   for (WithdrawalRecordVO aWithdrawalRecord : list) {
+		System.out.print(aWithdrawalRecord.getWrnum() + ",");
+		System.out.print(aWithdrawalRecord.getMemid() + ",");
+		System.out.print(aWithdrawalRecord.getWrmoney() + ",");
+		System.out.println(aWithdrawalRecord.getWrtime());
+		System.out.println("---------------------");
 //	}
 		
 		
@@ -431,7 +431,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 
 
 
-
+	}
 	
 	
 

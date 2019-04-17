@@ -3,6 +3,8 @@ package com.team.model;
 import java.sql.Date;
 import java.util.List;
 
+
+
 public class TeamService {
 
 	private TeamDAO_interface dao;
@@ -51,8 +53,9 @@ public class TeamService {
 	public TeamVO getOneTeam(String teamId) {
 		return dao.findByPrimaryKey(teamId);
 	}
+	
+	public List<TeamVO> getAll() {
+		return dao.getAll();
+	}
 
-//	public List<TeamVO> getAll() {
-//		return dao.getAll();
-//	}
 }

@@ -1,20 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="com.inscourse.model.*"%>
+<%@ page import="com.team.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 
 <%
-    InsCourseService insCourseSvc = new InsCourseService();
-    List<InsCourseVO> list = insCourseSvc.getAll();
-    pageContext.setAttribute("list",list);
+	TeamService teamSvc = new TeamService();
+	List<TeamVO> list = teamSvc.getAll();
+	pageContext.setAttribute("list", list);
 %>
 
-<jsp:useBean id="insCourseSvc1" scope="page" class="com.inscourse.model.InsCourseService" />
 
-<jsp:useBean id="insCourseTimeSvc" scope="page" class="com.inscoursetime.model.InsCourseTimeService" />
+<jsp:useBean id="insCourseSvc" scope="page"
+	class="com.inscourse.model.InsCourseService" />
 
-<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="insCourseTimeSvc" scope="page"
+	class="com.inscoursetime.model.InsCourseTimeService" />
+
+<jsp:useBean id="courseSvc" scope="page"
+	class="com.course.model.CourseService" />
 <!doctype html>
 <html lang="en">
 
@@ -101,15 +105,20 @@
 	margin-left: 900px;
 	margin-top: -40px;
 }
-.page2{
-    text-align:center;
-    width:500px;
-    margin:auto;
-}
-.form-row {
-     margin-left: 5px;
-     margin-top: 5px;
 
+.page2 {
+	text-align: center;
+	width: 500px;
+	margin: auto;
+}
+
+.form-row {
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+.btn-info {
+    margin-top:5px;
 }
 </style>
 </head>
@@ -160,94 +169,96 @@
 		<div id="quick_form">
 			<h1>
 				<font face="fantasy" color="#855600">想揪什麼團呢？</font>
-			</h1></style>
+			</h1>
 
-	
+
+			<jsp:useBean id="incourseSvc" scope="page"
+				class="com.inscourse.model.InsCourseService" />
+			<jsp:useBean id="courseSvc1" scope="page"
+				class="com.course.model.CourseService" />
 
 			<div class="form-row">
 				<div class="form-group col-md-4">
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/team/team.do">
-						<select prompt="請選擇課程" class="form-control"><option
-								value="1"></option> ${insCourseSvc1}
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/incourse/incourse.do">
+						<select post="請選擇課程" class="form-control">
+							<c:forEach var="incourseVO" items="${incourseSvc.all}">
+								<option value="${teamVO.inscID==incourseVO.inscId}">${incourseVO.courseId}
+								
+<%-- 									<option value="${incourseVO.courseId==courseVO.courseId}">${courseVO.courseName} --%>
 							
-							<c:forEach var="insCourseVO" items="${insCourseSvc1.all}">
-								<option value="${insCourseVO.inscLang}">${insCourseVO.inscLang}
 							</c:forEach>
+							<div class="form-row">
 						</select>
+					</FORM>
+					<div class="form-row">
 
-						<div class="form-row">
-						
-						<input type="hidden" name="action"	value="getOne_For_Update">
-						
-							<input type="submit" name="commit" value="查詢"
-								class="btn btn-info submit" data-disable-with="查詢" />
-						</div>
+                       <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/team/team.do">
+						<input type="hidden" name="action" value="getOne_For_Update">
+						<input type="submit" name="commit" value="查詢"
+						class="btn btn-info submit" data-disable-with="find" />
+							</FORM>
+					</div>
 				</div>
 			</div>
-
-			</Form>
 		</div>
 	</div>
 
-
-
-<%@ include file="page1.file" %> 
-	<c:forEach var="insCourseVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-	<div class="container">
-		<div class="plan">
-			<div class="plan_iamge">
-				<img alt="" width="200" height="150" src="images/555.png" />
-			</div>
-			<div class="plan_info">
-				<h4>
-				
-				${insCourseVO.inscLang}
-				
-				
-				
-				<span class="badge badge-light">團體課程</span></h4>
-	<jsp:useBean id="insCoursetimeSvc" scope="page"
-				class="com.inscourse.model.InsCourseService" />
-				
-
-	
-			<div>
-				<i class="far fa-calendar-alt"></i>
-				 ${insCourseTimeSvc.getOneInsCourseTime(insCourseVO.inscId).inscMFD}
-<%-- 				<c:forEach var="insCourseTimeVO" items="${insCourseTimeSvc.getOneInsCourseTime(insCourseVO.inscId)}">   --%>
-<%-- 	            <c:if test="${insCourseVO.inscId==insCourseTimeVO.inscId}"> --%>
-<%-- 	                        ${insCourseTimeVO.inscMFD}             --%>
-<%--                     </c:if> --%>
-<%--                 </c:forEach> --%>
-                
+	<%@ include file="page1.file"%>
+	<c:forEach var="teamVO" items="${list}" begin="<%=pageIndex%>"
+		end="<%=pageIndex+rowsPerPage-1%>">
+		<div class="container">
+			<div class="plan">
+				<div class="plan_iamge">
+					<img alt="" width="200" height="150" src="images/555.png" />
 				</div>
-				<div></div>
-				<hr>
-				<div>
-					<span class="badge badge-light">收費模式</span> <span
-						class="badge badge-success">預先扣款</span> <span
-						class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
-						費用 每小時
-					</span>${insCourseVO.inscPrice}元<br>
-				</div>
+				<div class="plan_info">
+					<h4>${teamVO.inscID}
+						<span class="badge badge-light">團體課程</span>
+					</h4>
 
-				<div>
-					<span class="badge badge-light"> 隊伍型態 </span> <span
-						class="badge badge-info">自主性揪團</span>｜由 <b> 中央大學 </b> 主辦
-				</div>
-			</div>
-			<div class="button-group">
-				<a class="btn btn-light" href="/plans/50"> <i class="far fa-eye"></i>
-					詳情
-				</a> <a class="btn btn-outline-info" rel="nofollow" data-method="post"
-					href="/plans/50/apply"><i class="fas fa-location-arrow"></i>
-					申請加入 </a>
+					<jsp:useBean id="insCoursetimeSvc" scope="page"
+						class="com.inscourse.model.InsCourseService" />
 
+					<div>
+						<i class="far fa-calendar-alt"></i>截團時間 ${teamVO.teamEXP}
+						<%-- ${insCourseTimeSvc.getOneInsCourseTime(insCourseVO.inscId).inscMFD} --%>
+						<%-- <c:forEach var="insCourseTimeVO" items="${insCourseTimeSvc.getOneInsCourseTime(insCourseVO.inscId)}">   --%>
+						<%-- <c:if test="${insCourseVO.inscId==insCourseTimeVO.inscId}"> --%>
+						<%-- ${insCourseTimeVO.inscMFD}             --%>
+						<%--   </c:if> --%>
+						<%--  </c:forEach> --%>
+
+					</div>
+					<div></div>
+					<hr>
+					<div>
+						<span class="badge badge-light">收費模式</span> <span
+							class="badge badge-success">預先扣款</span> <span
+							class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
+						</span>每人 ${insCourseSvc.findOneById(teamVO.inscID).inscPrice}元<br>
+					</div>
+
+					<div>
+						<span class="badge badge-light"> 隊伍型態 </span> <span
+							class="badge badge-info">自主性揪團</span>
+					</div>
+				</div>
+				<div class="button-group">
+				 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/team/team.do">
+				    <input type="hidden" name="action"	value="getOne_For_Update">
+					<input type="submit" name="commit" value="詳情"
+						class="btn btn-info submit" data-disable-with="find" />			 
+				</FORM>
+					<input type="submit" name="commit" value="申請加入"
+						class="btn btn-info submit" data-disable-with="find" />
+					
+
+				</div>
 			</div>
 		</div>
-	</div>
 	</c:forEach>
-<%@ include file="page2.file" %>
+	<%@ include file="page2.file"%>
 
 
 

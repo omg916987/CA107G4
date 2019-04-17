@@ -116,7 +116,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/listAllEmp.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/addWithdrawalRecord.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -133,10 +133,10 @@ public class WithdrawalRecordServlet extends HttpServlet {
 			/*************************** 1.接收請求參數 ****************************************/
 			String wrnum = new String(req.getParameter("wrnum"));
 
-////						String wrnum = req.getParameter("wrnum");
-//			if (wrnum == null || (wrnum.trim()).length() == 0) {
-//				errorMsgs.add("請輸入會員編號");
-//			}
+//						String wrnum = req.getParameter("wrnum");
+			if (wrnum == null || (wrnum.trim()).length() == 0) {
+				errorMsgs.add("請輸入會員編號");
+			}
 //			// Send the use back to the form, if there were errors
 //			if (!errorMsgs.isEmpty()) {
 //				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
@@ -165,11 +165,11 @@ public class WithdrawalRecordServlet extends HttpServlet {
 //				return;// 程式中斷
 //			}
 //
-//			WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
-//			WithdrawalRecordVO withdrawalRecordVO = withdrawalRecordSvc.getOneWithdrawalRecord(wrnum);
-//			if (withdrawalRecordVO == null) {
-//				errorMsgs.add("查無資料");
-//			}
+			WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
+			WithdrawalRecordVO withdrawalRecordVO = withdrawalRecordSvc.getOneWithdrawalRecord(wrnum);
+			if (withdrawalRecordVO == null) {
+				errorMsgs.add("查無資料");
+			}
 
 			/*************************** 2.開始查詢資料 ****************************************/
 			WithdrawalRecordService withdrawalRecordSvc1 = new WithdrawalRecordService();
@@ -184,11 +184,11 @@ public class WithdrawalRecordServlet extends HttpServlet {
 			/*************************** 其他可能的錯誤處理 **********************************/
 //					} catch (Exception e) {
 //						errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-//						RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/listAllEmp.jsp");
+//						RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/findbykey.jsp");
 //						failureView.forward(req, res);
 //					}
-		}
-
+//		}
+}
 //-------------------------------------------------------------新增-----------------------------------------
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 

@@ -85,18 +85,18 @@
 			<td>${withdrawalRecordVO.memid}</td>
 			<td>${withdrawalRecordVO.wrmoney}</td>
 			<td>${withdrawalRecordVO.wrtime}</td>
-<!-- 			<td> -->
-<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalrecord/withdrawalRecord.do" style="margin-bottom: 0px;"> --%>
-<!-- 			     <input type="submit" value="修改"> -->
-<%-- 			     <input type="hidden" name="wrnum"  value="${withdrawalRecordVO.wrnum}"> --%>
-<!-- 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> -->
-<!-- 			</td> -->
-<!-- 			<td> -->
-<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalrecord/withdrawalRecord.do" style="margin-bottom: 0px;"> --%>
-<!-- 			     <input type="submit" value="修改"> -->
-<%-- 			     <input type="hidden" name="wrnum"  value="${withdrawalRecordVO.wrnum}"> --%>
-<!-- 			     <input type="hidden" name="action" value="delete"></FORM> -->
-<!-- 			</td> -->
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalrecord/withdrawalRecord.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="修改">
+			     <input type="hidden" name="wrnum"  value="${withdrawalRecordVO.wrnum}">
+			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+			</td>
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/withdrawalrecord/withdrawalRecord.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="修改">
+			     <input type="hidden" name="wrnum"  value="${withdrawalRecordVO.wrnum}">
+			     <input type="hidden" name="action" value="delete"></FORM>
+			</td>
 		</tr>
 	</c:forEach>
 </table>

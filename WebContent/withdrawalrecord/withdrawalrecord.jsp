@@ -7,7 +7,11 @@
 	WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribute("withdrawalRecordVO");
 %>
 
-
+<%
+	WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
+    List<WithdrawalRecordVO> list = withdrawalRecordSvc.getAll();
+    pageContext.setAttribute("list",list);
+%>
 
 
 <!doctype html>
@@ -75,7 +79,7 @@
 				</li>
 				<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 			</ul>
-			<a class="text-dark">餘額:</a> <a class="text-dark" id="wepoint"></a>
+			<a class="text-dark">餘額:</a>${withdrawalRecordVO.wrmoney}<a class="text-dark" id="wepoint"></a>
 		</div>
 	</nav>
 	<!-- ----------------------------------------------------------------- -->
