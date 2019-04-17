@@ -32,6 +32,36 @@
 		<servlet-name>WithdrawalRecordServlet</servlet-name>
 		<url-pattern>/withdrawalrecord/withdrawalRecord.do</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Member -->
+	<servlet>
+		<servlet-name>MemberServlet</servlet-name>
+		<servlet-class>com.member.controller.MemberServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberServlet</servlet-name>
+		<url-pattern>/member/member.do</url-pattern>
+	</servlet-mapping>
+	
+	 <servlet>
+    <servlet-name>DBGifReader</servlet-name>
+    <servlet-class>com.member.controller.DBGifReader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader</servlet-name>
+    <url-pattern>/member/DBGifReader.do</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Member -->
+	<servlet>
+		<servlet-name>InsCourseServlet</servlet-name>
+		<servlet-class>com.inscourse.controller.MemberServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InsCourseServlet</servlet-name>
+		<url-pattern>/inscourse/inscourse.do</url-pattern>
+	</servlet-mapping>
+  
 
 </web-app>
 

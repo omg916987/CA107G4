@@ -2,10 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.withdrawalrecord.model.*"%>
-
+<%@ page import="com.member.model.*"%>
 <%
 	WithdrawalRecordVO withdrawalRecordVO = (WithdrawalRecordVO) request.getAttribute("withdrawalRecordVO");
 %>
+
+
+
 
 <!doctype html>
 <html lang="en">
@@ -70,11 +73,13 @@
 				<li class="nav-item"><a class="nav-link" href="#">註冊</a></li>
 				<li class="nav-item"><a class="nav-link disabled" href="#">關於我們</a>
 				</li>
+				<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 			</ul>
-			<a class="text-dark">餘額:</a> <a class="text-dark" id="wepoint">20000</a>
+			<a class="text-dark">餘額:</a> <a class="text-dark" id="wepoint"></a>
 		</div>
 	</nav>
 	<!-- ----------------------------------------------------------------- -->
+
 
 
 	<div class="container">

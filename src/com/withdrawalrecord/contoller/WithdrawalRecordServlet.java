@@ -6,6 +6,8 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import com.member.model.MemberService;
+import com.member.model.MemberVO;
 import com.withdrawalrecord.model.*;
 
 public class WithdrawalRecordServlet extends HttpServlet {
@@ -19,75 +21,75 @@ public class WithdrawalRecordServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-//		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
-//
-//			List<String> errorMsgs = new LinkedList<String>();
-//			// Store this set in the request scope, in case we need to
-//			// send the ErrorPage view.
-//			req.setAttribute("errorMsgs", errorMsgs);
+		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
 //查詢(單一)
-//			try {
-//				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-//				String wrnum = req.getParameter("wrnum");
-//				if (wrnum == null || (wrnum.trim()).length() == 0) {
-//					errorMsgs.add("請輸入會員編號");
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String wrnum = req.getParameter("wrnum");
+				if (wrnum == null || (wrnum.trim()).length() == 0) {
+					errorMsgs.add("請輸入會員編號");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				if (!wrnum.matches("WI[0-9]{5}")) {
+					errorMsgs.add("課程編號格式錯誤");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+//				String wrnum = null;
+//				try {
+//					wrnum = new String(str);
+//				} catch (Exception e) {
+//					errorMsgs.add("會員編號格式不正確");
 //				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
-//					failureView.forward(req, res);
-//					return;// 程式中斷
-//				}
-//				if (!wrnum.matches("WI[0-9]{5}")) {
-//					errorMsgs.add("課程編號格式錯誤");
-//				}
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
-//					failureView.forward(req, res);
-//					return;
-//				}
-//
-////				String wrnum = null;
-////				try {
-////					wrnum = new String(str);
-////				} catch (Exception e) {
-////					errorMsgs.add("會員編號格式不正確");
-////				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
-//					failureView.forward(req, res);
-//					return;// 程式中斷
-//				}
-//
-//				WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
-//				WithdrawalRecordVO withdrawalRecordVO = withdrawalRecordSvc.getOneWithdrawalRecord(wrnum);
-//				if (withdrawalRecordVO == null) {
-//					errorMsgs.add("查無資料");
-//				}
-//
-//				/*************************** 2.開始查詢資料 *****************************************/
-//
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
-//					failureView.forward(req, res);
-//					return;// 程式中斷
-//				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
+				WithdrawalRecordVO withdrawalRecordVO = withdrawalRecordSvc.getOneWithdrawalRecord(wrnum);
+				if (withdrawalRecordVO == null) {
+					errorMsgs.add("查無資料");
+				}
+
+				/*************************** 2.開始查詢資料 *****************************************/
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
 //
 //				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-//				req.setAttribute("withdrawalRecordVO", withdrawalRecordVO); // 資料庫取出的withdrawalRecordVO物件,存入req
-//				String url = "/withdrawalrecord/listOneEmp.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-//				successView.forward(req, res);
-//
+				req.setAttribute("withdrawalRecordVO", withdrawalRecordVO); // 資料庫取出的withdrawalRecordVO物件,存入req
+				String url = "/withdrawalrecord/findykey.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+
 //				/*************************** 其他可能的錯誤處理 *************************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("無法取得資料:" + e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
-//				failureView.forward(req, res);
-//			}
-//		}
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+				failureView.forward(req, res);
+			}
+		}
 
 		// 査全部
 		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
@@ -120,79 +122,74 @@ public class WithdrawalRecordServlet extends HttpServlet {
 		}
 
 		// yinren
-				if ("findByKey".equals(action)) { // 來自listAllEmp.jsp的請求
+		if ("findByKey".equals(action)) { // 來自listAllEmp.jsp的請求
 
-					List<String> errorMsgs = new LinkedList<String>();
-					// Store this set in the request scope, in case we need to
-					// send the ErrorPage view.
-					req.setAttribute("errorMsgs", errorMsgs);
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
 
 //					try {
-						/*************************** 1.接收請求參數 ****************************************/
-						String wrnum = new String(req.getParameter("wrnum"));
-						
-//						String wrnum = req.getParameter("wrnum");
-						if (wrnum == null || (wrnum.trim()).length() == 0) {
-							errorMsgs.add("請輸入會員編號");
-						}
-						// Send the use back to the form, if there were errors
-						if (!errorMsgs.isEmpty()) {
-							RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
-							failureView.forward(req, res);
-							return;// 程式中斷
-						}
-						if (!wrnum.matches("WI[0-9]{5}")) {
-							errorMsgs.add("課程編號格式錯誤");
-						}
-						if (!errorMsgs.isEmpty()) {
-							RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
-							failureView.forward(req, res);
-							return;
-						}
-		
-//						String wrnum = null;
-//						try {
-//							wrnum = new String(str);
-//						} catch (Exception e) {
-//							errorMsgs.add("會員編號格式不正確");
-//						}
-						// Send the use back to the form, if there were errors
-						if (!errorMsgs.isEmpty()) {
-							RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
-							failureView.forward(req, res);
-							return;// 程式中斷
-						}
-		
-						WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
-						WithdrawalRecordVO withdrawalRecordVO = withdrawalRecordSvc.getOneWithdrawalRecord(wrnum);
-						if (withdrawalRecordVO == null) {
-							errorMsgs.add("查無資料");
-						}
+			/*************************** 1.接收請求參數 ****************************************/
+			String wrnum = new String(req.getParameter("wrnum"));
 
-						/*************************** 2.開始查詢資料 ****************************************/
-						WithdrawalRecordService withdrawalRecordSvc1 = new WithdrawalRecordService();
-						List<WithdrawalRecordVO> list = (List<WithdrawalRecordVO>) withdrawalRecordSvc1.findByKey(wrnum);
+////						String wrnum = req.getParameter("wrnum");
+//			if (wrnum == null || (wrnum.trim()).length() == 0) {
+//				errorMsgs.add("請輸入會員編號");
+//			}
+//			// Send the use back to the form, if there were errors
+//			if (!errorMsgs.isEmpty()) {
+//				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+//				failureView.forward(req, res);
+//				return;// 程式中斷
+//			}
+//			if (!wrnum.matches("WI[0-9]{5}")) {
+//				errorMsgs.add("課程編號格式錯誤");
+//			}
+//			if (!errorMsgs.isEmpty()) {
+//				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+//				failureView.forward(req, res);
+//				return;
+//			}
+//
+////						String wrnum = null;
+////						try {
+////							wrnum = new String(str);
+////						} catch (Exception e) {
+////							errorMsgs.add("會員編號格式不正確");
+////						}
+//			// Send the use back to the form, if there were errors
+//			if (!errorMsgs.isEmpty()) {
+//				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+//				failureView.forward(req, res);
+//				return;// 程式中斷
+//			}
+//
+//			WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
+//			WithdrawalRecordVO withdrawalRecordVO = withdrawalRecordSvc.getOneWithdrawalRecord(wrnum);
+//			if (withdrawalRecordVO == null) {
+//				errorMsgs.add("查無資料");
+//			}
 
-						/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-						req.setAttribute("list", list); // 資料庫取出的withdrawalRecordVO物件,存入req
-						String url = "/withdrawalrecord/findbykey.jsp";
-						RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 addWithdrawalRecord.jsp
-						successView.forward(req, res);
+			/*************************** 2.開始查詢資料 ****************************************/
+			WithdrawalRecordService withdrawalRecordSvc1 = new WithdrawalRecordService();
+			List<WithdrawalRecordVO> list = (List<WithdrawalRecordVO>) withdrawalRecordSvc1.findByKey(wrnum);
 
-						/*************************** 其他可能的錯誤處理 **********************************/
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			req.setAttribute("list", list); // 資料庫取出的withdrawalRecordVO物件,存入req
+			String url = "/withdrawalrecord/findbykey.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 addWithdrawalRecord.jsp
+			successView.forward(req, res);
+
+			/*************************** 其他可能的錯誤處理 **********************************/
 //					} catch (Exception e) {
 //						errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 //						RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/listAllEmp.jsp");
 //						failureView.forward(req, res);
 //					}
-				}		
-		
-		
-		
-		
-		
-		
-//新增
+		}
+
+//-------------------------------------------------------------新增-----------------------------------------
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -200,6 +197,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
+
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String memid = req.getParameter("memid");
 
@@ -217,7 +215,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 					wrmoney = 0;
 					errorMsgs.add("交易金額請填數字.");
 				}
-				
+
 //				
 
 				java.sql.Date wrtime = null;
@@ -242,8 +240,22 @@ public class WithdrawalRecordServlet extends HttpServlet {
 				}
 
 				/*************************** 2.開始新增資料 *****************************************/
-				WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();	
+				WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
 				withdrawalRecordVO = withdrawalRecordSvc.addWithdrawalRecord(memid, wrmoney, wrtime);
+
+				MemberService memberSvc = new MemberService();
+				MemberVO membe = memberSvc.getOneMember(req.getParameter("memid"));
+
+				int blance = membe.getMemBalance();
+
+				int wrmoney1 = withdrawalRecordVO.getWrmoney();
+
+				int allmoney = blance + wrmoney1;
+
+//				membe.setMemBalance(allmoney);
+				memberSvc.update1(allmoney, membe.getMemBlock(), membe.getMemId());
+
+				System.out.println(allmoney);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				String url = "/withdrawalrecord/listAllWithdrawalRecord.jsp";
@@ -253,7 +265,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/addWithdrawalRecord.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/withdrawalrecord.jsp");
 				failureView.forward(req, res);
 			}
 		}

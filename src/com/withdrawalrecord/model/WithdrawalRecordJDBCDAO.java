@@ -9,6 +9,8 @@ import java.util.*;
 
 
 
+
+
 public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -25,7 +27,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 			"SELECT wrnum,memid,wrmoney,wrtime FROM WITHDRAWALRECORD order by wrnum";
 	private static final String GET_ALL_STMT1 = 
 			"SELECT * FROM WITHDRAWALRECORD where (case when memid=? then 1 else 0 end+ case when wrnum=? then 1 else 0 end)>=1";
-			
+//	private static final String GET_Emps_ByDeptno_STMT = "SELECT wrnum,memid,to_char(wrtime,'yyyy-mm-dd') wrtime,sal,FROM WITHDRAWALRECORD where memid = ? order by wrnum";		
 //	
 	@Override
 	public void insert(WithdrawalRecordVO withdrawalRecordVO) {
@@ -237,6 +239,62 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 		return list;
 	}
 	
+//	@Override
+//	public Set<WithdrawalRecordVO> getEmpsByDeptno(Integer deptno) {
+//		Set<WithdrawalRecordVO> set = new LinkedHashSet<WithdrawalRecordVO>();
+//		WithdrawalRecordVO withdrawalRecordVO = null;
+//	
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//	
+//		try {
+//	
+//			con = ds.getConnection();
+//			pstmt = con.prepareStatement(GET_Emps_ByDeptno_STMT);
+//			pstmt.setInt(1, deptno);
+//			rs = pstmt.executeQuery();
+//	
+//			while (rs.next()) {
+//				withdrawalRecordVO = new WithdrawalRecordVO();
+//				withdrawalRecordVO.setWrnum(rs.getString("wrnum"));
+//				withdrawalRecordVO.setMemid(rs.getString("memid"));
+//				withdrawalRecordVO.setWrmoney(rs.getInt("wrmoney"));
+//				withdrawalRecordVO.setWrtime(rs.getDate("wrtime"));
+//				
+//				set.add(withdrawalRecordVO); // Store the row in the vector
+//			}
+//	
+//			// Handle any SQL errors
+//		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. "
+//					+ se.getMessage());
+//		} finally {
+//			if (rs != null) {
+//				try {
+//					rs.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//		return set;
+//	}
+	
 	
 		
 	
@@ -316,22 +374,22 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 
 		WithdrawalRecordJDBCDAO dao = new WithdrawalRecordJDBCDAO();
 
-
+//
 //		WithdrawalRecordVO WithdrawalRecordVO1 = new WithdrawalRecordVO();
 //		
 //		WithdrawalRecordVO1.setMemid("weshare01");
 //		WithdrawalRecordVO1.setWrmoney(9000);
 //		WithdrawalRecordVO1.setWrtime(java.sql.Date.valueOf("2019-03-25"));
 //		dao.insert(WithdrawalRecordVO1);
-//
 
-//		WithdrawalRecordVO WithdrawalRecordVO2 = new WithdrawalRecordVO();
-//
-//		WithdrawalRecordVO2.setMemid("weshare04");
-//		WithdrawalRecordVO2.setWrmoney(16000);
-//		WithdrawalRecordVO2.setWrtime(java.sql.Date.valueOf("2019-03-25"));
-//		WithdrawalRecordVO2.setWrnum("WI00004");
-//		dao.update(WithdrawalRecordVO2);
+
+		WithdrawalRecordVO WithdrawalRecordVO2 = new WithdrawalRecordVO();
+
+		WithdrawalRecordVO2.setMemid("weshare01");
+		WithdrawalRecordVO2.setWrmoney(900);
+		WithdrawalRecordVO2.setWrtime(java.sql.Date.valueOf("2019-03-25"));
+		WithdrawalRecordVO2.setWrnum("WI00004");
+		dao.update(WithdrawalRecordVO2);
 //		System.out.println("---------------------");
 //
 
@@ -358,14 +416,14 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 		
 
 	   
-		List<WithdrawalRecordVO> list = dao.findByKey("weshare01");
-		for (WithdrawalRecordVO withdrawalRecordVO3 : list) {
-			System.out.println(withdrawalRecordVO3.getWrnum()+ ",");
-			System.out.println(withdrawalRecordVO3.getMemid()+ ",");
-			System.out.println(withdrawalRecordVO3.getWrmoney()+ ",");
-			System.out.println(withdrawalRecordVO3.getWrtime()+ ",");
+//		List<WithdrawalRecordVO> list = dao.findByKey("weshare01");
+//		for (WithdrawalRecordVO withdrawalRecordVO3 : list) {
+//			System.out.println(withdrawalRecordVO3.getWrnum()+ ",");
+//			System.out.println(withdrawalRecordVO3.getMemid()+ ",");
+//			System.out.println(withdrawalRecordVO3.getWrmoney()+ ",");
+//			System.out.println(withdrawalRecordVO3.getWrtime()+ ",");
 			
-			System.out.println("---------------------");
+//			System.out.println("---------------------");
 		}
 
 	
@@ -374,7 +432,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 
 
 
-	}
+	
 	
 
 }

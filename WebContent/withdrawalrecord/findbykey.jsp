@@ -6,14 +6,14 @@
 
 <%
 	WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
-    List<WithdrawalRecordVO> list = withdrawalRecordSvc.getAll();
+    List<WithdrawalRecordVO> list = withdrawalRecordSvc.findByKey(request.getParameter("wrnum"));
     pageContext.setAttribute("list",list);
 %>
 
 
 <html>
 <head>
-<title>所有交易紀錄資料 - listAllEmp.jsp</title>
+<title>所有交易紀錄資料 - findykey.jsp</title>
 
 <style>
   table#table-1 {
