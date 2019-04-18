@@ -275,19 +275,19 @@ public class CourseJDBCDAO implements CourseDAO_interface {
 //		courseJDBCDAO.delete("0001");
 		
 //		//查詢
-//		CourseVO courseVO3 = courseJDBCDAO.findByPrimaryKey("0005");
-//		System.out.println("CourseId="+courseVO3.getCourseId());
-//		System.out.println("CourseTypeId="+courseVO3.getCourseTypeId());
-//		System.out.println("CourseName="+courseVO3.getCourseName());
+		CourseVO courseVO3 = courseJDBCDAO.findByPrimaryKey("0002");
+		System.out.println("CourseId="+courseVO3.getCourseId());
+		System.out.println("CourseTypeId="+courseVO3.getCourseTypeId());
+		System.out.println("CourseName="+courseVO3.getCourseName());
 //		
 		//查詢全部
-		List<CourseVO> list = courseJDBCDAO.getAll();
-		for (CourseVO aEmp : list) {
-			System.out.println(aEmp.getCourseId() + ",");
-			System.out.println(aEmp.getCourseTypeId() + ",");
-			System.out.println(aEmp.getCourseName() + ",");
-			System.out.println();
-		}
+//		List<CourseVO> list = courseJDBCDAO.getAll();
+//		for (CourseVO aEmp : list) {
+//			System.out.println(aEmp.getCourseId() + ",");
+//			System.out.println(aEmp.getCourseTypeId() + ",");
+//			System.out.println(aEmp.getCourseName() + ",");
+//			System.out.println();
+//		}
 		
 	}
 

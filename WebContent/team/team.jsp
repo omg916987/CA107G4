@@ -3,22 +3,21 @@
 <%@ page import="com.team.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-
+<%@ page import="com.course.model.*"%>
 <%
 	TeamService teamSvc = new TeamService();
 	List<TeamVO> list = teamSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
+<%
+	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
+%>
 
 
-<jsp:useBean id="insCourseSvc" scope="page"
-	class="com.inscourse.model.InsCourseService" />
 
-<jsp:useBean id="insCourseTimeSvc" scope="page"
-	class="com.inscoursetime.model.InsCourseTimeService" />
 
-<jsp:useBean id="courseSvc" scope="page"
-	class="com.course.model.CourseService" />
+
+
 <!doctype html>
 <html lang="en">
 
@@ -118,7 +117,7 @@
 }
 
 .btn-info {
-    margin-top:5px;
+	margin-top: 5px;
 }
 </style>
 </head>
@@ -171,38 +170,35 @@
 				<font face="fantasy" color="#855600">想揪什麼團呢？</font>
 			</h1>
 
-
-			<jsp:useBean id="incourseSvc" scope="page"
-				class="com.inscourse.model.InsCourseService" />
-			<jsp:useBean id="courseSvc1" scope="page"
-				class="com.course.model.CourseService" />
-
+            <jsp:useBean id="insCourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
+			<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<%pageContext.setAttribute("xxx", "0002"); %>			
 			<div class="form-row">
 				<div class="form-group col-md-4">
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/incourse/incourse.do">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/team/team.do">
 						<select post="請選擇課程" class="form-control">
-							<c:forEach var="incourseVO" items="${incourseSvc.all}">
-								<option value="${teamVO.inscID==incourseVO.inscId}">${incourseVO.courseId}
-								
-<%-- 									<option value="${incourseVO.courseId==courseVO.courseId}">${courseVO.courseName} --%>
-							
-							</c:forEach>
-							<div class="form-row">
-						</select>
-					</FORM>
-					<div class="form-row">
 
-                       <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/team/team.do">
-						<input type="hidden" name="action" value="getOne_For_Update">
-						<input type="submit" name="commit" value="查詢"
-						class="btn btn-info submit" data-disable-with="find" />
-							</FORM>
+							<c:forEach var="courseVO" items="${courseSvc.getAll()}">
+							
+								<option value="${courseVO.courseName}">${courseVO.courseName}
+								
+								
+							</c:forEach>
+						</select>
+
+						<div class="form-row">
+
+
+							<input type="hidden" name="action" value="getOne_For_Update">
+							<input type="submit" name="commit" value="查詢"
+								class="btn btn-info submit" data-disable-with="find" />
 					</div>
+					</FORM>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 
 	<%@ include file="page1.file"%>
 	<c:forEach var="teamVO" items="${list}" begin="<%=pageIndex%>"
@@ -213,9 +209,11 @@
 					<img alt="" width="200" height="150" src="images/555.png" />
 				</div>
 				<div class="plan_info">
-					<h4>${teamVO.inscID}
+					<h4>${teamVO.inscID} 
 						<span class="badge badge-light">團體課程</span>
 					</h4>
+
+
 
 					<jsp:useBean id="insCoursetimeSvc" scope="page"
 						class="com.inscourse.model.InsCourseService" />
@@ -245,14 +243,15 @@
 					</div>
 				</div>
 				<div class="button-group">
-				 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/team/team.do">
-				    <input type="hidden" name="action"	value="getOne_For_Update">
-					<input type="submit" name="commit" value="詳情"
-						class="btn btn-info submit" data-disable-with="find" />			 
-				</FORM>
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/team/team.do">
+						<input type="hidden" name="action" value="getOne_For_Update">
+						<input type="submit" name="commit" value="詳情"
+							class="btn btn-info submit" data-disable-with="find" />
+					</FORM>
 					<input type="submit" name="commit" value="申請加入"
 						class="btn btn-info submit" data-disable-with="find" />
-					
+
 
 				</div>
 			</div>

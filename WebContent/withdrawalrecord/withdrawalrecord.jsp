@@ -116,8 +116,8 @@
 						<input type="hidden" name="action" value="findByKey">
 						<button class="btn btn-primary" type="submit">查看交易紀錄</button>		
 					</ul>
-					<input type="hidden" name="wrnum" value="weshare01">
-<%-- 					${param.memId} --%>
+					<input type="hidden" name="wrnum" value="${param.memId}">
+ 					
 					
 		</FORM>
 				</div>
@@ -155,7 +155,7 @@
 									placeholder="請輸入卡號">
 
 							</div>
-
+</div>
 						</div>
 						<div class="row">
 							<div class="col-md-4 mb-3">
@@ -187,109 +187,84 @@
 
 
 	<!-- -------------------------------------------------------------------------------------------------------------- -->
-	<footer class="my-5 pt-5 text-muted text-center text-small"> </footer>
-	
-	<footer class="section footer-classic context-dark bg-image"
-		style="background: #74b49b;">
-		<div class="container">
-			<div class="row row-30">
-				<div class="col-md-4 col-xl-5">
-					<div class="pr-xl-4">
-						<a href="index.html"></a>
-						<p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
-						<!-- Rights-->
-						<p class="rights">
-							<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>©
-								All Rights Reserved. .</span>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<h5 class="reademe">聯絡我們</h5>
-					<dl class="contact-list">
-						<dt>地址:</dt>
-						<dd>桃園市中壢區中大路300號</dd>
-					</dl>
-					<dl class="contact-list">
-						<dt>信箱:</dt>
-						<dd>
-							<a href="mailto:#">weshare@gmail.com</a>
-						</dd>
-					</dl>
-					<dl class="contact-list">
-						<dt>電話:</dt>
-						<dd>
-							<a href="tel:#">03-425-7387</a>
-						</dd>
-					</dl>
-				</div>
-				<div class="col-md-4 col-xl-3">
-					<h5 class="reademe2">關於</h5>
-					<ul class="nav-list">
-						<li><a href="#">關於我們</a></li>
-						<li><a href="#">團隊成員</a></li>
-						<li><a href="#">加入WeShare</a></li>
-						<li><a href="#">隱私權政策</a></li>
-						<li><a href="#">功能更新</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="row no-gutters social-container">
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-facebook"></span><span>Facebook</span></a>
-			</div>
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-instagram"></span><span>instagram</span></a>
-			</div>
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-twitter"></span><span>twitter</span></a>
-			</div>
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-youtube-play"></span><span>google</span></a>
-			</div>
-		</div>
-	</footer>
+                <!-- -------------------------------------------------------------------------------------------------------------- -->
+                <footer class="my-5 pt-5 text-muted text-center text-small">
+                </footer>
+          
+            <footer class="section footer-classic context-dark bg-image" style="background: #74b49b;">
+                <div class="container">
+                    <div class="row row-30">
+                        <div class="col-md-4 col-xl-5">
+                            <div class="pr-xl-4"><a href="index.html"></a>
+                                <p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
+                                <!-- Rights-->
+                                <p class="rights"><span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>© All Rights Reserved.
+                                        .</span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="reademe">聯絡我們</h5>
+                            <dl class="contact-list">
+                                <dt>地址:</dt>
+                                <dd>桃園市中壢區中大路300號</dd>
+                            </dl>
+                            <dl class="contact-list">
+                                <dt>信箱:</dt>
+                                <dd><a href="mailto:#">weshare@gmail.com</a></dd>
+                            </dl>
+                            <dl class="contact-list">
+                                <dt>電話:</dt>
+                                <dd><a href="tel:#">03-425-7387</a> </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-4 col-xl-3">
+                            <h5 class="reademe2">關於</h5>
+                            <ul class="nav-list">
+                                <li><a href="#">關於我們</a></li>
+                                <li><a href="#">團隊成員</a></li>
+                                <li><a href="#">加入WeShare</a></li>
+                                <li><a href="#">隱私權政策</a></li>
+                                <li><a href="#">功能更新</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row no-gutters social-container">
+                    <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-facebook"></span><span>Facebook</span></a></div>
+                    <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-instagram"></span><span>instagram</span></a></div>
+                    <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-twitter"></span><span>twitter</span></a></div>
+                    <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-youtube-play"></span><span>google</span></a></div>
+                </div>
+            </footer>
+            
+            <script>
+          
+            </script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-	<script>
-		
-	</script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
 
-	<script type="text/javascript">
-		function Magic() {
-			document.getElementById("MEMID").value = "weshare01";
-			document.getElementById("cc-name").value = "447708570857";
-			document.getElementById("wrmoney").value = "9000"
-			document.getElementById("cc-cvv").value = "957";
-		}
+      function Magic(){
+        document.getElementById("MEMID").value="weshare01";
+        document.getElementById("cc-name").value="447708570857";
+        
+        document.getElementById("cc-cvv").value="957";
+      }
+ 
 
-		$(function() {
-			$("#submit").click(function() {
-				//alert範例
-				swal("已成功付款", "請至檢查您的餘額", "success");
+       $(function () {
+            $("#submit").click(function () {
+                //alert範例
+                swal("已成功付款", "請至檢查您的餘額", "success");
 
-			});
-		});
-	</script>
+            });
+        });
 
-</body>
+    </script>
 
-</html>
+        </body>
+    </html>

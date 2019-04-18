@@ -8,7 +8,7 @@ public class CourseService {
 	private CourseDAO_interface dao;
 	
 	public CourseService() {
-		dao = new CourseDAO();
+		dao = new CourseJDBCDAO();
 	}
 
 	public void addCourse(String courseId,Integer courseTypeId,String courseName) {
