@@ -30,7 +30,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>WithdrawalRecordServlet</servlet-name>
-		<url-pattern>/withdrawalrecord/withdrawalRecord.do</url-pattern>
+		<url-pattern>/withdrawalrecord/withdrawalrecord.do</url-pattern>
 	</servlet-mapping>
 	
 	<!-- Member -->

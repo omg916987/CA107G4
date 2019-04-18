@@ -44,7 +44,7 @@ public class WithdrawalRecordService {
 	public List<WithdrawalRecordVO> getAll() {
 		return dao.getAll();
 	}
-	public List<WithdrawalRecordVO> findByKey(String wrnum){
-		return dao.findByKey(wrnum);
+	public List<WithdrawalRecordVO> findByKey(String memId){
+		return dao.findByKey(memId);
 	}
 }

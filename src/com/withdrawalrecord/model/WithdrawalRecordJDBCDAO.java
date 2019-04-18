@@ -309,7 +309,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 	
 	
 	@Override
-	public List<WithdrawalRecordVO> findByKey(String xxxId){
+	public List<WithdrawalRecordVO> findByKey(String memId){
 		List<WithdrawalRecordVO> list = new ArrayList<WithdrawalRecordVO>();
 		WithdrawalRecordVO withdrawalRecordVO = null;
 		Connection con = null;
@@ -321,8 +321,8 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT1);
-			pstmt.setString(1, xxxId);
-			pstmt.setString(2, xxxId);
+			pstmt.setString(1, memId);
+			pstmt.setString(2, memId);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

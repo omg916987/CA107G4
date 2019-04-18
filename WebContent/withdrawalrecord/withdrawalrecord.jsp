@@ -79,7 +79,7 @@
 				</li>
 				<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 			</ul>
-			<a class="text-dark">餘額:</a>${withdrawalRecordVO.wrmoney}<a class="text-dark" id="wepoint"></a>
+			<a class="text-dark">餘額:</a>${memberSvc.getOneMember(withdrawalrecordVO.memid).memBalance}<a class="text-dark" id="wepoint"></a>
 		</div>
 	</nav>
 	<!-- ----------------------------------------------------------------- -->
@@ -107,19 +107,19 @@
 
 			<div class="row">
 				<div class="col-md-3 order-md-2 mb-4">
-				 <FORM METHOD="post" ACTION="withdrawalRecord.do" name="form1">
-					<h4 class="d-flex justify-content-between align-items-center mb-3">
+				
+		<FORM METHOD="GET" ACTION="withdrawalrecord.do" name="form1">
+				<h4 class="d-flex justify-content-between align-items-center mb-3">
 						<span class="text-muted">查詢您的訂單</span>
-					</h4>
+				</h4>
+					<ul class="list-group mb-1">
+						<input type="hidden" name="action" value="findByKey">
+						<button class="btn btn-primary" type="submit">查看交易紀錄</button>		
+					</ul>
+					<input type="hidden" name="wrnum" value="weshare01">
+<%-- 					${param.memId} --%>
 					
-						<ul class="list-group mb-1">
-						<input type="hidden" name="action" value="insert">
-							<a href="#" class="btn btn-primary" role="button" >
-							查看交易紀錄</a>
-							
-							</li>
-						</ul>
-						</FORM>
+		</FORM>
 				</div>
 				<!-- ---------------------表單-------------------------- -->
 
@@ -127,7 +127,7 @@
 				<%--    <jsp:useBean id="withdrawalRecordSvc" scope="page" class="com.withdrawalrecord.model.WithdrawalRecordService" /> --%>
 
 				<div class="col-md-8 order-md-1">
-				<FORM METHOD="post" ACTION="withdrawalRecord.do" name="form1">
+				<FORM METHOD="GET" ACTION="withdrawalrecord.do" name="form1">
 					<h4 class="mb-3">信用卡付款</h4>
 
 					<div class="money">
@@ -175,8 +175,7 @@
 						
 					
 						<input type="hidden" name="action" value="insert">
-						<button class="btn btn-primary btn-lg btn-block" type="submit"
-							id="submit">付款</button>
+						<button class="btn btn-primary btn-lg btn-block" type="submit"id="submit">付款</button>
 							
 						<input id="magic" name="magic" type="button" onclick="Magic()"
 						class="btn btn-link">
@@ -189,7 +188,7 @@
 
 	<!-- -------------------------------------------------------------------------------------------------------------- -->
 	<footer class="my-5 pt-5 text-muted text-center text-small"> </footer>
-	</div>
+	
 	<footer class="section footer-classic context-dark bg-image"
 		style="background: #74b49b;">
 		<div class="container">

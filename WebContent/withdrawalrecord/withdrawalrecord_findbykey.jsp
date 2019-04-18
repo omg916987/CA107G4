@@ -1,15 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+
 <%@ page import="com.withdrawalrecord.model.*"%>
 
 <%
 	WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
-	List<WithdrawalRecordVO> list = withdrawalRecordSvc.getAll();
+	List<WithdrawalRecordVO> list = withdrawalRecordSvc.findByKey(request.getParameter("wrnum"));
 	pageContext.setAttribute("list", list);
 %>
 
-
+ 	
 
 <!doctype html>
 <html lang="en">
@@ -29,6 +30,7 @@
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
 <body>
+
 	<!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
 	<div class="header headerImg">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -72,7 +74,20 @@
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 	<div class="container">
 	<div class="p-4">
-		<h3>交易紀錄</h3>
+		<h3>個人交易紀錄</h3>
+
+		<c:if test="${not empty errorMsgs}">
+	<font style="color:red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
+		
+		
+
+		
 		<table class="table table-bordered track_tbl">
 			<thead>
 				<tr>
@@ -103,7 +118,7 @@
 			</c:forEach>
 		</table>
 		<%@ include file="page2.file"%>
-		
+	
 	</div>
 </div>
 

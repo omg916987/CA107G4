@@ -59,8 +59,8 @@ h4 {
 
 		<li>
 			<FORM METHOD="post" ACTION="withdrawalRecord.do">
-				<b>輸入訂單編號 (如WI00001):</b> <input type="text" name="wrnum"> <input
-					type="hidden" name="action" value="findByKey">
+				<b>輸入訂單編號 (如WI00001):</b> <input type="text" name="wrnum"> 
+				<input type="hidden" name="action" value="findByKey">
 				<!--value="findByKey" -->
 				<input type="submit" value="送出">
 			</FORM>
@@ -70,7 +70,7 @@ h4 {
 			class="com.withdrawalrecord.model.WithdrawalRecordService" />
 
 		<li>
-			<FORM METHOD="post" ACTION="withdrawalRecord.do">
+			<FORM METHOD="get" ACTION="withdrawalRecord.do">
 				<b>選擇訂單編號:</b> <select size="1" name="wrnum">
 					<c:forEach var="withdrawalRecordVO"
 						items="${withdrawalRecordSvc.all}">

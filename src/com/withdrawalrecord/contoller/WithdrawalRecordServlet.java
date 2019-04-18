@@ -4,12 +4,14 @@ import java.io.*;
 import java.util.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 import com.withdrawalrecord.model.*;
 
+@WebServlet("/WithdrawalRecordServlet")
 public class WithdrawalRecordServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -134,9 +136,9 @@ public class WithdrawalRecordServlet extends HttpServlet {
 			String wrnum = new String(req.getParameter("wrnum"));
 
 //						String wrnum = req.getParameter("wrnum");
-			if (wrnum == null || (wrnum.trim()).length() == 0) {
-				errorMsgs.add("請輸入會員編號");
-			}
+//			if (wrnum == null || (wrnum.trim()).length() == 0) {
+//				errorMsgs.add("請輸入會員編號");
+//			}
 //			// Send the use back to the form, if there were errors
 //			if (!errorMsgs.isEmpty()) {
 //				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
@@ -164,12 +166,12 @@ public class WithdrawalRecordServlet extends HttpServlet {
 //				failureView.forward(req, res);
 //				return;// 程式中斷
 //			}
-//
-			WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
-			WithdrawalRecordVO withdrawalRecordVO = withdrawalRecordSvc.getOneWithdrawalRecord(wrnum);
-			if (withdrawalRecordVO == null) {
-				errorMsgs.add("查無資料");
-			}
+////
+//			WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
+//			WithdrawalRecordVO withdrawalRecordVO = withdrawalRecordSvc.getOneWithdrawalRecord(wrnum);
+//			if (withdrawalRecordVO == null) {
+//				errorMsgs.add("查無資料");
+//			}
 
 			/*************************** 2.開始查詢資料 ****************************************/
 			WithdrawalRecordService withdrawalRecordSvc1 = new WithdrawalRecordService();
@@ -177,7 +179,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("list", list); // 資料庫取出的withdrawalRecordVO物件,存入req
-			String url = "/withdrawalrecord/findbykey.jsp";
+			String url = "/withdrawalrecord/withdrawalrecord_findbykey.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 addWithdrawalRecord.jsp
 			successView.forward(req, res);
 
