@@ -10,19 +10,19 @@ public class JoinGroupService {
 		dao = new JoinGroupJDBCDAO();
 	}
 
-//	public JoinGroupVO addJoinGroup(String memId, String teamId) {
-//
-//		JoinGroupVO joinGroupVO = new JoinGroupVO();
-//
-//		joinGroupVO.setMemId(memId);
-//		joinGroupVO.setTeamId(teamId);
-//		dao.insert(joinGroupVO);
-//
-//		return joinGroupVO;
-//	}
+	public JoinGroupVO addJoinGroup(String memId, String teamId) {
+
+		JoinGroupVO joinGroupVO = new JoinGroupVO();
+
+		joinGroupVO.setMemId(memId);
+		joinGroupVO.setTeamId(teamId);
+		dao.insert(joinGroupVO);
+
+		return joinGroupVO;
+	}
 
 //	public JoinGroupVO updateJoinGroup(String memId, String teamId) {
-//
+
 //		JoinGroupVO joinGroupVO = new JoinGroupVO();
 //
 //		joinGroupVO.setMemId(memId);
@@ -33,9 +33,10 @@ public class JoinGroupService {
 //
 //	}
 
-//	public void deleteJoinGroup(String memId) {
-//		dao.delete(memId);
-//	}
+	public void deleteJoinGroup(String memId,String teamId) {
+		dao.delete(memId, teamId);
+		
+	}
 
 	public JoinGroupVO getOneJoinGroup(String memId) {
 		return dao.findByPrimaryKey(memId);

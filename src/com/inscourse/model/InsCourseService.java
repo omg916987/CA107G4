@@ -40,5 +40,8 @@ public class InsCourseService {
 	public List<InsCourseVO> findByCourse(String courseId){
 		return dao.findByCourse(courseId);
 	}
+	public List<InsCourseVO> findClassName(String str){
+		return dao.findClassName(str);
+	}
 
 }

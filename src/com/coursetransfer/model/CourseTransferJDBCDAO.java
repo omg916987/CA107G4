@@ -17,6 +17,7 @@ public class CourseTransferJDBCDAO implements CourseTransferDAO_interface {
 	final String SEARCH_COURSETRANSFERALL = "SELECT * FROM COURSETRANSFER";
 	
 	
+	
 	@Override
 	public void insert(CourseTransferVO courseTransferVO) {
 		Connection con = null;
@@ -256,6 +257,9 @@ public class CourseTransferJDBCDAO implements CourseTransferDAO_interface {
 		return list;
 	}
 	
+	
+	
+
 	public static void main(String args[]) {
 		
 		CourseTransferJDBCDAO courseTransferJDBCDAO = new CourseTransferJDBCDAO();
@@ -293,18 +297,23 @@ public class CourseTransferJDBCDAO implements CourseTransferDAO_interface {
 //		System.out.println("ctDate="+courseTransferVO3.getCtDate());
 //		System.out.println("ctPrice="+courseTransferVO3.getCtPrice());
 		
-		//查詢全部
-		List<CourseTransferVO> list = courseTransferJDBCDAO.getAll();
-		for (CourseTransferVO aEmp : list) {
-			System.out.println("CourseId="+aEmp.getCtId());
-			System.out.println("ctBuyer="+aEmp.getCtBuyer());
-			System.out.println("oldCrvId="+aEmp.getOldCrvId());
-			System.out.println("newCrvId="+aEmp.getNewCrvId());
-			System.out.println("ctDate="+aEmp.getCtDate());
-			System.out.println("ctPrice="+aEmp.getCtPrice());
-			System.out.println();
-		}
+//
+//		List<CourseTransferVO> list = courseTransferJDBCDAO.getAll();
+//		for (CourseTransferVO aEmp : list) {
+//			System.out.println("CourseId="+aEmp.getCtId());
+//			System.out.println("ctBuyer="+aEmp.getCtBuyer());
+//			System.out.println("oldCrvId="+aEmp.getOldCrvId());
+//			System.out.println("newCrvId="+aEmp.getNewCrvId());
+//			System.out.println("ctDate="+aEmp.getCtDate());
+//			System.out.println("ctPrice="+aEmp.getCtPrice());
+//			System.out.println();
+//		}
+//		
 		
+		
+	
 	}
+
+	
 
 }

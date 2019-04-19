@@ -375,12 +375,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 		WithdrawalRecordJDBCDAO dao = new WithdrawalRecordJDBCDAO();
 
 //
-//		WithdrawalRecordVO WithdrawalRecordVO1 = new WithdrawalRecordVO();
-//		
-//		WithdrawalRecordVO1.setMemid("weshare01");
-//		WithdrawalRecordVO1.setWrmoney(9000);
-//		WithdrawalRecordVO1.setWrtime(java.sql.Date.valueOf("2019-03-25"));
-//		dao.insert(WithdrawalRecordVO1);
+
 
 
 		WithdrawalRecordVO WithdrawalRecordVO2 = new WithdrawalRecordVO();

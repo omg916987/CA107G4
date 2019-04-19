@@ -5,17 +5,11 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.course.model.*"%>
 <%
-	TeamService teamSvc = new TeamService();
+	TeamService teamSvc=new TeamService();
 	List<TeamVO> list = teamSvc.getAll();
 	pageContext.setAttribute("list", list);
+	
 %>
-<%
-	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
-%>
-
-
-
-
 
 
 <!doctype html>
@@ -162,6 +156,7 @@
 			</div>
 		</nav>
 	</div>
+	  
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 	<div class="jumbotron JumboHeaderImg">
 
@@ -172,36 +167,27 @@
 
             <jsp:useBean id="insCourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
 			<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
-<%pageContext.setAttribute("xxx", "0002"); %>			
+			
 			<div class="form-row">
 				<div class="form-group col-md-4">
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/team/team.do">
-						<select post="請選擇課程" class="form-control">
-
-							<c:forEach var="courseVO" items="${courseSvc.getAll()}">
-							
-								<option value="${courseVO.courseName}">${courseVO.courseName}
-								
-								
-							</c:forEach>
-						</select>
-
+					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do">
+					 
+                    <b>請輸入課程</b>
+                   <input type="text" name="str">
+					</select>
 						<div class="form-row">
-
-
-							<input type="hidden" name="action" value="getOne_For_Update">
+							<input type="hidden" name="action" value="Search_One">
 							<input type="submit" name="commit" value="查詢"
-								class="btn btn-info submit" data-disable-with="find" />
+							class="btn btn-info submit" data-disable-with="find" />
 					</div>
 					</FORM>
 				</div>
 			</div>
 		</div>
 	</div>
-	
 
 	<%@ include file="page1.file"%>
-	<c:forEach var="teamVO" items="${list}" begin="<%=pageIndex%>"
+	<c:forEach var="insCourseVO" items="${insCourseVOList}" begin="<%=pageIndex%>"
 		end="<%=pageIndex+rowsPerPage-1%>">
 		<div class="container">
 			<div class="plan">
@@ -209,37 +195,28 @@
 					<img alt="" width="200" height="150" src="images/555.png" />
 				</div>
 				<div class="plan_info">
-					<h4>${teamVO.inscID} 
+					<h4>${insCourseVO.inscLang}
 						<span class="badge badge-light">團體課程</span>
 					</h4>
-
-
-
-					<jsp:useBean id="insCoursetimeSvc" scope="page"
-						class="com.inscourse.model.InsCourseService" />
-
 					<div>
-						<i class="far fa-calendar-alt"></i>截團時間 ${teamVO.teamEXP}
-						<%-- ${insCourseTimeSvc.getOneInsCourseTime(insCourseVO.inscId).inscMFD} --%>
-						<%-- <c:forEach var="insCourseTimeVO" items="${insCourseTimeSvc.getOneInsCourseTime(insCourseVO.inscId)}">   --%>
-						<%-- <c:if test="${insCourseVO.inscId==insCourseTimeVO.inscId}"> --%>
-						<%-- ${insCourseTimeVO.inscMFD}             --%>
-						<%--   </c:if> --%>
-						<%--  </c:forEach> --%>
-
-					</div>
+						<i class="far fa-calendar-alt"></i>課程大綱:
+  						  ${insCourseVO.inscCourser}                    
+				</div>
 					<div></div>
 					<hr>
 					<div>
 						<span class="badge badge-light">收費模式</span> <span
 							class="badge badge-success">預先扣款</span> <span
 							class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
-						</span>每人 ${insCourseSvc.findOneById(teamVO.inscID).inscPrice}元<br>
+						</span>每人 ${insCourseVO.inscPrice}元<br>
 					</div>
 
 					<div>
 						<span class="badge badge-light"> 隊伍型態 </span> <span
-							class="badge badge-info">自主性揪團</span>
+							class="badge badge-info">自主性揪團</span> <span
+							class="badge badge-info">揪團編號
+							
+							</span>
 					</div>
 				</div>
 				<div class="button-group">
@@ -249,25 +226,18 @@
 						<input type="submit" name="commit" value="詳情"
 							class="btn btn-info submit" data-disable-with="find" />
 					</FORM>
-					<input type="submit" name="commit" value="申請加入"
-						class="btn btn-info submit" data-disable-with="find" />
 
-
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/team/team.do">
+						<input type="submit" name="commit" value="申請加入"
+							class="btn btn-info submit" data-disable-with="find" /> 
+							<input type="hidden" name="action" value="joingroup" />
+					</FORM>
 				</div>
 			</div>
 		</div>
 	</c:forEach>
 	<%@ include file="page2.file"%>
-
-
-
-
-
-
-
-
-
-
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
 	<footer class="section footer-classic context-dark bg-image"
 		style="background: #74b49b;">

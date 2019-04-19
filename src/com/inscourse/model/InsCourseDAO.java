@@ -367,6 +367,12 @@ pstmt = con.prepareStatement(SEARCH_COURSE);
 		}
 		return list;
 	}
+
+	@Override
+	public List<InsCourseVO> findClassName(String str) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

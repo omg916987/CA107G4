@@ -61,6 +61,15 @@
 		<servlet-name>InsCourseServlet</servlet-name>
 		<url-pattern>/inscourse/inscourse.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>TeamServlet</servlet-name>
+		<servlet-class>com.team.controller.TeamServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeamServlet</servlet-name>
+		<url-pattern>/team/team.do</url-pattern>
+	</servlet-mapping>
   
 
 </web-app>

@@ -9,4 +9,5 @@ public interface CourseTransferDAO_interface {
 	public void delete(String ctId);
 	public CourseTransferVO findByPrimaryKey(String ctId);
 	public List<CourseTransferVO> getAll();
+
 }

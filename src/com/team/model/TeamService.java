@@ -57,5 +57,6 @@ public class TeamService {
 	public List<TeamVO> getAll() {
 		return dao.getAll();
 	}
+	
 
 }
