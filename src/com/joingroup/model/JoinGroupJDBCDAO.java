@@ -230,7 +230,7 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 
 	public static void main(String[] args) {
 		JoinGroupJDBCDAO dao = new JoinGroupJDBCDAO();
-//
+////
 //		JoinGroupVO JoinGroupVO3 = new JoinGroupVO();
 //		JoinGroupVO3.setMemId("weshare01");
 //		JoinGroupVO3.setTeamId("TM00002");
@@ -251,7 +251,7 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 //			
 			System.out.println("---------------------");
 			
-			dao.delete("weshare02","TM00001");
+			dao.delete("weshare01","TM00002");
 			
 			System.out.println("---------------------");
 		}

@@ -76,39 +76,65 @@ public class TeamServlet extends HttpServlet {
 			}
 		}
 //	---------------------------------------------------------------------------------------------	
-		
-		if ("joingroup".equals(action)) { // 來自select_page.jsp的請求
-
+		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
+			
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
+			
 			req.setAttribute("errorMsgs", errorMsgs);
+			java.sql.Date hiredate = null;
+			System.out.println("到武一游");
 
 			try {
-
-				String memId = new String(req.getParameter("memid").trim());
-				String teamId = new String(req.getParameter("teamId").trim());
-
+				
+				String memId = req.getParameter("memId");
+				if (memId == null || (memId.trim()).length() == 0) {
+					errorMsgs.add("請輸會員編號");
+				}
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/team/team.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				String teamId = req.getParameter("teamId").trim();
+				if (!teamId.matches("TM[0-9]{5}")) {
+					errorMsgs.add("課程編號格式錯誤");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/team/team.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				  
 				JoinGroupVO joinGroupVO = new JoinGroupVO();
 				joinGroupVO.setMemId(memId);
 				joinGroupVO.setTeamId(teamId);
-
-				/*************************** 2.開始新增資料 ***************************************/
+					
+				
+			
+				
+				
+				/***************************2.開始新增資料***************************************/
 				JoinGroupService joinGroupSvc = new JoinGroupService();
-				joinGroupVO = joinGroupSvc.addJoinGroup(memId, teamId);
-
-				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				
+				joinGroupVO = joinGroupSvc.addJoinGroup(memId,teamId);
+			
+				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/team/team.jsp";
+				
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);
+				successView.forward(req, res);	
+				
 
-				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
+			}catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/team/team.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/team/team.jsp");
 				failureView.forward(req, res);
 			}
-		}
+			}
+//	____________________________________________________________________________________________	
 	}
 
 }

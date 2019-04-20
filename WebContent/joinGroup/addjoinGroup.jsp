@@ -1,22 +1,22 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.joingroup.model.*"%>
 
 <%
-  JoinGroupVO JoinGroupVO = (JoinGroupVO) request.getAttribute("JoinGroupVO");
+JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO"); 
 %>
-
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>­û¤u¸ê®Æ·s¼W - addEmp.jsp</title>
+<title>èª²ç¨‹è³‡æ–™æ–°å¢ - addEmp.jsp</title>
 
 <style>
   table#table-1 {
 	background-color: #CCCCFF;
     border: 2px solid black;
     text-align: center;
+    width: 100%;
   }
   table#table-1 h4 {
     color: red;
@@ -30,11 +30,13 @@
 </style>
 
 <style>
+	form{
+	margin: 1px auto;
+	}
   table {
 	width: 450px;
 	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
+	margin: 1px auto;
   }
   table, th, td {
     border: 0px solid #CCCCFF;
@@ -49,16 +51,16 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>­û¤u¸ê®Æ·s¼W - addEmp.jsp</h3></td><td>
-		 <h4><a href="select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">¦^­º­¶</a></h4>
+		 <h3>èª²ç¨‹è³‡æ–™æ–°å¢ - addEmp.jsp</h3></td><td>
+		 <h4><a href="select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ·s¼W:</h3>
+<h3 align="center">è³‡æ–™æ–°å¢:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -66,28 +68,27 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="joingroup.do" name="form1">
+<FORM METHOD="post" ACTION="joinGroup.do" name="form1">
 <table>
+
+	
 	<tr>
-		<td>·|­û±b¸¹:</td>
-		<td><input type="TEXT" name="ename" size="45" 
-			 value="<%= (JoinGroupVO==null)? "weshare01" : JoinGroupVO.getMemId()%>" /></td>
+		<td>è€å¸«:</td>
+		<td><input type="TEXT" name="memId" size="45"
+			 value="<%= (joinGroupVO==null)? "weshare04" : joinGroupVO.getMemId()%>" /></td>
 	</tr>
 	<tr>
-		<td>´ª¹Î½s¸¹:</td>
-		<td><input type="TEXT" name="job" size="45"
-			 value="<%= (JoinGroupVO==null)? "TM0001" : JoinGroupVO.getTeamId()%>" /></td>
+		<td>èª²ç¨‹ç¨®é¡:</td>
+		<td><input type="TEXT" name="teamId" size="45"
+			 value="<%= (joinGroupVO==null)? "TM00004" : joinGroupVO.getTeamId()%>" /></td>
 	</tr>
 	
 
-	<jsp:useBean id="JoingroupSvc" scope="page" class="com.joingroup.model.JoinGroupService" />
+	
+
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
-<input type="submit" value="°e¥X·s¼W"></FORM>
+<input type="submit" value="é€å‡ºæ–°å¢" ></FORM>
 </body>
-
-
-
-<!-- =========================================¥H¤U¬° datetimepicker ¤§¬ÛÃö³]©w========================================== -->
-
+</html>

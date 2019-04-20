@@ -2,6 +2,10 @@ package com.joingroup.model;
 
 import java.util.List;
 
+
+
+
+
 public class JoinGroupService {
 
 	private JoinGroupDAO_interface dao;
@@ -17,6 +21,7 @@ public class JoinGroupService {
 		joinGroupVO.setMemId(memId);
 		joinGroupVO.setTeamId(teamId);
 		dao.insert(joinGroupVO);
+		System.out.println("8857");
 
 		return joinGroupVO;
 	}

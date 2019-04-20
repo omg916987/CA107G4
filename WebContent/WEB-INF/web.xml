@@ -59,7 +59,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>InsCourseServlet</servlet-name>
-		<url-pattern>/inscourse/inscourse.do</url-pattern>
+		<url-pattern>/insCourse/inscourse.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -69,6 +69,15 @@
 	<servlet-mapping>
 		<servlet-name>TeamServlet</servlet-name>
 		<url-pattern>/team/team.do</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>JoinGroupServlet</servlet-name>
+		<servlet-class>com.joingroup.controller.JoinGroupServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JoinGroupServlet</servlet-name>
+		<url-pattern>/joinGroup/joinGroup.do</url-pattern>
 	</servlet-mapping>
   
 
