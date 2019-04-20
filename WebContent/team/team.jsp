@@ -5,6 +5,8 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.course.model.*"%>
 <%@ page import="com.joingroup.model.*"%>
+<%@ page import="com.teacher.model.*"%>
+<%@ page import="com.inscourse.model.*"%>
 <%
 	TeamService teamSvc = new TeamService();
 	List<TeamVO> list = teamSvc.getAll();
@@ -14,6 +16,20 @@
 	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
 %>
 
+<%
+	TeacherVO teacherVO = (TeacherVO) request.getAttribute("teacherVO");
+%>
+<%
+  InsCourseVO insCourseVO = (InsCourseVO) request.getAttribute("insCourseVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+%>
+<jsp:useBean id="memberSvc" scope="page"
+	class="com.member.model.MemberService" />
+<jsp:useBean id="incourseSvc" scope="page"
+	class="com.inscourse.model.InsCourseService" />
+<jsp:useBean id="courseSvc" scope="page"
+	class="com.course.model.CourseService" />
+	<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
+	
 <!doctype html>
 <html lang="en">
 
@@ -167,16 +183,13 @@
 				<font face="fantasy" color="#855600">想揪什麼團呢？</font>
 			</h1>
 
-			<jsp:useBean id="insCourseSvc" scope="page"
-				class="com.inscourse.model.InsCourseService" />
-			<jsp:useBean id="courseSvc" scope="page"
-				class="com.course.model.CourseService" />
+
+
 
 			<div class="form-row">
 				<div class="form-group col-md-4">
 					<FORM METHOD="get"
 						ACTION="<%=request.getContextPath()%>/team/team.do">
-
 						<b>請輸入課程</b> <input type="text" name="str">
 						<div class="form-row">
 							<input type="hidden" name="action" value="Search_One"> <input
@@ -188,6 +201,7 @@
 			</div>
 		</div>
 	</div>
+	
 
 	<%@ include file="page1.file"%>
 	<c:forEach var="teamVO" items="${list}" begin="<%=pageIndex%>"
@@ -196,47 +210,46 @@
 		<div class="container">
 			<div class="plan">
 				<div class="plan_iamge">
-					<img alt="" width="200" height="150" src="images/555.png" />
+<%-- 					<c:forEach var="insCourseVO" items="${insCourseSvc.getAll()}"> --%> --%>
+
+<%--  						<c:if test="${insCourseVO.inscId==teamVO.inscId && inCourseVO.teacherId==teacherVO.teacherId}"> --%> --%>
+<%-- 							<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId}"width="175" height="150"/> --%>
+							
+<%--  						</c:if>  --%>
+<%--  					</c:forEach>  --%>
 				</div>
 				<div class="plan_info">
-					<h4>
-						<span class="badge badge-light">課程名稱</span>
+					<h3>
+						<text class="badge badge-light">課程名稱:${courseSvc.findOneById(incourseSvc.findOneById(teamVO.inscID).courseId).courseName}</text>
 
-					</h4>
-					<div>
-						<i class="far fa-calendar-alt">開團日期${teamVO.temaMFD} </i> <i
-							class="far fa-calendar-alt">節團日期 ${teamVO.teamEXP} </i>
-					</div>
-					<div></div>
+					</h3>
+
+					<i class="fa-alt">課程大綱:${incourseSvc.findOneById(teamVO.inscID).inscCourser}
+					</i>
+
+
+
 					<hr>
 					<div>
 						<span class="badge badge-light">收費模式</span> <span
 							class="badge badge-success">預先扣款</span> <span
 							class="badge badge-lisght"></span> <i class="fas fa-dollar-sign"></i>
-						
-					</div>
 
+					</div>
 					<div>
 						<span class="badge badge-light"> 隊伍型態 </span> <span
-							class="badge badge-info">自主性揪團</span> 
-							 
+							class="badge badge-info">自主性揪團</span>
 					</div>
 				</div>
 				<div class="button-group">
 
-
-
-
-
 					<!-- Button trigger modal -->
 					<button type="button" class="btn btn-info submit"
-						data-toggle="modal" data-target="#teamclass">
-						詳情</button>
+						data-toggle="modal" data-target="#teamclass">詳情</button>
 
 					<!-- Modal -->
-					<div class="modal fade" id="teamclass" tabindex="-1"
-						role="dialog" aria-labelledby="teamclassTitle"
-						aria-hidden="true">
+					<div class="modal fade" id="teamclass" tabindex="-1" role="dialog"
+						aria-labelledby="teamclassTitle" aria-hidden="true">
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -246,107 +259,92 @@
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
-                               <!------Modal body------>
+								<!------Modal body------>
 								<div class="modal-body">
-						    <a>團主姓名:</a><br>
-						    <a>連絡電話:</a><br>
-						    <a>預扣金額:</a><br>
-						    <a>開團時間:</a><br>
-						    <a>截團時間:</a><br>
-								
-								
+									<a>團主姓名:</a>${memberSvc.getOneMember(teamVO.leaderID).memName}<br>
+									<a>連絡電話:</a>${memberSvc.getOneMember(teamVO.leaderID).memPhone}<br>
+									<a>預扣金額:</a>${incourseSvc.findOneById(teamVO.inscID).inscPrice}<br>
+									<%-- 						    <a>開團時間:</a>${teamVO.teamMFD}<br> --%>
+									<%-- 						    <a>截團時間:</a>${teamVO.teamEXP}<br> --%>
+
+
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-info"
-										data-dismiss="modal">關閉</button>
-								
+									<button type="button" class="btn btn-info" data-dismiss="modal">關閉</button>
+
 								</div>
 							</div>
 						</div>
 					</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 					<button type="button" class="btn btn-info submit"
 						data-toggle="modal" data-target="#myModal">加入揪團</button>
+				</div>
+				<!-- 				------------------------------------------------------ -->
+				<!-- The Modal -->
+
+				<div class="modal fade" id="myModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">加入揪團</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<!-- Modal body -->
+							<div class="modal-body">
+
+								<%-- 錯誤表列 --%>
+								<c:if test="${not empty errorMsgs}">
+									<font style="color: red">請修正以下錯誤:</font>
+									<ul>
+										<c:forEach var="message" items="${errorMsgs}">
+											<li style="color: red">${message}</li>
+										</c:forEach>
+									</ul>
+								</c:if>
 
 
-
-					<!-- 				------------------------------------------------------ -->
-					<!-- The Modal -->
-					<div class="modal fade" id="myModal">
-						<div class="modal-dialog">
-							<div class="modal-content">
-
-								<!-- Modal Header -->
-								<div class="modal-header">
-
-
-									<h4 class="modal-title">加入揪團</h4>
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-								</div>
-								<!-- Modal body -->
-								<div class="modal-body">
-
-									<%-- 錯誤表列 --%>
-									<c:if test="${not empty errorMsgs}">
-										<font style="color: red">請修正以下錯誤:</font>
-										<ul>
-											<c:forEach var="message" items="${errorMsgs}">
-												<li style="color: red">${message}</li>
-											</c:forEach>
-										</ul>
-									</c:if>
+								<FORM METHOD="post" ACTION="team.do" name="form1">
+									<table>
+										<tr>
+											<td>帳號:</td>
+											<td><input class="form-control" type="text"
+												placeholder="請輸入帳號" name="memId" size="45"
+												value="<%=(joinGroupVO == null) ? "weshare04" : joinGroupVO.getMemId()%>" /></td>
+										</tr>
+										<tr>
+											<td>編號:</td>
+											<td><input type="TEXT" class="form-control "
+												name="teamId" size="35"
+												value="<%=(joinGroupVO == null) ? "TM00004" : joinGroupVO.getTeamId()%>" /></td>
+										</tr>
+									</table>
+									<!-- Modal footer -->
 
 
-									<FORM METHOD="post" ACTION="team.do" name="form1">
-										<table>
-											<tr>
-												<td>帳號:</td>
-												<td><input class="form-control" type="text"
-													placeholder="請輸入帳號" name="memId" size="45"
-													value="<%=(joinGroupVO == null) ? "weshare04" : joinGroupVO.getMemId()%>" /></td>
-											</tr>
-											<tr>
-												<td>編號:</td>
-												<td><input type="TEXT" class="form-control "
-													name="teamId" size="35"
-													value="<%=(joinGroupVO == null) ? "TM00004" : joinGroupVO.getTeamId()%>" /></td>
-											</tr>
-										</table>
-										<!-- Modal footer -->
+									<div class="modal-footer">
+										<button type="button" class="btn btn-info"
+											data-dismiss="modal">取消</button>
 
-
-										<div class="modal-footer">
-											<button type="button" class="btn btn-info"
-												data-dismiss="modal">取消</button>
-
-											<input type="hidden" name="action" value="insert">
-											<button type="submit" class="btn btn-info"
-												data-dismiss="insert">加入</button>
-									</Form>
-								</div>
+										<input type="hidden" name="action" value="insert">
+										<button type="submit" class="btn btn-info"
+											data-dismiss="insert">加入</button>
+									</div>
+								</Form>
 							</div>
 						</div>
 					</div>
 
+
+
 				</div>
+
 			</div>
 		</div>
-		</div>
-		</div>
+
+
 
 	</c:forEach>
 	<%@ include file="page2.file"%>

@@ -35,19 +35,21 @@ public class TeamServlet extends HttpServlet {
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("str");
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("請輸入課程");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/team/team.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
-			
+//				if (str == null || (str.trim()).length() == 0) {
+//					errorMsgs.add("請輸入課程");
+//				}
+//				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("/team/listOneInsCourse.jsp");
+//					failureView.forward(req, res);
+//					return;//程式中斷
+//				}
+				
+				System.out.println("1234");
 				
 				/***************************2.開始查詢資料*****************************************/
+				
 				InsCourseService insCourseSvc = new InsCourseService();
 				List<InsCourseVO> insCourseVOList = insCourseSvc.findClassName(str);
 				if (insCourseVOList.size()==0) {
@@ -60,18 +62,18 @@ public class TeamServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
-				
+			
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("insCourseVOList", insCourseVOList); // 資料庫取出的empVO物件,存入req
-				String url = "/team/team.jsp";
+				String url = "/team/listOneInsCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
-
+                System.out.println("1234");
 				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/team/team.jsp");
+						.getRequestDispatcher("/team/listOneInsCourse.jsp");
 				failureView.forward(req, res);
 			}
 		}

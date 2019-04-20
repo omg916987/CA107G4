@@ -17,7 +17,12 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 	final String SEARCH_COURSEALL = "SELECT * FROM INSCOURSE";
 	final String FINDBYCOURSE = "SELECT * FROM INSCOURSE WHERE COURSEID=?";
 	
-	final String SEARCH_COURSETRANSFERALL1 ="SELECT * FROM INSCOURSE  WHERE INSCTYPE ='1' And INSCLANG LIKE ?";
+	final String SEARCH_COURSETRANSFERALL1 =" SELECT * FROM (INSCOURSE INNER JOIN COURSE ON INSCOURSE.COURSEID= COURSE.COURSEID) INNER JOIN TEAM ON TEAM.INSCID=INSCOURSE.INSCID WHERE INSCTYPE ='1' And COURSENAME LIKE ?";
+	
+	
+	
+	
+	
 	@Override
 	public void insert(InsCourseVO insCourseVO) {
 		Connection con = null;
@@ -407,7 +412,7 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 			
 			
 			
-			List<InsCourseVO> list = InsCourseJDBCDAO.findClassName("英");
+			List<InsCourseVO> list = InsCourseJDBCDAO.findClassName("甜");
 			for (InsCourseVO aEmp : list) {
 				System.out.println("InscId="+aEmp.getInscId());
 				System.out.println("InscId="+aEmp.getTeacherId());
