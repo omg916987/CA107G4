@@ -136,9 +136,9 @@ public class TeamServlet extends HttpServlet {
 				InsCourseVO insCourseVO=null;
 				int memblance =0;
 				Integer inscPrice1 = ((InsCourseVO) insCourseVO).getInscPrice();
-				
-				int memBalance = membe.getMemBalance();
 				System.out.println("1234");
+				int memBalance = membe.getMemBalance();
+				
 				int blance = membe.getMemBalance();
 				int memBlock = membe.getMemBlock();
 				if (blance < memBlock) {
@@ -149,7 +149,7 @@ public class TeamServlet extends HttpServlet {
 				} else {
 
 					memblance = blance - inscPrice1;
-					memBlock = inscPrice1 + memBlock;
+					memBlock = inscPrice1 + memBlock; 
 
 				}
 				memberSvc.update1(memBlock, membe.getMemBlock(), membe.getMemId());
