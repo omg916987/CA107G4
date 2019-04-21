@@ -4,25 +4,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.course.model.*"%>
-<%@ page import="com.joingroup.model.*"%>
-
 <%
-	TeamService teamSvc = new TeamService();
+	TeamService teamSvc=new TeamService();
 	List<TeamVO> list = teamSvc.getAll();
 	pageContext.setAttribute("list", list);
 	
 %>
 
-<%
-	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
-%>
 
- <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
- <jsp:useBean id="incourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
- <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
- <jsp:useBean id="teamSvc1" scope="page" class="com.team.model.TeamService" />
-	
-	
 <!doctype html>
 <html lang="en">
 
@@ -43,52 +32,43 @@
 .breadcrumb-item+.breadcrumb-item::before {
 	content: "|";
 }
-
 .page-link:hover {
 	background-color: #8af;
 	color: #fff;
 	border-color: #00f;
 	transform: scale(2);
 }
-
 .head {
 	display: none;
 }
-
 .jumbotron {
 	border-radius: 0;
 }
-
 .jumbotron {
 	background-image: url(01.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
 }
-
 .JumboHeaderImg {
 	background-size: cover;
 	background-image: url(images/333.jpg);
 }
-
 #quick_form {
 	margin-top: 60px;
 	margin-left: 35px;
 }
-
 .plan {
 	padding: 10px;
 	border: 1px #ccc solid;
 	border-radius: 10px;
 	margin: 10px;
 }
-
 .plan_iamge {
 	width: 200px;
 	height: 150px;
 	float: left;
 }
-
 .container {
 	width: 100%;
 	padding-right: 15px;
@@ -97,30 +77,25 @@
 	margin-left: auto;
 	max-width: 1140px;
 }
-
 .row {
 	display: flex;
 	flex-wrap: wrap;
 	margin-right: -15px;
 	margin-left: -15px;
 }
-
 .button-group {
 	margin-left: 900px;
 	margin-top: -40px;
 }
-
 .page2 {
 	text-align: center;
 	width: 500px;
 	margin: auto;
 }
-
 .form-row {
 	margin-left: 5px;
 	margin-top: 5px;
 }
-
 .btn-info {
 	margin-top: 5px;
 }
@@ -167,7 +142,7 @@
 			</div>
 		</nav>
 	</div>
-
+	  
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 	<div class="jumbotron JumboHeaderImg">
 
@@ -176,38 +151,28 @@
 				<font face="fantasy" color="#855600">想揪什麼團呢？</font>
 			</h1>
 
-
-
-
+            <jsp:useBean id="insCourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
+			<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+			
 			<div class="form-row">
 				<div class="form-group col-md-4">
-				
 					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do">
-						<b>請輸入課程</b> <input type="text" name="str">
-						
+					 
+                    <b>請輸入課程</b>
+                   <input type="text" name="str">
+					</select>
 						<div class="form-row">
-							<input type="hidden" name="action" value="Search_One"> <input
-								type="submit" name="commit" value="查詢"
-								class="btn btn-info submit" data-disable-with="find" />
-						</div>
+							<input type="hidden" name="action" value="Search_One">
+							<input type="submit" name="commit" value="查詢"
+							class="btn btn-info submit" data-disable-with="find" />
+					</div>
 					</FORM>
 				</div>
 			</div>
 		</div>
 	</div>
-	                
-	               
-	
-<%-- 						<c:forEach var="insCourseVO" items="${insCourseSvc.findClassName(str)}">  --%>
 
-<%--  						<c:if test="${(insCourseVO.inscId==teamVO.inscId) && (inCourseVO.teacherId==teacherVO.teacherId)}"> --%> --%>
-<%-- 							<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId}"width="175" height="150"/> --%>
-							
-<%--  						</c:if>  --%>
-<%--  					</c:forEach>  --%>
-	
-
-		<%@ include file="page1.file"%>
+	<%@ include file="page1.file"%>
 	<c:forEach var="insCourseVO" items="${insCourseVOList}" begin="<%=pageIndex%>"
 		end="<%=pageIndex+rowsPerPage-1%>">
 		<div class="container">
@@ -215,16 +180,13 @@
 				<div class="plan_iamge">
 					<img alt="" width="200" height="150" src="images/555.png" />
 				</div>
-				<div class="plan_info"> 					
-			<h4>
--              ${courseSvc.findOneById(insCourseVO.courseId).courseName}
+				<div class="plan_info">
+					<h4>${insCourseVO.inscLang}
 						<span class="badge badge-light">團體課程</span>
 					</h4>
 					<div>
 						<i class="far fa-calendar-alt"></i>課程大綱:
-  						  ${insCourseVO.inscCourser}
-  						  ${insCOurseVO.getOne }     
-  						                 
+  						  ${insCourseVO.inscCourser}                    
 				</div>
 					<div></div>
 					<hr>
@@ -232,7 +194,7 @@
 						<span class="badge badge-light">收費模式</span> <span
 							class="badge badge-success">預先扣款</span> <span
 							class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
-						</span>每人 ${insCourseVO.inscPrice}元$<br>
+						</span>每人 ${insCourseVO.inscPrice}元<br>
 					</div>
 
 					<div>
@@ -244,110 +206,22 @@
 					</div>
 				</div>
 				<div class="button-group">
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/team/team.do">
+						<input type="hidden" name="action" value="getOne_For_Update">
+						<input type="submit" name="commit" value="詳情"
+							class="btn btn-info submit" data-disable-with="find" />
+					</FORM>
 
-					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-info submit"
-						data-toggle="modal" data-target="#teamclass">詳情</button>
-
-					<!-- Modal -->
-					<div class="modal fade" id="teamclass" tabindex="-1" role="dialog"
-						aria-labelledby="teamclassTitle" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLongTitle">揪團詳情</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<!------Modal body------>
-								<div class="modal-body">
-									<a>團主姓名:</a>${teamSvc1.getOneTeam(insCourseVO.inscId).leaderID}<br>
-<%-- 									<a>連絡電話:</a>${memberSvc.getOneMember(teamVO.leaderID).memPhone}<br> --%>
-<%-- 									<a>預扣金額:</a>${incourseSvc.findOneById(teamVO.inscID).inscPrice}<br> --%>
-									<%-- 						    <a>開團時間:</a>${teamVO.teamMFD}<br> --%>
-									<%-- 						    <a>截團時間:</a>${teamVO.teamEXP}<br> --%>
-
-
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-info" data-dismiss="modal">關閉</button>
-
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-					<button type="button" class="btn btn-info submit"
-						data-toggle="modal" data-target="#myModal">加入揪團</button>
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/team/team.do">
+						<input type="submit" name="commit" value="申請加入"
+							class="btn btn-info submit" data-disable-with="find" /> 
+							<input type="hidden" name="action" value="joingroup" />
+					</FORM>
 				</div>
-				<!-- 				------------------------------------------------------ -->
-				<!-- The Modal -->
-
-				<div class="modal fade" id="myModal">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<!-- Modal Header -->
-							<div class="modal-header">
-								<h4 class="modal-title">加入揪團</h4>
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-							</div>
-							<!-- Modal body -->
-							<div class="modal-body">
-
-								<%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">
-									<font style="color: red">請修正以下錯誤:</font>
-									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
-											<li style="color: red">${message}</li>
-										</c:forEach>
-									</ul>
-								</c:if>
-
-
-								<FORM METHOD="post" ACTION="team.do" name="form1">
-									<table>
-										<tr>
-											<td>帳號:</td>
-											<td><input class="form-control" type="text"
-												placeholder="請輸入帳號" name="memId" size="45"
-												value="<%=(joinGroupVO == null) ? "weshare04" : joinGroupVO.getMemId()%>" /></td>
-										</tr>
-										<tr>
-											<td>編號:</td>
-											<td><input type="TEXT" class="form-control "
-												name="teamId" size="35"
-												value="<%=(joinGroupVO == null) ? "TM00004" : joinGroupVO.getTeamId()%>" /></td>
-										</tr>
-									</table>
-<!-- 									Modal footer -->
-
-
-									<div class="modal-footer">
-										<button type="button" class="btn btn-info"
-											data-dismiss="modal">取消</button>
-
-										<input type="hidden" name="action" value="insert">
-										<button type="submit" class="btn btn-info"
-											data-dismiss="insert">加入</button>
-									</div>
-								</Form>
-							</div>
-						</div>
-					</div>
-
-
-
-				</div>
-
 			</div>
 		</div>
-
-
-
 	</c:forEach>
 	<%@ include file="page2.file"%>
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
@@ -361,7 +235,7 @@
 						<p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
 						<!-- Rights-->
 						<p class="rights">
-							<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>©
+							<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>©
 								All Rights Reserved. .</span>
 						</p>
 					</div>
