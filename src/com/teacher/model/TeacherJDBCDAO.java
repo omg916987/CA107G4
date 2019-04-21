@@ -321,27 +321,27 @@ public class TeacherJDBCDAO implements TeacherDAO_interface {
 //		TeacherJDBCDAO.delete("TC00002");
 		
 //		//查詢
-//		TeacherVO TeacherVO3 = TeacherJDBCDAO.findByPrimaryKey("TC00002");
-//		System.out.println("TeacherId="+TeacherVO3.getTeacherId());
-//		System.out.println("MemId="+TeacherVO3.getMemId());
-//		System.out.println("TeacherStatus="+TeacherVO3.getTeacherStatus());
-//		System.out.println("TeacherCity="+TeacherVO3.getTeacherCity());
-//		System.out.println("TeacherEdu="+TeacherVO3.getTeacherEdu());
-//		System.out.println("TeacherText="+TeacherVO3.getTeacherText());
-
-		//查詢全部
-		List<TeacherVO> list = TeacherJDBCDAO.getAll();
-		for (TeacherVO aEmp : list) {
-			System.out.println("TeacherId="+aEmp.getTeacherId());
-			System.out.println("MemId="+aEmp.getMemId());
-			System.out.println("TeacherStatus="+aEmp.getTeacherStatus());
-			System.out.println("TeacherCity="+aEmp.getTeacherCity());
-			System.out.println("TeacherEdu="+aEmp.getTeacherEdu());
-			System.out.println("TeacherText="+aEmp.getTeacherText());
-			System.out.println("IdCardImg="+aEmp.getIdCardImg());
-		}
-	
+		TeacherVO TeacherVO3 = TeacherJDBCDAO.findByPrimaryKey("TC00002");
+		System.out.println("TeacherId="+TeacherVO3.getTeacherId());
+		System.out.println("MemId="+TeacherVO3.getMemId());
+		System.out.println("TeacherStatus="+TeacherVO3.getTeacherStatus());
+		System.out.println("TeacherCity="+TeacherVO3.getTeacherCity());
+		System.out.println("TeacherEdu="+TeacherVO3.getTeacherEdu());
+		System.out.println("TeacherText="+TeacherVO3.getTeacherText());
 	}
+		//查詢全部
+//		List<TeacherVO> list = TeacherJDBCDAO.getAll();
+//		for (TeacherVO aEmp : list) {
+//			System.out.println("TeacherId="+aEmp.getTeacherId());
+//			System.out.println("MemId="+aEmp.getMemId());
+//			System.out.println("TeacherStatus="+aEmp.getTeacherStatus());
+//			System.out.println("TeacherCity="+aEmp.getTeacherCity());
+//			System.out.println("TeacherEdu="+aEmp.getTeacherEdu());
+//			System.out.println("TeacherText="+aEmp.getTeacherText());
+//			System.out.println("IdCardImg="+aEmp.getIdCardImg());
+//		}
+//	
+//	}
 		
 	public static byte[] getFileByteArray(String path) throws IOException {
 		File file = new File(path);

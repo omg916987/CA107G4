@@ -50,9 +50,14 @@ public class TeamService {
 //		dao.delete(teamId);
 //	}
 
-	public TeamVO getOneTeam(String teamId) {
+	public TeamVO getOneTeam(String inscID) {
+		return dao.findByPrimaryKey(inscID);
+	}
+	
+	public TeamVO getOneTeam1(String teamId) {
 		return dao.findByPrimaryKey(teamId);
 	}
+	
 	
 	public List<TeamVO> getAll() {
 		return dao.getAll();

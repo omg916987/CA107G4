@@ -143,6 +143,9 @@ public class MemberService {
     public MemberVO getOneMember(String memberId) {
     	return dao.findByPrimaryKey(memberId);
     }
+    public MemberVO getOnepicture(byte[] memImage) {
+    	return dao.findByPrimaryKey(memImage);
+    }
     
     
     public List<MemberVO> getAll(){
