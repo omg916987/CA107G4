@@ -88,7 +88,7 @@
 	width: 200px;
 	height: 150px;
 	float: left;
-	margin-top: -5px;
+	margin-top: -2px;
 }
 
 .container {
@@ -126,9 +126,13 @@
 .btn-info {
 	margin-top: 5px;
 }
-.pig{
-   
+.class1{
+   margin-left: 200px;
 
+}
+.picture{
+   margin-top:-120px;
+   margin-left:250px;
 }
 
 </style>
@@ -213,7 +217,7 @@
 		<div class="container">
 			<div class="plan">
 				<div class="plan_iamge">
- 					<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(insCourseVO.teacherId).memId}"width="175" height="150""/>  
+ 					<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(insCourseVO.teacherId).memId}"width="175" height="185""/>  
 				</div>
 				<div class="plan_info"> 					
 			<h4> 
@@ -224,11 +228,9 @@
 						<i class="far fa-calendar-alt"></i>
   						  <div>課程大綱:  ${insCourseVO.inscCourser} </div>
   						  <div>上課語言:  ${insCourseVO.inscLang}</div>
-  						  <div>${teacherSvc.findOneById(insCourseVO.teacherId).memId}</div>
-
-  						                 
-				</div>
-					<div></div>
+  						  <div>${teacherSvc.findOneById(insCourseVO.teacherId).memId}</div>               
+				   </div>
+				
 					<hr>
 					<div>
 						<span class="badge badge-light">收費模式</span> <span
@@ -237,12 +239,10 @@
 						</span>每人 ${insCourseVO.inscPrice}元$<br>
 					</div>
 
-					<div>
-						<span class="badge badge-light"> 隊伍型態 </span> <span
-							class="badge badge-info">自主性揪團</span> <span
-							class="badge badge-info">揪團編號
-							
-							</span>
+					<div class="class1">
+						<span class="badge badge-light"> 隊伍型態 </span>
+						<span class="badge badge-info">自主性揪團</span> 
+						<span class="badge badge-info">揪團編號</span>
 					</div>
 				</div>
 				<div class="button-group">
@@ -265,18 +265,17 @@
 								</div>
 								<!------Modal body------>
 								<div class="modal-body">
-									<a>團主姓名:${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memName}</a><br>
-									<a>連絡電話:${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memPhone}</a><br>
+ 									<a>團主姓名:${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memName}</a><br> 
+								<a>連絡電話:${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memPhone}</a><br> 
 									<a>預扣金額:</a>${insCourseVO.inscPrice}<br>
 									<a>開團時間:${teamSvc1.getAll().get(0).getTemaMFD()}</a><br>
 									<a>截團時間:${teamSvc1.getAll().get(0).getTeamEXP()}</a><br>
-                                     <div class="plan_iamge">
-					<div class="pig" >
-					<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memId}"width="175" height="150""/>
-					</div> 
-					${teamSvc1.getOneTeam(insCourseVO.inscId).teamId)}
+                                     <div class="picture">
+					
+	<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memId}"width="175" height="150" >
+	
+		 	
 				</div>
-
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-info" data-dismiss="modal">關閉</button>
