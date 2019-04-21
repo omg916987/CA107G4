@@ -5,6 +5,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.course.model.*"%>
 <%@ page import="com.joingroup.model.*"%>
+<%@ page import="com.member.model.*"%>
 
 
 <%
@@ -16,6 +17,9 @@
 
 <%
 	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
+%>
+<%
+	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 %>
 
  <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
@@ -314,22 +318,29 @@
 								</c:if>
 
 
-								<FORM METHOD="post" ACTION="team.do" name="form1">
+								<FORM METHOD="get" ACTION="team.do" name="form1">
 									<table>
 										<tr>
 											<td>帳號:</td>
 											<td><input class="form-control" type="text"
-												placeholder="請輸入帳號" name="memId" size="45"
+												placeholder="請輸入帳號" name="memId" size="20" readonly="readonly"
 												value="<%=(joinGroupVO == null) ? "weshare04" : joinGroupVO.getMemId()%>" /></td>
 										</tr>
 										<tr>
-											<td>編號:</td>
-											<td><input type="TEXT" class="form-control "
+											<td>揪團編號:</td>
+											<td><input type="TEXT" class="form-control " readonly="readonly" 
 												name="teamId" size="35"
 												value="<%=(joinGroupVO == null) ? "TM00004" : joinGroupVO.getTeamId()%>" /></td>
 										</tr>
+										<tr>
+											<td>預扣金額:</td>
+											<td><input type="text" class="form-control" name="memId" value="${insCourseVO.inscPrice}"
+										readonly="readonly"	> </td>
+										</tr>
 									</table>
-<!-- 									Modal footer -->
+									
+									
+		
 
 
 									<div class="modal-footer">
@@ -367,7 +378,7 @@
 						<p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
 						<!-- Rights-->
 						<p class="rights">
-							<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>©
+							<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>.</span><span>©
 								All Rights Reserved. .</span>
 						</p>
 					</div>

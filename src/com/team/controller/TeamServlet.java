@@ -6,14 +6,20 @@ import java.util.List;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
+import com.member.model.MemberService;
+import com.member.model.MemberVO;
 
 
 import com.inscourse.model.InsCourseService;
 import com.inscourse.model.InsCourseVO;
 import com.joingroup.model.JoinGroupService;
 import com.joingroup.model.JoinGroupVO;
+import com.member.model.MemberService;
+import com.member.model.MemberVO;
 
 public class TeamServlet extends HttpServlet {
+
+	private static final String String = null;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -71,7 +77,7 @@ public class TeamServlet extends HttpServlet {
 				String url = "/team/team.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
-				System.out.println("1234");
+				
 				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
@@ -122,8 +128,34 @@ public class TeamServlet extends HttpServlet {
 				
 				/***************************2.開始新增資料***************************************/
 				JoinGroupService joinGroupSvc = new JoinGroupService();
-				
 				joinGroupVO = joinGroupSvc.addJoinGroup(memId,teamId);
+				
+				MemberService memberSvc = new MemberService();
+				MemberVO membe = memberSvc.getOneMember(req.getParameter("memid"));
+			
+				InsCourseVO insCourseVO=null;
+				int memblance =0;
+				Integer inscPrice1 = ((InsCourseVO) insCourseVO).getInscPrice();
+				
+				int memBalance = membe.getMemBalance();
+				System.out.println("1234");
+				int blance = membe.getMemBalance();
+				int memBlock = membe.getMemBlock();
+				if (blance < memBlock) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/withdrawalrecord.jsp");
+					failureView.forward(req, res);
+					return;
+
+				} else {
+
+					memblance = blance - inscPrice1;
+					memBlock = inscPrice1 + memBlock;
+
+				}
+				memberSvc.update1(memBlock, membe.getMemBlock(), membe.getMemId());
+
+				System.out.println(memBlock);
+				
 			
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/team/team.jsp";
