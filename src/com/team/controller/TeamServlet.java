@@ -32,7 +32,7 @@ public class TeamServlet extends HttpServlet {
 
 		
 		if ("Search_One".equals(action)) { // 來自select_page.jsp的請求
-
+System.out.println("TEAMVO");
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -93,7 +93,7 @@ public class TeamServlet extends HttpServlet {
 			
 			req.setAttribute("errorMsgs", errorMsgs);
 			java.sql.Date hiredate = null;
-			System.out.println("到武一游");
+			
 
 			try {
 				
@@ -121,7 +121,7 @@ public class TeamServlet extends HttpServlet {
 				JoinGroupVO joinGroupVO = new JoinGroupVO();
 				joinGroupVO.setMemId(memId);
 				joinGroupVO.setTeamId(teamId);
-					
+				System.out.println("到武一游");
 				
 			
 				

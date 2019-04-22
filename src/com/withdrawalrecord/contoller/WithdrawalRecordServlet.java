@@ -260,7 +260,12 @@ public class WithdrawalRecordServlet extends HttpServlet {
 				System.out.println(allmoney);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				String url = "/withdrawalrecord/listAllWithdrawalRecord.jsp";
+				
+				req.setAttribute("withdrawalRecordVO",withdrawalRecordVO);
+				
+				
+				String url = "/withdrawalrecord/findOneByKey.jsp";
+			    
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 

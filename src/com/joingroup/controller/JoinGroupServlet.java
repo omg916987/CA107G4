@@ -29,7 +29,7 @@ public class JoinGroupServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		
-	if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
+	if ("456".equals(action)) { // 來自addEmp.jsp的請求  
 	
 			List<String> errorMsgs = new LinkedList<String>();
 			

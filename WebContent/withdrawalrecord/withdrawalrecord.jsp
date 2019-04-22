@@ -9,8 +9,8 @@
 
 <%
 	WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
-    List<WithdrawalRecordVO> list = withdrawalRecordSvc.getAll();
-    pageContext.setAttribute("list",list);
+	List<WithdrawalRecordVO> list = withdrawalRecordSvc.getAll();
+	pageContext.setAttribute("list", list);
 %>
 
 
@@ -77,9 +77,11 @@
 				<li class="nav-item"><a class="nav-link" href="#">註冊</a></li>
 				<li class="nav-item"><a class="nav-link disabled" href="#">關於我們</a>
 				</li>
-				<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
+				<jsp:useBean id="memberSvc" scope="page"
+					class="com.member.model.MemberService" />
 			</ul>
-			<a class="text-dark">餘額:</a>${memberSvc.getOneMember(withdrawalrecordVO.memid).memBalance}<a class="text-dark" id="wepoint"></a>
+			<a class="text-dark">餘額:</a>${memberSvc.getOneMember(withdrawalrecordVO.memid).memBalance}<a
+				class="text-dark" id="wepoint"></a>
 		</div>
 	</nav>
 	<!-- ----------------------------------------------------------------- -->
@@ -102,32 +104,34 @@
 			</ul>
 		</c:if>
 
-   
-		
 
-			<div class="row">
-				<div class="col-md-3 order-md-2 mb-4">
-				
-		<FORM METHOD="GET" ACTION="withdrawalrecord.do" name="form1">
-				<h4 class="d-flex justify-content-between align-items-center mb-3">
+
+
+		<div class="row">
+			<div class="col-md-3 order-md-2 mb-4">
+
+				<FORM METHOD="GET" ACTION="withdrawalrecord.do" name="form1">
+					<h4 class="d-flex justify-content-between align-items-center mb-3">
 						<span class="text-muted">查詢您的訂單</span>
-				</h4>
+					</h4>
 					<ul class="list-group mb-1">
 						<input type="hidden" name="action" value="findByKey">
-						<button class="btn btn-primary" type="submit">查看交易紀錄</button>		
+						<button class="btn btn-primary" type="submit">查看交易紀錄</button>
 					</ul>
-					<input type="hidden" name="wrnum" value="${param.memId}">
- 					
-					
-		</FORM>
-				</div>
-				<!-- ---------------------表單-------------------------- -->
+<!-- 					//抓會員帳號 -->
+					<input type="hidden" name="wrnum" value="weshare02">    <%-- "${param.memId}" --%>
 
- 
-				<%--    <jsp:useBean id="withdrawalRecordSvc" scope="page" class="com.withdrawalrecord.model.WithdrawalRecordService" /> --%>
 
-				<div class="col-md-8 order-md-1">
-				<FORM METHOD="GET" ACTION="withdrawalrecord.do" name="form1">
+				</FORM>
+			</div>
+			<!-- ---------------------表單-------------------------- -->
+
+
+			<%--    <jsp:useBean id="withdrawalRecordSvc" scope="page" class="com.withdrawalrecord.model.WithdrawalRecordService" /> --%>
+
+			<div class="col-md-8 order-md-1">
+				<FORM METHOD="GET"
+					ACTION="/CA107G4/withdrawalrecord/withdrawalrecord.do" name="form1">
 					<h4 class="mb-3">信用卡付款</h4>
 
 					<div class="money">
@@ -155,116 +159,152 @@
 									placeholder="請輸入卡號">
 
 							</div>
-</div>
 						</div>
-						<div class="row">
-							<div class="col-md-4 mb-3">
-								<label for="date">到期日</label> <input class="form-control"
-									type="date" id="wrtime" name="wrtime" page[end_date]="">
-							</div>
-							<div class=" col-md-4 mb-3">
-								<label for="cc-cvv">CVV</label> <input type="text"
-									class="form-control" id="cc-cvv" name="cc-cvv"
-									placeholder="請輸入CVV碼">
-							</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 mb-3">
+							<label for="date">到期日</label> <input class="form-control"
+								type="date" id="wrtime" name="wrtime" page[end_date]="">
 						</div>
+						<div class=" col-md-4 mb-3">
+							<label for="cc-cvv">CVV</label> <input type="text"
+								class="form-control" id="cc-cvv" name="cc-cvv"
+								placeholder="請輸入CVV碼">
+						</div>
+					</div>
 
-						<hr class="mb-4">
+					<hr class="mb-4">
 
-						
-						
-					
-						<input type="hidden" name="action" value="insert">
-						<button class="btn btn-primary btn-lg btn-block" type="submit"id="submit">付款</button>
-							
-						<input id="magic" name="magic" type="button" onclick="Magic()"
+
+
+
+					<input type="hidden" name="action" value="insert">
+
+					<button class="btn btn-primary btn-lg btn-block" type="submit"
+						id="submit">付款</button>
+
+
+					<input id="magic" name="magic" type="button" onclick="Magic()"
 						class="btn btn-link">
 				</FORM>
-  				</div>
-	</div>
+				
+			
+				
+				
+				
+				
+				
+				
+			</div>
+		</div>
 	</div>
 
 
 
 	<!-- -------------------------------------------------------------------------------------------------------------- -->
-                <!-- -------------------------------------------------------------------------------------------------------------- -->
-                <footer class="my-5 pt-5 text-muted text-center text-small">
-                </footer>
-          
-            <footer class="section footer-classic context-dark bg-image" style="background: #74b49b;">
-                <div class="container">
-                    <div class="row row-30">
-                        <div class="col-md-4 col-xl-5">
-                            <div class="pr-xl-4"><a href="index.html"></a>
-                                <p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
-                                <!-- Rights-->
-                                <p class="rights"><span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>© All Rights Reserved.
-                                        .</span></p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <h5 class="reademe">聯絡我們</h5>
-                            <dl class="contact-list">
-                                <dt>地址:</dt>
-                                <dd>桃園市中壢區中大路300號</dd>
-                            </dl>
-                            <dl class="contact-list">
-                                <dt>信箱:</dt>
-                                <dd><a href="mailto:#">weshare@gmail.com</a></dd>
-                            </dl>
-                            <dl class="contact-list">
-                                <dt>電話:</dt>
-                                <dd><a href="tel:#">03-425-7387</a> </dd>
-                            </dl>
-                        </div>
-                        <div class="col-md-4 col-xl-3">
-                            <h5 class="reademe2">關於</h5>
-                            <ul class="nav-list">
-                                <li><a href="#">關於我們</a></li>
-                                <li><a href="#">團隊成員</a></li>
-                                <li><a href="#">加入WeShare</a></li>
-                                <li><a href="#">隱私權政策</a></li>
-                                <li><a href="#">功能更新</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row no-gutters social-container">
-                    <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-facebook"></span><span>Facebook</span></a></div>
-                    <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-instagram"></span><span>instagram</span></a></div>
-                    <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-twitter"></span><span>twitter</span></a></div>
-                    <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-youtube-play"></span><span>google</span></a></div>
-                </div>
-            </footer>
-            
-            <script>
-          
-            </script>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!-- -------------------------------------------------------------------------------------------------------------- -->
+	<footer class="my-5 pt-5 text-muted text-center text-small"> </footer>
 
-<script type="text/javascript">
+	<footer class="section footer-classic context-dark bg-image"
+		style="background: #74b49b;">
+		<div class="container">
+			<div class="row row-30">
+				<div class="col-md-4 col-xl-5">
+					<div class="pr-xl-4">
+						<a href="index.html"></a>
+						<p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
+						<!-- Rights-->
+						<p class="rights">
+							<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>©
+								All Rights Reserved. .</span>
+						</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<h5 class="reademe">聯絡我們</h5>
+					<dl class="contact-list">
+						<dt>地址:</dt>
+						<dd>桃園市中壢區中大路300號</dd>
+					</dl>
+					<dl class="contact-list">
+						<dt>信箱:</dt>
+						<dd>
+							<a href="mailto:#">weshare@gmail.com</a>
+						</dd>
+					</dl>
+					<dl class="contact-list">
+						<dt>電話:</dt>
+						<dd>
+							<a href="tel:#">03-425-7387</a>
+						</dd>
+					</dl>
+				</div>
+				<div class="col-md-4 col-xl-3">
+					<h5 class="reademe2">關於</h5>
+					<ul class="nav-list">
+						<li><a href="#">關於我們</a></li>
+						<li><a href="#">團隊成員</a></li>
+						<li><a href="#">加入WeShare</a></li>
+						<li><a href="#">隱私權政策</a></li>
+						<li><a href="#">功能更新</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="row no-gutters social-container">
+			<div class="col">
+				<a class="social-inner" href="#"><span
+					class="icon mdi mdi-facebook"></span><span>Facebook</span></a>
+			</div>
+			<div class="col">
+				<a class="social-inner" href="#"><span
+					class="icon mdi mdi-instagram"></span><span>instagram</span></a>
+			</div>
+			<div class="col">
+				<a class="social-inner" href="#"><span
+					class="icon mdi mdi-twitter"></span><span>twitter</span></a>
+			</div>
+			<div class="col">
+				<a class="social-inner" href="#"><span
+					class="icon mdi mdi-youtube-play"></span><span>google</span></a>
+			</div>
+		</div>
+	</footer>
 
-      function Magic(){
-        document.getElementById("MEMID").value="weshare01";
-        document.getElementById("cc-name").value="447708570857";
-        
-        document.getElementById("cc-cvv").value="957";
-      }
- 
+	<script>
+		
+	</script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-       $(function () {
-            $("#submit").click(function () {
-                //alert範例
-                swal("已成功付款", "請至檢查您的餘額", "success");
+	<script type="text/javascript">
+		function Magic() {
+			document.getElementById("MEMID").value = "weshare01";
+			document.getElementById("wrmoney").value = "6000";
+			document.getElementById("cc-name").value = "447708570857";
+			document.getElementById("cc-cvv").value = "957";
+		}
 
-            });
-        });
+		//        $(function () {
+		//             $(#submit).click(function () {
+		//                 //alert範例
+		//                 swal("已成功付款", "請至檢查您的餘額", "success");},100000);
 
-    </script>
+		//             setTimeout(function(){window.location.reload(); },2000);
+		//         });
+	</script>
 
-        </body>
-    </html>
+</body>
+</html>
