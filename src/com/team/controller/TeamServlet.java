@@ -132,12 +132,15 @@ System.out.println("TEAMVO");
 				
 				MemberService memberSvc = new MemberService();
 				MemberVO membe = memberSvc.getOneMember(req.getParameter("memid"));
-			
-				InsCourseVO insCourseVO=null;
-				int memblance =0;
-				Integer inscPrice1 = ((InsCourseVO) insCourseVO).getInscPrice();
-				System.out.println("1234");
-				int memBalance = membe.getMemBalance();
+				joinGroupSvc.getAll();
+		
+				
+//				getparator
+//				InsCourseVO insCourseVO=null;
+//				int memblance =0;
+//				Integer inscPrice = ((InsCourseVO) insCourseVO).getInscPrice();
+//				System.out.println("1234");
+//				int memBalance = membe.getMemBalance();
 				
 				int blance = membe.getMemBalance();
 				int memBlock = membe.getMemBlock();
@@ -147,9 +150,9 @@ System.out.println("TEAMVO");
 					return;
 
 				} else {
-
-					memblance = blance - inscPrice1;
-					memBlock = inscPrice1 + memBlock; 
+//
+//					memblance = blance - inscPrice;
+//					memBlock = inscPrice + memBlock; 
 
 				}
 				memberSvc.update1(memBlock, membe.getMemBlock(), membe.getMemId());

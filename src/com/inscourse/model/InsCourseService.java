@@ -34,8 +34,8 @@ public class InsCourseService {
 	public InsCourseVO findOneById(String inscId) {
 		return dao.findByPrimaryKey(inscId);
 	}
-	public List<InsCourseVO> getAll(){
-		return dao.getAll();
+	public List<InsCourseVO> getAll(String i){
+		return dao.getAll(i);
 	}
 	public List<InsCourseVO> findByCourse(String courseId){
 		return dao.findByCourse(courseId);

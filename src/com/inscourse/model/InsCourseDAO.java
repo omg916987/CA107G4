@@ -29,8 +29,11 @@ public class InsCourseDAO implements InsCourseDAO_interface {
 	final String INSERT_STMT = "INSERT INTO INSCOURSE VALUES('IC'||LPAD(InsCourse_seq.NEXTVAL,5,'0'),?,?,?,?,?,?,?,?,?)";
 	final String UPDATE_STMT = "UPDATE INSCOURSE SET TEACHERID=?,COURSEID=?,INSCLOC=?,INSCTYPE=?,INSCPEOPLE=?,INSCLANG=?,INSCPRICE=?,INSCCOURSER=?,INSCSTATUS=? WHERE INSCID=?";
 	final String DELETE_COURSE = "DELETE FROM INSCOURSE WHERE INSCID=?";
+	
 	final String SEARCH_COURSE = "SELECT * FROM INSCOURSE WHERE INSCID=?";
-	final String SEARCH_COURSEALL = "SELECT * FROM INSCOURSE";
+	
+	final String SEARCH_COURSEALL = "SELECT * FROM INSCTYPE";
+	
 	final String UPDATE_STATUS = "UPDATE INSCOURSE SET INSCSTATUS=? WHERE INSCID=?";
 	final String FINDBYCOURSE = "SELECT * FROM INSCOURSE WHERE COURSEID=?";
 	
@@ -213,7 +216,7 @@ pstmt = con.prepareStatement(SEARCH_COURSE);
 	}
 
 	@Override
-	public List<InsCourseVO> getAll() {
+	public List<InsCourseVO> getAll(String i) {
 
 		List<InsCourseVO> list = new ArrayList<InsCourseVO>();
 		InsCourseVO insCourseVO = null;

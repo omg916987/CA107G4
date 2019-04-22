@@ -250,6 +250,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 
 				int blance = membe.getMemBalance();
 
+				System.out.println("blance");
 				int wrmoney1 = withdrawalRecordVO.getWrmoney();
 
 				int allmoney = blance + wrmoney1;

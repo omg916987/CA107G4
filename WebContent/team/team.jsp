@@ -6,13 +6,13 @@
 <%@ page import="com.course.model.*"%>
 <%@ page import="com.joingroup.model.*"%>
 <%@ page import="com.member.model.*"%>
+<%@ page import="com.inscourse.model.*"%>
 
 
 <%
-	TeamService teamSvc = new TeamService();
-	List<TeamVO> list = teamSvc.getAll();
+	InsCourseService inscourseSvc = new InsCourseService();
+	List<InsCourseVO> list = inscourseSvc.getAll("1");
 	pageContext.setAttribute("list", list);
-	
 %>
 
 <%
@@ -21,6 +21,8 @@
 <%
 	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 %>
+
+
 
  <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
  <jsp:useBean id="incourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
@@ -195,12 +197,8 @@
 		</div>
 	</div>
 	                
-	               
-	
-	
-
 		<%@ include file="page1.file"%>
-	<c:forEach var="insCourseVO" items="${insCourseVOList}" begin="<%=pageIndex%>"
+	<c:forEach var="insCourseVO" items="${list}" begin="<%=pageIndex%>"
 		end="<%=pageIndex+rowsPerPage-1%>">
 		<div class="container">
 			<div class="plan">
@@ -311,11 +309,11 @@
 											<td>揪團編號:</td>
 											<td><input type="TEXT" class="form-control " readonly="readonly" 
 												name="teamId" size="35"
-												value="<%=(joinGroupVO == null) ? "TM00004" : joinGroupVO.getTeamId()%>" /></td>
+												value="${teamSvc1.getOneTeam(insCourseVO.inscId).teamId}" /></td>
 										</tr>
 										<tr>
 											<td>預扣金額:</td>
-											<td><input type="text" class="form-control" name="memId" value="${insCourseVO.inscPrice}"
+											<td><input type="text" class="form-control" name="inscPrice" value="${insCourseVO.inscPrice}"
 										readonly="readonly"	> </td>
 										</tr>
 									</table>
