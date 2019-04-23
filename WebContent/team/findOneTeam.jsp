@@ -10,25 +10,24 @@
 
 
 <%
-	InsCourseService inscourseSvc = new InsCourseService();
-	List<InsCourseVO> list = inscourseSvc.getAll("1");
+	JoinGroupService joinGroupSvc = new JoinGroupService();
+	List<JoinGroupVO> list = joinGroupSvc.findByPrimaryKey("weshare01");
 	pageContext.setAttribute("list", list);
 %>
 
-<%
-	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
-%>
-<%
-	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
-%>
 
 
 
- <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
- <jsp:useBean id="incourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
- <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
- <jsp:useBean id="teamSvc1" scope="page" class="com.team.model.TeamService" />
- <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />	
+<!--  	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); -->
+
+
+
+
+  <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
+  <jsp:useBean id="incourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
+  <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+  <jsp:useBean id="teamSvc" scope="page" class="com.team.model.TeamService" />
+  <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />	
 	
 <!doctype html>
 <html lang="en">
@@ -209,36 +208,38 @@
 			</div>
 			
 			
-			
 		</div>
 	</div>
 	                
 		<%@ include file="page1.file"%>
-	<c:forEach var="insCourseVO" items="${list}" begin="<%=pageIndex%>"
+	<c:forEach var="joinGroupVO" items="${list}" begin="<%=pageIndex%>"
 		end="<%=pageIndex+rowsPerPage-1%>">
 		<div class="container">
 			<div class="plan">
 				<div class="plan_iamge">
- 					<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(insCourseVO.teacherId).memId}"width="175" height="185""/>  
+			-------------${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).getInscID()}--------
+<%--  					<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(insCourseVO.teacherId).memId}"width="175" height="185""/>   --%>
 				</div>
 				<div class="plan_info"> 					
 			<h4> 
-              ${courseSvc.findOneById(insCourseVO.courseId).courseName}
-						<span class="badge badge-light">團體課程</span>
+              
+						<span class="badge badge-light">
+						${courseSvc.findOneById(incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).courseId).courseName} 團體課程</span>
 					</h4>
 					<div>
 						<i class="far fa-calendar-alt"></i>
-  						  <div>課程大綱:  ${insCourseVO.inscCourser} </div>
-  						  <div>上課語言:  ${insCourseVO.inscLang}</div>
-  						  <div>${teacherSvc.findOneById(insCourseVO.teacherId).memId}</div>               
+  						  <div>課程大綱:${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscCourser}  </div>
+  						  <div>上課語言:${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscLang}  </div>
+  						  <div></div>               
 				   </div>
+						-----${joinGroupVO.teamId}----	
 				
 					<hr>
 					<div>
 						<span class="badge badge-light">收費模式</span> <span
 							class="badge badge-success">預先扣款</span> <span
 							class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
-						</span>每人 ${insCourseVO.inscPrice}元$<br>
+						</span>每小時${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscPrice} 元$<br>
 					</div>
 					<div class="class1">
 						<span class="badge badge-light"> 隊伍型態 </span>
@@ -262,13 +263,14 @@
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
-								<!------Modal body------>
+<!-- 								----Modal body---- -->
 								<div class="modal-body">
- 									<a>團主姓名:${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memName}</a><br> 
-								    <a>連絡電話:${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memPhone}</a><br> 
-									<a>預扣金額:</a>${insCourseVO.inscPrice}<br>
-									<a>開團時間:${teamSvc1.getAll().get(0).getTemaMFD()}</a><br>
-									<a>截團時間:${teamSvc1.getAll().get(0).getTeamEXP()}</a><br>
+ 								<a>團主姓名:${memberSvc.getOneMember(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).leaderID).memName}</a><br> 
+								<a>連絡電話:</a>${memberSvc.getOneMember(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).leaderID).memPhone}<br> 
+								<a>預扣金額:</a>${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscPrice}<br>
+								<a>開團時間:${teamSvc.getAll().get(0).getTemaMFD()}</a><br>
+								<a>截團時間:${teamSvc.getAll().get(0).getTeamEXP()}</a><br>
+								</div>
                                      <div class="picture">
 					
 	<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memId}"width="175" height="150" >
@@ -286,7 +288,7 @@
 
 
 					<button type="button" class="btn btn-info submit"
-						data-toggle="modal" data-target="#myModal">加入揪團</button>
+						data-toggle="modal" data-target="#myModal">退出揪團</button>
 				</div>
 				<!-- 				------------------------------------------------------ -->
 				<!-- The Modal -->
@@ -296,7 +298,7 @@
 						<div class="modal-content">
 							<!-- Modal Header -->
 							<div class="modal-header">
-								<h4 class="modal-title">加入揪團</h4>
+								<h4 class="modal-title">退出揪團</h4>
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 							</div>
 							<!-- Modal body -->
@@ -317,9 +319,9 @@
 									<table>
 										<tr>
 											<td>帳號:</td>
-											<td><input class="form-control" type="text"
-												placeholder="請輸入帳號" name="memId" size="20" readonly="readonly"
-												value="<%=(joinGroupVO == null) ? "weshare04" : joinGroupVO.getMemId()%>" /></td>
+<!-- 											<td><input class="form-control" type="text" -->
+<!-- 												placeholder="請輸入帳號" name="memId" size="20" readonly="readonly" -->
+<%-- 												value="<%=(joinGroupVO == null) ? "weshare04" : joinGroupVO.getMemId()%>" /></td> --%>
 										</tr>
 										<tr>
 											<td>揪團編號:</td>
@@ -344,7 +346,7 @@
 
 										<input type="hidden" name="action" value="insert">
 										<button type="submit" class="btn btn-info"
-											data-dismiss="insert">加入</button>
+											data-dismiss="insert">退出</button>
 									</div>
 								</Form>
 							</div>

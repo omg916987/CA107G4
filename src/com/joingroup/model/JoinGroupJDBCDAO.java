@@ -67,8 +67,8 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 	}
 
 	@Override
-	public JoinGroupVO findByPrimaryKey(String memId) {
-
+	public List<JoinGroupVO> findByPrimaryKey(String memId) {
+		List<JoinGroupVO> list = new ArrayList<JoinGroupVO>();
 		JoinGroupVO joinGroupVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -80,7 +80,7 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			pstmt.setString(1, memId);
-
+			
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -88,7 +88,8 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 				joinGroupVO = new JoinGroupVO();
 				joinGroupVO.setMemId(rs.getString("memId"));
 				joinGroupVO.setTeamId(rs.getString("teamId"));
-
+				
+				list.add(joinGroupVO);
 			}
 
 			// Handle any driver errors
@@ -118,7 +119,7 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 				}
 			}
 		}
-		return joinGroupVO;
+		return list;
 	}
 
 	@Override
@@ -254,12 +255,21 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 			dao.delete("weshare01","TM00002");
 			
 			System.out.println("---------------------");
+			
+			
+			List<JoinGroupVO> list = dao.findByPrimaryKey("weshare04");
+			for (JoinGroupVO JoinGroupV05 : list) {
+				System.out.print(JoinGroupV05.getMemId() + ",");
+				System.out.println(JoinGroupV05.getTeamId());
+				System.out.println();
+			
+			
 		}
 	
 
 
 		
-	
+	}
 
 	
 

@@ -114,7 +114,7 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 	}
 
 	@Override
-	public TeamVO findByPrimaryKey(String inscId) {
+	public TeamVO getOneTeam(String inscId) {
 
 		TeamVO teamVO = null;
 		Connection con = null;
@@ -306,7 +306,7 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 //		dao.insert(teamVO1);
 //
 //		// 修改
-//		TeamVO teamVO2 = new TeamVO();
+		TeamVO teamVO2 = new TeamVO();
 //
 //		teamVO2.setLeaderID("weshare02");
 //		teamVO2.setInscID("IC00002");
@@ -328,18 +328,18 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 //		
 		// 查全部
 
-		List<TeamVO> list = dao.getAll();
-
-		for (TeamVO teamVO4 : list) {	
-			System.out.print(teamVO4.getTeamId() + ",");
-			System.out.print(teamVO4.getLeaderID() + ",");
-			System.out.print(teamVO4.getInscID() + ",");
-			System.out.print(teamVO4.getTemaMFD() + ",");
-			System.out.print(teamVO4.getTeamEXP() + ",");
-			System.out.print(teamVO4.getTeamStatus());
-			System.out.println("---------------------");
-
-		}
+//		List<TeamVO> list = dao.getAll();
+//
+//		for (TeamVO teamVO4 : list) {	
+//			System.out.print(teamVO4.getTeamId() + ",");
+//			System.out.print(teamVO4.getLeaderID() + ",");
+//			System.out.print(teamVO4.getInscID() + ",");
+//			System.out.print(teamVO4.getTemaMFD() + ",");
+//			System.out.print(teamVO4.getTeamEXP() + ",");
+//			System.out.print(teamVO4.getTeamStatus());
+//			System.out.println("---------------------");
+//
+//		}
 		TeamVO TeamVO4 = dao.findByPrimaryKey1("TM00001");
 		System.out.print(TeamVO4.getTeamId() + ",");
 		System.out.print(TeamVO4.getLeaderID() + ",");
@@ -349,8 +349,25 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 		System.out.println(TeamVO4.getTeamStatus());
 		System.out.println("---------------------");
 	}
+	
+//	TeamVO TeamVO4 = dao.getOneTeam("IC00001");
+//	System.out.print(TeamVO4.getTeamId() + ",");
+//	System.out.print(TeamVO4.getLeaderID() + ",");
+//	System.out.print(TeamVO4.getInscID() + ",");
+//	System.out.print(TeamVO4.getTemaMFD() + ",");
+//	System.out.print(TeamVO4.getTeamEXP() + ",");
+//	System.out.println(TeamVO4.getTeamStatus());
+//	System.out.println("---------------------");
+//}
+
+	@Override
+	public TeamVO findByPrimaryKey(String inscID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
-	
-	
+
 }
+	
+

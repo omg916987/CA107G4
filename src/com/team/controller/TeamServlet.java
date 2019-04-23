@@ -135,12 +135,7 @@ System.out.println("TEAMVO");
 				joinGroupSvc.getAll();
 		
 				
-//				getparator
-//				InsCourseVO insCourseVO=null;
-//				int memblance =0;
-//				Integer inscPrice = ((InsCourseVO) insCourseVO).getInscPrice();
-//				System.out.println("1234");
-//				int memBalance = membe.getMemBalance();
+			
 				
 				int blance = membe.getMemBalance();
 				int memBlock = membe.getMemBlock();

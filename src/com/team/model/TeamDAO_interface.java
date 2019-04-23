@@ -14,13 +14,11 @@ public interface TeamDAO_interface {
 
 //	public void delete(String teamId);
 	public TeamVO findByPrimaryKey(String inscID);
-;
+
 	public List<TeamVO> getAll();
 	
-	
-	
-	
 	public TeamVO findByPrimaryKey1(String teamId);
+	public TeamVO getOneTeam(String inscId);
 	
 //	public List<TeamVO> getAll(Map<String, String[]> map);
 	

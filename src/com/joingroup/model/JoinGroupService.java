@@ -21,7 +21,7 @@ public class JoinGroupService {
 		joinGroupVO.setMemId(memId);
 		joinGroupVO.setTeamId(teamId);
 		dao.insert(joinGroupVO);
-		System.out.println("8857");
+		
 
 		return joinGroupVO;
 	}
@@ -43,7 +43,7 @@ public class JoinGroupService {
 		
 	}
 
-	public JoinGroupVO getOneJoinGroup(String memId) {
+	public List<JoinGroupVO> findByPrimaryKey(String memId) {
 		return dao.findByPrimaryKey(memId);
 	}
 
