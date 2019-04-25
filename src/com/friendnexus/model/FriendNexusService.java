@@ -22,17 +22,17 @@ public class FriendNexusService {
 		return friendNexusVO;
 	}
 
-//	public FriendNexusVO updatefriendNexus(String memId, String friendAcc, Integer friendstatus) {
-//
-//		FriendNexusVO friendNexusVO = new FriendNexusVO();
-//
-//		friendNexusVO.setMemId(memId);
-//		friendNexusVO.setFriendAcc(friendAcc);
-//		friendNexusVO.setFriendstatus(friendstatus);
-//		dao.update(friendNexusVO);
-//
-//		return friendNexusVO;
-//	}
+	public FriendNexusVO updatefriendNexus(String memId, String friendAcc, Integer friendstatus) {
+
+		FriendNexusVO friendNexusVO = new FriendNexusVO();
+
+		friendNexusVO.setMemId(memId);
+		friendNexusVO.setFriendAcc(friendAcc);
+		friendNexusVO.setFriendstatus(friendstatus);
+		dao.update(friendNexusVO);
+
+		return friendNexusVO;
+	}
 
 //	public void deletefriendNexusp(String memId) {
 //		dao.delete(memId);

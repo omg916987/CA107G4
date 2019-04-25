@@ -249,7 +249,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 				MemberVO membe = memberSvc.getOneMember(req.getParameter("memid"));
 
 				int blance = membe.getMemBalance();
-
+  
 				System.out.println("blance");
 				int wrmoney1 = withdrawalRecordVO.getWrmoney();
 

@@ -230,7 +230,7 @@
 						ACTION="<%=request.getContextPath()%>/team/team.do">
 						<div class="form-row">
 							<input type="hidden" name="action" value="findOneteam"> <input
-								type="submit" name="memId" value="wesahre02"
+								type="submit" name="memId" value="wesahre01"
 								class="btn btn-info submit" data-disable-with="find" />
 						</div>
 					</FORM>
@@ -353,7 +353,7 @@
 											<td><input class="form-control" type="text"
 												placeholder="請輸入帳號" name="memId" size="20"
 												readonly="readonly"
-												value="<%=(joinGroupVO == null) ? "weshare04" : joinGroupVO.getMemId()%>" /></td>
+												value="<%=(joinGroupVO == null) ? "weshare01" : joinGroupVO.getMemId()%>" /></td>
 										</tr>
 										<tr>
 											<td>揪團編號:</td>

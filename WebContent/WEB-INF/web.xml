@@ -88,7 +88,14 @@
 		<url-pattern>/coursereservation/coursereservation.do</url-pattern>
 	</servlet-mapping>
 
-
+  <servlet>
+    <servlet-name>FriendNexusServlet</servlet-name>
+    <servlet-class>com.friendnexus.controller.FriendNexusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FriendNexusServlet</servlet-name>
+    <url-pattern>/friendnexus/friendnexus.do</url-pattern>
+  </servlet-mapping>
 
 
 </web-app>

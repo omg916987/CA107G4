@@ -13,8 +13,7 @@ import com.inscourse.model.InsCourseService;
 import com.inscourse.model.InsCourseVO;
 import com.joingroup.model.JoinGroupService;
 import com.joingroup.model.JoinGroupVO;
-import com.member.model.MemberService;
-import com.member.model.MemberVO;
+
 
 public class TeamServlet extends HttpServlet {
 
@@ -88,54 +87,52 @@ public class TeamServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			java.sql.Date hiredate = null;
 			try {
-				String memId = req.getParameter("memId");
-				if (memId == null || (memId.trim()).length() == 0) {
-					errorMsgs.add("請輸會員編號");
-				}
-
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/team/team.jsp");
-					failureView.forward(req, res);
-					return;
-				}
+				String memId = req.getParameter("memId").trim();
 				String teamId = req.getParameter("teamId").trim();
-				if (!teamId.matches("TM[0-9]{5}")) {
-					errorMsgs.add("課程編號格式錯誤");
-				}
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/team/team.jsp");
-					failureView.forward(req, res);
-					return;
-				}
+				
+				
 
 				JoinGroupVO joinGroupVO = new JoinGroupVO();
 				joinGroupVO.setMemId(memId);
 				joinGroupVO.setTeamId(teamId);
-				
-
+				System.out.println(memId);
+				System.out.println(teamId);
 				/*************************** 2.開始新增資料 ***************************************/
 				JoinGroupService joinGroupSvc = new JoinGroupService();
 				joinGroupVO = joinGroupSvc.addJoinGroup(memId, teamId);
-
 				MemberService memberSvc = new MemberService();
-				MemberVO membe = memberSvc.getOneMember(req.getParameter("memid"));
+				
+				MemberVO membe = memberSvc.getOneMember(req.getParameter("memId"));
 				joinGroupSvc.getAll();
-
+				int memblance =0;
 				int blance = membe.getMemBalance();
+				int memBalance = membe.getMemBalance();
+				
+				
+				
+				Integer inscPrice1 = new Integer(req.getParameter("inscPrice"));
+				
 				int memBlock = membe.getMemBlock();
+				System.out.println("餘額"+blance);
+				System.out.println("要扣的錢"+inscPrice1);
+				System.out.println("預扣款項"+memblance);
 				if (blance < memBlock) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/withdrawalrecord.jsp");
 					failureView.forward(req, res);
 					return;
 
+		    
 				} else {
-//
-//					memblance = blance - inscPrice;
-//					memBlock = inscPrice + memBlock; 
+					 System.out.println("有走到這");
+					memblance = blance - inscPrice1;
+					memBlock = inscPrice1 + memBlock; 
+					System.out.println(memblance);
+					System.out.println("存到系統的錢"+memBlock);
+					
 
 				}
-				memberSvc.update1(memBlock, membe.getMemBlock(), membe.getMemId());
-				System.out.println("這邊沒跑");
+				memberSvc.update1(memblance, memBlock, membe.getMemId());
+				
 				System.out.println(memBlock);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/

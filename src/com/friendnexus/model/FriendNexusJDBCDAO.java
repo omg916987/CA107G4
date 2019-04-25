@@ -19,6 +19,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 	private static final String INSERT_FriendNexus = "INSERT INTO FRIENDNEXUS (memId,friendAcc,friendstatus) VALUES (?, ?, ?)";
 	private static final String GET_ONE_STMT = "SELECT * FROM FRIENDNEXUS where memId=?";
 	private static final String GET_ALL_STMT = "SELECT memId,friendAcc,friendstatus FROM FriendNexus order by memId";
+	private static final String UPDATE = "UPDATE FRIENDNEXUS set memId=?, friendAcc=?, friendstatus=? where memId = ?";
 
 	@Override
 	public void insert(FriendNexusVO scorpionChatRecordVO) {
@@ -177,18 +178,23 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 		return list;
 	}
 
+	@Override
+	public void update(FriendNexusVO friendNexusVO) {
+
+	}
+
 	public static void main(String[] args) {
 		FriendNexusJDBCDAO dao = new FriendNexusJDBCDAO();
-//
-//		// 新增
+
+		// 新增
 //		FriendNexusVO FriendNexusVO1 = new FriendNexusVO();
-//		FriendNexusVO1.setMemId("weshare01");
-//		FriendNexusVO1.setFriendAcc("weshare02");
+//		FriendNexusVO1.setMemId("weshare05");
+//		FriendNexusVO1.setFriendAcc("weshare03");
 //		FriendNexusVO1.setFriendstatus(1);
 //
 //		dao.insert(FriendNexusVO1);
 
-		// 查詢
+//		 查詢
 		FriendNexusVO FriendNexusVO2 = dao.findByPrimaryKey("weshare02");
 		System.out.print(FriendNexusVO2.getMemId() + ",");
 		System.out.print(FriendNexusVO2.getFriendAcc() + ",");
@@ -197,14 +203,12 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 		System.out.println("---------------------");
 
 		// 查詢
-		List<FriendNexusVO> list = dao.getAll();
-		for (FriendNexusVO FriendNexusVO3 : list) {
-			System.out.print(FriendNexusVO3.getMemId() + ",");
-			System.out.print(FriendNexusVO3.getFriendAcc() + ",");
-			System.out.println(FriendNexusVO3.getFriendstatus());
-			System.out.println();
-
-		}
+//		List<FriendNexusVO> list = dao.getAll();
+//		for (FriendNexusVO FriendNexusVO3 : list) {
+//			System.out.print(FriendNexusVO3.getMemId() + ",");
+//			System.out.print(FriendNexusVO3.getFriendAcc() + ",");
+//			System.out.println(FriendNexusVO3.getFriendstatus());
+//			System.out.println();
 
 	}
 

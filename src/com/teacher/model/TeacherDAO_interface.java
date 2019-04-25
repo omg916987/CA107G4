@@ -8,4 +8,6 @@ public interface TeacherDAO_interface {
 	public void delete(String teacherId);
 	public TeacherVO findByPrimaryKey(String teacherId);
 	public List<TeacherVO> getAll();
+	public TeacherVO findOneById(String teacherId);
+	
 }

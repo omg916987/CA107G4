@@ -12,6 +12,9 @@
 %>
 <jsp:useBean id="courseSvc" scope="page"
 	class="com.course.model.CourseService" />
+	
+	<jsp:useBean id="friendnexusSvc" scope="page"
+	class="com.friendnexus.model.FriendNexusService" />
 
 <!doctype html>
 <html lang="en">
@@ -89,6 +92,12 @@ textarea{
    height:500px;
    width:700px;
 }
+.btn-primary {
+
+    margin-left: 70px;
+}
+
+.btn {
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -173,28 +182,31 @@ textarea{
 												width="100" height="50">
 
 										</div>
+										<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do" name="form1">
 										<div class="card-block px-2">
 											<div class="d-flex">
 												<div>
-													<a calss="user_name">姓名:${memberVO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a><a
-														calss="user_name">ID:${memberVO.memId}</a><br> <a
-														calss="user_name">興趣:<c:forEach var="courseVO"
-															items="${courseSvc.getAll()}">
+												   <input type="hidden" name="memId" value="weshare02">
+													<a class="user_name">姓名:${memberVO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
+													<a class="user_name">ID:${memberVO.memId}</a><br> 
+													<input type="hidden" name="friendAcc" value="${memberVO.memId}">
+													<a class="user_name">興趣:
+														<c:forEach var="courseVO" items="${courseSvc.getAll()}">
 															<c:if test="${memberVO.memSkill==courseVO.courseId}"> ${courseVO.courseName}
 													</c:if>
-														</c:forEach></a><br> <a class="user_name">想學的<c:forEach
-															var="courseVO" items="${courseSvc.getAll()}">
+														</c:forEach></a><br> <a class="user_name">想學的
+														<c:forEach var="courseVO" items="${courseSvc.getAll()}">
 															<c:if test="${memberVO.memWantSkill==courseVO.courseId}">  ${courseVO.courseName}
 												</c:if>
 														</c:forEach></a>
 												</div>
 											</div>
 											<div class="row1">
-
-												<a href="#" class="btn btn-primary " id="cht_btn">聊天</a> <a
-													href="#" class="btn btn-primary " id="clean_btn">清除好友</a>
+                                                 <input type="hidden" name="action" value="insert1">
+												 <input type="submit" value="加入好友"class="btn btn-primary">
 											</div>
 										</div>
+										</FORM>
 										<div class="w-10"></div>
 										<div class="card-footer w-100 text-muted ">
 											<a href="yahoo.com.tw">查看個人資料</a>

@@ -264,4 +264,10 @@ public class TeacherDAO implements TeacherDAO_interface {
 		return list;
 	}
 
+	@Override
+	public TeacherVO findOneById(String teacherId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
