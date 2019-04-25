@@ -38,11 +38,12 @@ public class FriendNexusService {
 //		dao.delete(memId);
 //	}
 
-	public FriendNexusVO getOneFriendNexus(String memId) {
-		return dao.findByPrimaryKey(memId);
+//	public FriendNexusVO getOneFriendNexus(String memId) {
+//		return dao.findByPrimaryKey(memId);
+//	}
+	public List<FriendNexusVO>friendNexus(String memId){
+		return dao.friendNexus(memId);
 	}
 
-	public List<FriendNexusVO> getAll() {
-		return dao.getAll();
-	}
+	
 }

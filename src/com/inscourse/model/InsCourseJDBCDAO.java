@@ -397,37 +397,37 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 //		System.out.println("InscStatus="+InsCourseVO3.getInscStatus());
 		
 		//查詢全部
-		List<InsCourseVO> list = InsCourseJDBCDAO.getAll("1");
-		for (InsCourseVO aEmp : list) {
-			System.out.println("InscId="+aEmp.getInscId());
-			System.out.println("InscId="+aEmp.getTeacherId());
-			System.out.println("CourseId="+aEmp.getCourseId());
-			System.out.println("InscLoc="+aEmp.getInscLoc());
-			System.out.println("InscType="+aEmp.getInscType());
-			System.out.println("InscPeople="+aEmp.getInscPeople());
-			System.out.println("InscLang="+aEmp.getInscLang());
-			System.out.println("InscPrice="+aEmp.getInscPrice());
-			System.out.println("InscCourser="+aEmp.getInscCourser());
-			System.out.println("InscStatus="+aEmp.getInscStatus());
-			System.out.println();
-			
-		}
-			
-			
-//			List<InsCourseVO> list = InsCourseJDBCDAO.findClassName("甜");
-//			for (InsCourseVO aEmp : list) {
-//				System.out.println("InscId="+aEmp.getInscId());
-//				System.out.println("InscId="+aEmp.getTeacherId());
-//				System.out.println("CourseId="+aEmp.getCourseId());
-//				System.out.println("InscLoc="+aEmp.getInscLoc());
-//				System.out.println("InscType="+aEmp.getInscType());
-//				System.out.println("InscPeople="+aEmp.getInscPeople());
-//				System.out.println("InscLang="+aEmp.getInscLang());
-//				System.out.println("InscPrice="+aEmp.getInscPrice());
-//				System.out.println("InscCourser="+aEmp.getInscCourser());
-//				System.out.println("InscStatus="+aEmp.getInscStatus());
-//				System.out.println();
+//		List<InsCourseVO> list = InsCourseJDBCDAO.getAll("1");
+//		for (InsCourseVO aEmp : list) {
+//			System.out.println("InscId="+aEmp.getInscId());
+//			System.out.println("InscId="+aEmp.getTeacherId());
+//			System.out.println("CourseId="+aEmp.getCourseId());
+//			System.out.println("InscLoc="+aEmp.getInscLoc());
+//			System.out.println("InscType="+aEmp.getInscType());
+//			System.out.println("InscPeople="+aEmp.getInscPeople());
+//			System.out.println("InscLang="+aEmp.getInscLang());
+//			System.out.println("InscPrice="+aEmp.getInscPrice());
+//			System.out.println("InscCourser="+aEmp.getInscCourser());
+//			System.out.println("InscStatus="+aEmp.getInscStatus());
+//			System.out.println();
+//			
 //		}
+			
+			
+			List<InsCourseVO> list = InsCourseJDBCDAO.findClassName("甜");
+			for (InsCourseVO aEmp : list) {
+				System.out.println("InscId="+aEmp.getInscId());
+				System.out.println("InscId="+aEmp.getTeacherId());
+				System.out.println("CourseId="+aEmp.getCourseId());
+				System.out.println("InscLoc="+aEmp.getInscLoc());
+				System.out.println("InscType="+aEmp.getInscType());
+				System.out.println("InscPeople="+aEmp.getInscPeople());
+				System.out.println("InscLang="+aEmp.getInscLang());
+				System.out.println("InscPrice="+aEmp.getInscPrice());
+				System.out.println("InscCourser="+aEmp.getInscCourser());
+				System.out.println("InscStatus="+aEmp.getInscStatus());
+				System.out.println();
+		}
 		
 	}
 

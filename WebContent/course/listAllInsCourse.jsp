@@ -78,7 +78,7 @@
 		<th>課程名稱</th>
 		
 	</tr>
-	<%@ include file="page1.file" %> 
+	<%@ include file="page11.file" %> 
 	<c:forEach var="CourseVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
@@ -95,7 +95,7 @@
 		</tr>
 	</c:forEach>
 </table>
-<%@ include file="page2.file" %>
+<%@ include file="page22.file" %>
 </div>
 </body>
 </html>
