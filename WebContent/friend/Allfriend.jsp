@@ -423,7 +423,7 @@ textarea{
 			document.getElementById('sendMessage').disabled = false;
 			document.getElementById('connect').disabled = true;
 			document.getElementById('disconnect').disabled = false;
-		};
+		}; 
 
 		webSocket.onmessage = function(event) {
 			var messagesArea = document.getElementById("messagesArea");
