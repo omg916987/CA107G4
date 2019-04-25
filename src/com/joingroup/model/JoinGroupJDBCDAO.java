@@ -21,6 +21,7 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 
 	private static final String INSERT_GOINGROUP = "INSERT INTO JoinGroup (memId,teamId) VALUES (?,?)";
 	private static final String GET_ONE_STMT = "SELECT * FROM JOINGROUP where MEMID=?";
+	private static final String GET_TEAMONE_STMT = "SELECT * FROM JOINGROUP where TeamId=?";
 	private static final String GET_ALL_STMT = "SELECT memId,teamId FROM joinGroup order by memId";
 	private static final String UPDATE = "UPDATE JoinGroup set memid=?, teamId=? where memid = ?";
 	private static final String DELETE = 
@@ -80,6 +81,62 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			pstmt.setString(1, memId);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				joinGroupVO = new JoinGroupVO();
+				joinGroupVO.setMemId(rs.getString("memId"));
+				joinGroupVO.setTeamId(rs.getString("teamId"));
+				
+				list.add(joinGroupVO);
+			}
+
+			// Handle any driver errors
+		} catch (Exception se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<JoinGroupVO> findByTeamId(String teamId) {
+		List<JoinGroupVO> list = new ArrayList<JoinGroupVO>();
+		JoinGroupVO joinGroupVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_TEAMONE_STMT);
+			pstmt.setString(1, teamId);
 			
 			rs = pstmt.executeQuery();
 
@@ -257,13 +314,17 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 			System.out.println("---------------------");
 			
 			
-			List<JoinGroupVO> list = dao.findByPrimaryKey("weshare04");
-			for (JoinGroupVO JoinGroupV05 : list) {
-				System.out.print(JoinGroupV05.getMemId() + ",");
-				System.out.println(JoinGroupV05.getTeamId());
-				System.out.println();
-			
-			
+//			List<JoinGroupVO> list = dao.findByPrimaryKey("weshare04");
+//			for (JoinGroupVO JoinGroupV05 : list) {
+//				System.out.print(JoinGroupV05.getMemId() + ",");
+//				System.out.println(JoinGroupV05.getTeamId());
+//				System.out.println();
+				
+				List<JoinGroupVO> list = dao.findByTeamId("TM00001");
+				for (JoinGroupVO JoinGroupV06 : list) {
+					System.out.print(JoinGroupV06.getTeamId() + ",");
+					System.out.println(JoinGroupV06.getMemId());
+					System.out.println();
 		}
 	
 

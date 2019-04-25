@@ -161,6 +161,12 @@ public class MemberService {
 		
 		return memberVO;
 	}
+
+	public List<MemberVO> getAll() {
+		return dao.getAll();
+		// TODO Auto-generated method stub
+	
+	}
   	
 	
 }

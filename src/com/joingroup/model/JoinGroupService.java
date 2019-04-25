@@ -38,13 +38,18 @@ public class JoinGroupService {
 //
 //	}
 
-	public void deleteJoinGroup(String memId,String teamId) {
+	public JoinGroupVO deleteJoinGroup(String memId,String teamId) {
 		dao.delete(memId, teamId);
+		return null;
 		
 	}
 
 	public List<JoinGroupVO> findByPrimaryKey(String memId) {
 		return dao.findByPrimaryKey(memId);
+	}
+	
+	public List<JoinGroupVO> findByTeamId(String teamId) {
+		return dao.findByPrimaryKey(teamId);
 	}
 
 	public List<JoinGroupVO> getAll() {

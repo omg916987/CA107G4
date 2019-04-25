@@ -79,6 +79,17 @@
 		<url-pattern>/joinGroup/joinGroup.do</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>CourseReservationServlet</servlet-name>
+		<servlet-class>com.coursereservation.controller.CourseReservationServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CourseReservationServlet</servlet-name>
+		<url-pattern>/coursereservation/coursereservation.do</url-pattern>
+	</servlet-mapping>
+
+
+
 
 </web-app>
 

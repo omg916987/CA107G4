@@ -51,7 +51,7 @@ public class TeamService {
 //	}
 
 	public TeamVO getOneTeam(String inscID) {
-		return dao.findByPrimaryKey(inscID);
+		return dao.getOneTeam(inscID);
 	}
 	
 	public TeamVO findByPrimaryKey1(String teamId) {

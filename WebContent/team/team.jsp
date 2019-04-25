@@ -13,23 +13,30 @@
 	InsCourseService inscourseSvc = new InsCourseService();
 	List<InsCourseVO> list = inscourseSvc.getAll("1");
 	pageContext.setAttribute("list", list);
-%>
+%> 
+
 
 <%
-	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
+   JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
 %>
+
 <%
 	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 %>
 
 
 
- <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
- <jsp:useBean id="incourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
- <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
- <jsp:useBean id="teamSvc1" scope="page" class="com.team.model.TeamService" />
- <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />	
-	
+<jsp:useBean id="memberSvc" scope="page"
+	class="com.member.model.MemberService" />
+<jsp:useBean id="incourseSvc" scope="page"
+	class="com.inscourse.model.InsCourseService" />
+<jsp:useBean id="courseSvc" scope="page"
+	class="com.course.model.CourseService" />
+<jsp:useBean id="teamSvc" scope="page"
+	class="com.team.model.TeamService" />
+<jsp:useBean id="teacherSvc" scope="page"
+	class="com.teacher.model.TeacherService" />
+
 <!doctype html>
 <html lang="en">
 
@@ -50,44 +57,53 @@
 .breadcrumb-item+.breadcrumb-item::before {
 	content: "|";
 }
+
 .page-link:hover {
 	background-color: #8af;
 	color: #fff;
 	border-color: #00f;
 	transform: scale(2);
 }
+
 .head {
 	display: none;
 }
+
 .jumbotron {
 	border-radius: 0;
 }
+
 .jumbotron {
 	background-image: url(01.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
 }
+
 .JumboHeaderImg {
 	background-size: cover;
 	background-image: url(images/333.jpg);
 }
+
 #quick_form {
 	margin-top: 60px;
 	margin-left: 35px;
 }
+
 .plan {
 	padding: 10px;
 	border: 1px #ccc solid;
 	border-radius: 10px;
 	margin: 10px;
 }
+
 .plan_iamge {
 	width: 200px;
 	height: 150px;
 	float: left;
 	margin-top: -2px;
 }
+
 .container {
 	width: 100%;
 	padding-right: 15px;
@@ -96,36 +112,48 @@
 	margin-left: auto;
 	max-width: 1140px;
 }
+
 .row {
 	display: flex;
 	flex-wrap: wrap;
 	margin-right: -15px;
 	margin-left: -15px;
 }
+
 .button-group {
 	margin-left: 900px;
 	margin-top: -40px;
 }
+
 .page2 {
 	text-align: center;
 	width: 500px;
 	margin: auto;
 }
+
 .form-row {
 	margin-left: 5px;
 	margin-top: 5px;
 }
+
 .btn-info {
 	margin-top: 5px;
 }
-.class1{
-   margin-left: 200px;
-}
-.picture{
-   margin-top:-120px;
-   margin-left:250px;
+
+.class1 {
+	margin-left: 200px;
 }
 
+.picture {
+	margin-top: -120px;
+	margin-left: 250px;
+}
+
+.page111 {
+	text-alain: center;
+	width: 500px;
+	margin: auto;
+}
 </style>
 </head>
 <body>
@@ -183,10 +211,10 @@
 
 			<div class="form-row">
 				<div class="form-group col-md-4">
-				
+
 					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do">
 						<b>請輸入課程</b> <input type="text" name="str">
-						
+
 						<div class="form-row">
 							<input type="hidden" name="action" value="Search_One"> <input
 								type="submit" name="commit" value="查詢"
@@ -195,53 +223,56 @@
 					</FORM>
 				</div>
 			</div>
-			
+
 			<div class="form-row">
 				<div class="form-group col-md-3">
-				
+					<FORM METHOD="get"
+						ACTION="<%=request.getContextPath()%>/team/team.do">
 						<div class="form-row">
-							<input type="hidden" name="action" value="Search_One"> <input
-								type="submit" name="commit" value="查看我的揪團"
+							<input type="hidden" name="action" value="findOneteam"> <input
+								type="submit" name="memId" value="wesahre02"
 								class="btn btn-info submit" data-disable-with="find" />
 						</div>
-					
+					</FORM>
 				</div>
 			</div>
-			
-			
-			
+
+
+
 		</div>
 	</div>
-	                
-		<%@ include file="page1.file"%>
-	<c:forEach var="insCourseVO" items="${list}" begin="<%=pageIndex%>"
-		end="<%=pageIndex+rowsPerPage-1%>">
+
+	<%@ include file="page1.file"%>
+	<c:forEach var="insCourseVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		<div class="container">
 			<div class="plan">
 				<div class="plan_iamge">
- 					<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(insCourseVO.teacherId).memId}"width="175" height="185""/>  
+					<img
+						src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(insCourseVO.teacherId).memId}"
+						width="175" height="185">
 				</div>
-				<div class="plan_info"> 					
-			<h4> 
-              ${courseSvc.findOneById(insCourseVO.courseId).courseName}
-						<span class="badge badge-light">團體課程</span>
+				<div class="plan_info">
+					<h4>
+						${courseSvc.findOneById(insCourseVO.courseId).courseName} <span
+							class="badge badge-light">團體課程</span>
 					</h4>
 					<div>
 						<i class="far fa-calendar-alt"></i>
-  						  <div>課程大綱:  ${insCourseVO.inscCourser} </div>
-  						  <div>上課語言:  ${insCourseVO.inscLang}</div>
-  						  <div>${teacherSvc.findOneById(insCourseVO.teacherId).memId}</div>               
-				   </div>
-				
+						<div>課程大綱: ${insCourseVO.inscCourser}</div>
+						<div>上課語言: ${insCourseVO.inscLang}</div>
+						<div>上課地點: ${insCourseVO.inscLoc}</div>
+					</div>
+
 					<hr>
 					<div>
-						<span class="badge badge-light">收費模式</span> <span
-							class="badge badge-success">預先扣款</span> <span
-							class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
-						</span>每人 ${insCourseVO.inscPrice}元$<br>
+						<span class="badge badge-light">收費模式</span> 
+						<span class="badge badge-success">預先扣款</span> 
+					    <span class="badge badge-lisght"> 
+					    <i class="fas fa-dollar-sign"></i>
+						</span>每小時 ${insCourseVO.inscPrice}元$<br>
 					</div>
 					<div class="class1">
-						<span class="badge badge-light"> 隊伍型態 </span>
+						<span class="badge badge-light"> 隊伍型態 </span> 
 						<span class="badge badge-info">自主性揪團</span> 
 						<span class="badge badge-info">揪團編號</span>
 					</div>
@@ -264,24 +295,26 @@
 								</div>
 								<!------Modal body------>
 								<div class="modal-body">
- 									<a>團主姓名:${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memName}</a><br> 
-								    <a>連絡電話:${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memPhone}</a><br> 
-									<a>預扣金額:</a>${insCourseVO.inscPrice}<br>
-									<a>開團時間:${teamSvc1.getAll().get(0).getTemaMFD()}</a><br>
-									<a>截團時間:${teamSvc1.getAll().get(0).getTeamEXP()}</a><br>
-                                     <div class="picture">
-					
-	<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memId}"width="175" height="150" >
-	
-		 	
-				</div>
+									<a>團主姓名:${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memName}</a><br>
+									<a>連絡電話:${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memPhone}</a><br>
+									<a>預扣金額:${insCourseVO.inscPrice}</a><br> 
+									<a>開團時間:${teamSvc.getAll().get(0).getTemaMFD()}</a><br>
+									<a>截團時間:${teamSvc.getAll().get(0).getTeamEXP()}</a><br>
+									<div class="picture">
+
+										<img
+											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memId}"
+											width="175" height="150">
+
+
+									</div>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-info" data-dismiss="modal">關閉</button>
 
 								</div>
 							</div>
-						</div> 
+						</div>
 					</div>
 
 
@@ -318,24 +351,26 @@
 										<tr>
 											<td>帳號:</td>
 											<td><input class="form-control" type="text"
-												placeholder="請輸入帳號" name="memId" size="20" readonly="readonly"
+												placeholder="請輸入帳號" name="memId" size="20"
+												readonly="readonly"
 												value="<%=(joinGroupVO == null) ? "weshare04" : joinGroupVO.getMemId()%>" /></td>
 										</tr>
 										<tr>
 											<td>揪團編號:</td>
-											<td><input type="TEXT" class="form-control " readonly="readonly" 
-												name="teamId" size="35"
-												value="${teamSvc1.getOneTeam(insCourseVO.inscId).teamId}" /></td>
+											<td><input type="TEXT" class="form-control "
+												readonly="readonly" name="teamId" size="35"
+												value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" /></td>
 										</tr>
 										<tr>
 											<td>預扣金額:</td>
-											<td><input type="text" class="form-control" name="inscPrice" value="${insCourseVO.inscPrice}"
-										readonly="readonly"	> </td>
+											<td><input type="text" class="form-control"
+												name="inscPrice" value="${insCourseVO.inscPrice}"
+												readonly="readonly"></td>
 										</tr>
 									</table>
-									
-									
-		
+
+
+
 
 
 									<div class="modal-footer">
@@ -373,8 +408,9 @@
 						<p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
 						<!-- Rights-->
 						<p class="rights">
-							<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>.</span><span>©
-								All Rights Reserved. .</span>
+							<span>© </span><span class="copyright-year">2018</span><span>
+							</span><span>WeShare教育共享平台</span><span>.</span><span>© All Rights
+								Reserved. .</span>
 						</p>
 					</div>
 				</div>

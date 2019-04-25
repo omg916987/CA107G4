@@ -113,8 +113,7 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 
 	}
 
-	@Override
-	public TeamVO getOneTeam(String inscId) {
+	public TeamVO getOneTeam(String inscID) {
 
 		TeamVO teamVO = null;
 		Connection con = null;
@@ -126,7 +125,7 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
-			pstmt.setString(1, inscId);
+			pstmt.setString(1, inscID);
 
 			rs = pstmt.executeQuery();
 
@@ -188,7 +187,7 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				
+
 				teamVO = new TeamVO();
 				teamVO.setTeamId(rs.getString("teamId"));
 				teamVO.setLeaderID(rs.getString("leaderID"));
@@ -199,10 +198,10 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 				list.add(teamVO);
 
 			}
-			
+
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
-			
+
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
@@ -234,6 +233,7 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 		return list;
 
 	}
+
 	@Override
 	public TeamVO findByPrimaryKey1(String teamId) {
 
@@ -306,7 +306,7 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 //		dao.insert(teamVO1);
 //
 //		// 修改
-		TeamVO teamVO2 = new TeamVO();
+//		TeamVO teamVO2 = new TeamVO();
 //
 //		teamVO2.setLeaderID("weshare02");
 //		teamVO2.setInscID("IC00002");
@@ -316,15 +316,15 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 //		teamVO2.setTeamId("TM00002");
 //		dao.update(teamVO2);
 //
-		// 查詢
-//		TeamVO TeamVO3 = dao.findByPrimaryKey("IC00001");
-//		System.out.print(TeamVO3.getTeamId() + ",");
-//		System.out.print(TeamVO3.getLeaderID() + ",");
-//		System.out.print(TeamVO3.getInscID() + ",");
-//		System.out.print(TeamVO3.getTemaMFD() + ",");
-//		System.out.print(TeamVO3.getTeamEXP() + ",");
-//		System.out.println(TeamVO3.getTeamStatus());
-//		System.out.println("---------------------");
+//		 查詢
+		 TeamVO TeamVO3 = dao.getOneTeam("IC00001");
+			System.out.print(TeamVO3.getTeamId() + ",");
+			System.out.print(TeamVO3.getLeaderID() + ",");
+			System.out.print(TeamVO3.getInscID() + ",");
+			System.out.print(TeamVO3.getTemaMFD() + ",");
+			System.out.print(TeamVO3.getTeamEXP() + ",");
+			System.out.println(TeamVO3.getTeamStatus());
+			System.out.println("---------------------");
 //		
 		// 查全部
 
@@ -340,16 +340,18 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 //			System.out.println("---------------------");
 //
 //		}
-		TeamVO TeamVO4 = dao.findByPrimaryKey1("TM00001");
-		System.out.print(TeamVO4.getTeamId() + ",");
-		System.out.print(TeamVO4.getLeaderID() + ",");
-		System.out.print(TeamVO4.getInscID() + ",");
-		System.out.print(TeamVO4.getTemaMFD() + ",");
-		System.out.print(TeamVO4.getTeamEXP() + ",");
-		System.out.println(TeamVO4.getTeamStatus());
-		System.out.println("---------------------");
+//		TeamVO TeamVO4 = dao.findByPrimaryKey1("TM00001");
+//		System.out.print(TeamVO4.getTeamId() + ",");
+//		System.out.print(TeamVO4.getLeaderID() + ",");
+//		System.out.print(TeamVO4.getInscID() + ",");
+//		System.out.print(TeamVO4.getTemaMFD() + ",");
+//		System.out.print(TeamVO4.getTeamEXP() + ",");
+//		System.out.println(TeamVO4.getTeamStatus());
+//		System.out.println("---------------------");
 	}
+
 	
+
 //	TeamVO TeamVO4 = dao.getOneTeam("IC00001");
 //	System.out.print(TeamVO4.getTeamId() + ",");
 //	System.out.print(TeamVO4.getLeaderID() + ",");
@@ -360,14 +362,4 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 //	System.out.println("---------------------");
 //}
 
-	@Override
-	public TeamVO findByPrimaryKey(String inscID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-
 }
-	
-

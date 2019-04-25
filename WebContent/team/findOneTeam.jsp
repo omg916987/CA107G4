@@ -124,6 +124,11 @@
    margin-top:-120px;
    margin-left:250px;
 }
+.btn-primary {
+   
+    margin-left: 970px;
+    margin-top: -350px;
+}
 
 </style>
 </head>
@@ -197,13 +202,14 @@
 			
 			<div class="form-row">
 				<div class="form-group col-md-3">
-				
+				<FORM METHOD="get"
+						ACTION="<%=request.getContextPath()%>/team/team.do">
 						<div class="form-row">
-							<input type="hidden" name="action" value="Search_One"> <input
-								type="submit" name="commit" value="查看我的揪團"
-								class="btn btn-info submit" data-disable-with="find" />
+						
+						<a class="btn btn-info submit" href="<%=request.getContextPath()%>/team/team.jsp" role="button">返回揪團</a>
+							 
 						</div>
-					
+					</FORM>
 				</div>
 			</div>
 			
@@ -217,29 +223,30 @@
 		<div class="container">
 			<div class="plan">
 				<div class="plan_iamge">
-			-------------${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).getInscID()}--------
-<%--  					<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(insCourseVO.teacherId).memId}"width="175" height="185""/>   --%>
+		
+ 					<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).teacherId).memId}"width="175" height="185">   
 				</div>
 				<div class="plan_info"> 					
 			<h4> 
-              
-						<span class="badge badge-light">
-						${courseSvc.findOneById(incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).courseId).courseName} 團體課程</span>
+              ${courseSvc.findOneById(incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).courseId).courseName}
+						
+						 <span class="badge badge-light">團體課程</span>
 					</h4>
 					<div>
 						<i class="far fa-calendar-alt"></i>
   						  <div>課程大綱:${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscCourser}  </div>
   						  <div>上課語言:${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscLang}  </div>
-  						  <div></div>               
+  						  <div>上課地點:${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscLoc}</div>      
 				   </div>
-						-----${joinGroupVO.teamId}----	
+						
 				
 					<hr>
 					<div>
-						<span class="badge badge-light">收費模式</span> <span
-							class="badge badge-success">預先扣款</span> <span
-							class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
-						</span>每小時${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscPrice} 元$<br>
+						<span class="badge badge-light">收費模式</span> 
+						<span class="badge badge-success">預先扣款</span> 
+						<span class="badge badge-lisght">
+							<i class="fas fa-dollar-sign"></i>
+							</span>每小時${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscPrice} 元$<br>
 					</div>
 					<div class="class1">
 						<span class="badge badge-light"> 隊伍型態 </span>
@@ -264,32 +271,31 @@
 									</button>
 								</div>
 <!-- 								----Modal body---- -->
-								<div class="modal-body">
+						<div class="modal-body">
  								<a>團主姓名:${memberSvc.getOneMember(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).leaderID).memName}</a><br> 
-								<a>連絡電話:</a>${memberSvc.getOneMember(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).leaderID).memPhone}<br> 
-								<a>預扣金額:</a>${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscPrice}<br>
+								<a>連絡電話:${memberSvc.getOneMember(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).leaderID).memPhone}</a><br> 
+								<a>預扣金額:${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscPrice}</a><br>
 								<a>開團時間:${teamSvc.getAll().get(0).getTemaMFD()}</a><br>
-								<a>截團時間:${teamSvc.getAll().get(0).getTeamEXP()}</a><br>
-								</div>
-                                     <div class="picture">
+								<a>截團時間:${teamSvc.getAll().get(0).getTeamEXP()}</a><br>		
+                         <div class="picture">
 					
-	<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberSvc.getOneMember(teamSvc1.getOneTeam(insCourseVO.inscId).leaderID).memId}"width="175" height="150" >
+	               <img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).leaderID}"width="175" height="150" >
 	
-		 	
-				</div>
+		            </div>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-info" data-dismiss="modal">關閉</button>
 
 								</div>
 							</div>
-						</div> 
-					</div>
-
-
+							</div>
+							</div>
 					<button type="button" class="btn btn-info submit"
 						data-toggle="modal" data-target="#myModal">退出揪團</button>
-				</div>
+						
+						</div>
+						<div>
+	              </div>			
 				<!-- 				------------------------------------------------------ -->
 				<!-- The Modal -->
 
@@ -319,32 +325,23 @@
 									<table>
 										<tr>
 											<td>帳號:</td>
-<!-- 											<td><input class="form-control" type="text" -->
-<!-- 												placeholder="請輸入帳號" name="memId" size="20" readonly="readonly" -->
-<%-- 												value="<%=(joinGroupVO == null) ? "weshare04" : joinGroupVO.getMemId()%>" /></td> --%>
+											<td><input class="form-control" type="text"
+												placeholder="請輸入帳號" name="memId" size="20" readonly="readonly"
+												value="${joinGroupVO.memId}" /></td>
 										</tr>
 										<tr>
 											<td>揪團編號:</td>
 											<td><input type="TEXT" class="form-control " readonly="readonly" 
 												name="teamId" size="35"
-												value="${teamSvc1.getOneTeam(insCourseVO.inscId).teamId}" /></td>
-										</tr>
-										<tr>
-											<td>預扣金額:</td>
-											<td><input type="text" class="form-control" name="inscPrice" value="${insCourseVO.inscPrice}"
-										readonly="readonly"	> </td>
+												value="${joinGroupVO.teamId}" /></td>
 										</tr>
 									</table>
 									
-									
-		
-
-
 									<div class="modal-footer">
 										<button type="button" class="btn btn-info"
 											data-dismiss="modal">取消</button>
 
-										<input type="hidden" name="action" value="insert">
+										<input type="hidden" name="action" value="delete">
 										<button type="submit" class="btn btn-info"
 											data-dismiss="insert">退出</button>
 									</div>
@@ -352,11 +349,83 @@
 							</div>
 						</div>
 					</div>
-
-
-
 				</div>
+				
+				<!-- Button trigger modal -->
+<button type="button1" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+  成員名單
+</button>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">團員名單</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+         
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>${joinGroupSvc.findByTeamId(teamVO.teamId).memId}</td>
+        <td>john@example.com</td>
+        
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+     
+      </div>
+    </div>
+  </div>
+</div>
+				
 			</div>
 		</div>
 

@@ -19,4 +19,6 @@ public interface JoinGroupDAO_interface {
 	 
 	 
 	public void delete(String memId, String teamId);
+
+	List<JoinGroupVO> findByTeamId(String teamId);
 }

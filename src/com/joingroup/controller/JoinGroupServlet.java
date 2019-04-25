@@ -35,15 +35,11 @@ public class JoinGroupServlet extends HttpServlet {
 			
 			req.setAttribute("errorMsgs", errorMsgs);
 			java.sql.Date hiredate = null;
-			
-
 			try {
 				
 				String memId = req.getParameter("memId").trim();		
 				String teamId = req.getParameter("teamId").trim();
-				
-				
-				  
+			
 				JoinGroupVO joinGroupVO = new JoinGroupVO();
 				joinGroupVO.setMemId(memId);
 				joinGroupVO.setTeamId(teamId);
@@ -53,10 +49,7 @@ public class JoinGroupServlet extends HttpServlet {
 					RequestDispatcher failureView = req.getRequestDispatcher("/joinGroup/listAllEmp.jsp");
 					failureView.forward(req, res);
 					return;
-				}
-			
-				
-				
+				}	
 				/***************************2.開始新增資料***************************************/
 				JoinGroupService joinGroupSvc = new JoinGroupService();
 				System.out.println("1234");

@@ -656,30 +656,30 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 //		dao.insert(memberVO1);
 		
 		// 查詢全部
-//		List<MemberVO> list = dao.getAll();
-//		for (MemberVO memberVO2 : list) {
-//			System.out.print(memberVO2.getMemId() + ",");
-//			System.out.print(memberVO2.getMemPsw()+ ",");
-//			System.out.print(memberVO2.getMemPswHint()+ ",");
-//			System.out.print(memberVO2.getMemIdCard()+ ",");
-//			System.out.print(memberVO2.getMemName()+ ",");
-//			System.out.print(memberVO2.getMemSex()+ ",");
-//			System.out.print(memberVO2.getMemImage()+ ",");
-//			System.out.print(memberVO2.getMemEmail()+ ",");
-//			System.out.print(memberVO2.getMemPhone()+ ",");
-//			System.out.print(memberVO2.getMemBirth()+ ",");
-//			System.out.print(memberVO2.getMemAdd()+ ",");
-//			System.out.print(memberVO2.getMemText()+ ",");
-//			System.out.print(memberVO2.getMemBank()+ ",");
-//			System.out.print(memberVO2.getMemBalance()+ ",");
-//			System.out.print(memberVO2.getMemBlock()+ ",");
-//			System.out.print(memberVO2.getMemStatus()+ ",");
-//			System.out.print(memberVO2.getMemSkill()+ ",");
-//			System.out.print(memberVO2.getMemWantSkill()+ ",");
-//			System.out.print(memberVO2.getMemPair()+ ",");
-//	
-//			System.out.println("---------------------");
-//		}
+		List<MemberVO> list = dao.getAll();
+		for (MemberVO memberVO2 : list) {
+			System.out.print(memberVO2.getMemId() + ",");
+			System.out.print(memberVO2.getMemPsw()+ ",");
+			System.out.print(memberVO2.getMemPswHint()+ ",");
+			System.out.print(memberVO2.getMemIdCard()+ ",");
+			System.out.print(memberVO2.getMemName()+ ",");
+			System.out.print(memberVO2.getMemSex()+ ",");
+			System.out.print(memberVO2.getMemImage()+ ",");
+			System.out.print(memberVO2.getMemEmail()+ ",");
+			System.out.print(memberVO2.getMemPhone()+ ",");
+			System.out.print(memberVO2.getMemBirth()+ ",");
+			System.out.print(memberVO2.getMemAdd()+ ",");
+			System.out.print(memberVO2.getMemText()+ ",");
+			System.out.print(memberVO2.getMemBank()+ ",");
+			System.out.print(memberVO2.getMemBalance()+ ",");
+			System.out.print(memberVO2.getMemBlock()+ ",");
+			System.out.print(memberVO2.getMemStatus()+ ",");
+			System.out.print(memberVO2.getMemSkill()+ ",");
+			System.out.print(memberVO2.getMemWantSkill()+ ",");
+			System.out.print(memberVO2.getMemPair()+ ",");
+	
+			System.out.println("---------------------");
+		}
 //		
 		// 查詢單筆
 //		MemberVO memberVO3 = dao.findByPrimaryKey("weshare03");
