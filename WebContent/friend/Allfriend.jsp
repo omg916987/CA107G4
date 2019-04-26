@@ -5,6 +5,7 @@
 <%@ page import="com.friendnexus.model.*"%>
 
 
+
 <%
 	MemberService memberSvc = new MemberService();
 	List<MemberVO> list = memberSvc.getAll();
@@ -12,15 +13,11 @@
 %>
 
 <%
+	
     FriendNexusService friendSvc = new FriendNexusService();
-	List<FriendNexusVO> list1 = friendSvc.friendNexus("memId");
+	List<FriendNexusVO> list2 = friendSvc.friendNexus("weshare02");
 	pageContext.setAttribute("list", list);
 %>
-
-
-
-
-
 <jsp:useBean id="courseSvc" scope="page"
 	class="com.course.model.CourseService" />
 	
@@ -107,8 +104,9 @@ textarea{
 
     margin-left: 70px;
 }
-
-.btn {
+.btn-info {
+    margin-top: 30px;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -159,20 +157,17 @@ textarea{
 	<div class="title TitleImg">
 		<h1 class="hader-title" style="text-align: center">建立您的&nbsp;好友關係</h1>
 	</div>
-
 	<div class="container">
 		<div class="row">
 			<div class="col-3">
 				<div class="list-group" id="list-tab" role="tablist">
 					<a class="list-group-item list-group-item-action active"
 						id="list-home-list" data-toggle="list" href="#list-home"
-						role="tab" aria-controls="home">好友列表</a> 
+						role="tab" aria-controls="home">建議的好友</a> <a
+						class="list-group-item list-group-item-action"
+						id="list-profile-list" data-toggle="list" href="#list-profile"
+						role="tab" aria-controls="profile">聊天室</a>
 						
-					<a class="list-group-item list-group-item-action" id="list-profile-list"
-					data-toggle="list" href="#list-profile"role="tab" aria-controls="profile">聊天室</a> 
-					
-					<a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">好友申請</a>
-
 				</div>
 			</div>
 			<div class="col-9">
@@ -190,32 +185,26 @@ textarea{
 											<img
 												src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}"
 												width="100" height="50">
-
 										</div>
-										<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do" name="form1">
-										<div class="card-block px-2">
-											<div class="d-flex">
-												<div>
-												   <input type="hidden" name="memId" value="weshare02">
-													<a class="user_name">姓名:${memberVO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
-													<a class="user_name">ID:${memberVO.memId}</a><br> 
-												<input type="hidden" name="friendAcc" value="${memberVO.memId}">  <%--  登入帳號 --%>
-													<a class="user_name">興趣:
-														<c:forEach var="courseVO" items="${courseSvc.getAll()}">
-															<c:if test="${memberVO.memSkill==courseVO.courseId}"> ${courseVO.courseName}
-													</c:if>
-														</c:forEach></a><br> <a class="user_name">想學的
-														<c:forEach var="courseVO" items="${courseSvc.getAll()}">
-															<c:if test="${memberVO.memWantSkill==courseVO.courseId}">  ${courseVO.courseName}
-												</c:if>
-														</c:forEach></a>
+										<FORM METHOD="get"
+											ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do"
+											name="form1">
+											<div class="card-block px-2">
+												<div class="d-flex">
+													<div>
+														<input type="hidden" name="memId" value="weshare02">
+														<a class="user_name">姓名:${memberVO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
+														<a class="user_name">ID:${memberVO.memId}</a><br> <input
+															type="hidden" name="friendAcc" value="${memberVO.memId}">
+														<a class="user_name">專長:&nbsp;${courseSvc.findOneById(memberVO.memSkill).courseName}</a><br>
+														<a class="user_name">想學的課:&nbsp;${courseSvc.findOneById(memberVO.memWantSkill).courseName}</a>
+													</div>
+												</div>
+												<div class="row1">
+													<input type="hidden" name="action" value="insert1">
+													<input type="submit" value="加入好友" class="btn btn-primary">
 												</div>
 											</div>
-											<div class="row1">
-                                                 <input type="hidden" name="action" value="insert1">
-												 <input type="submit" value="加入好友"class="btn btn-primary">
-											</div>
-										</div>
 										</FORM>
 										<div class="w-10"></div>
 										<div class="card-footer w-100 text-muted ">
@@ -237,9 +226,15 @@ textarea{
 											<input type="text" class="form-control" placeholder="請輸入好友帳號">
 											<div class="input-group-append">
 												<button type="submit" class="btn btn-secondary">尋找</button>
+												
+						                         
 											</div>
+											
 										</div>
 									</form>
+									<div>
+									<input type="hidden" name="action" value="friend">
+									<input class="btn btn-info" type="button" value="申請好友列表"></div>
 								</ul>
 							</div>
 						</div>
@@ -247,85 +242,25 @@ textarea{
 
 					</div>
 					<!-- ----------------------------------------------------------第二頁---------------------------------------------- -->
-					<div class="tab-pane fade" id="list-profile" role="tabpanel"aria-labelledby="list-profile-list">
-					
-					
-					
-					
-					<h8>聊天室</h8>
-	<h3 id="statusOutput" class="statusOutput"></h3>
-	<textarea id="messagesArea" class="panel message-area" readonly sytle = hight=500px;></textarea>
-	<div class="panel input-area">
-		<input id="userName" class="text-field" type="text" placeholder="User name" /> 
-		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
-		<input type="submit" id="sendMessage" class="button" value="送出" onclick="sendMessage();" /> 
-		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
-		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
-	</div>
-					
-	
+					<div class="tab-pane fade" id="list-profile" role="tabpanel"
+						aria-labelledby="list-profile-list">
 
-					</div>
-					<!-- ----------------------------------------------------------第三頁---------------------------------------------- -->
-					<div class="tab-pane fade" id="list-messages" role="tabpanel"
-						aria-labelledby="list-messages-list">
-						
-						
-
-						
-						
-						
-					<div class="row">
-							<div class="col-8">
-								
-								<c:forEach var="friendVO" items="${list}" begin="<%=pageIndex%>"	
-									end="<%=pageIndex+rowsPerPage-1%>">
-									<div class="card flex-row flex-wrap">
-										<div class="card-header border-0">
-											<img
-												src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}"
-												width="100" height="50">
-
-										</div>
-										<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do" name="form1">
-										<div class="card-block px-2">
-											<div class="d-flex">
-												<div>
-												   <input type="hidden" name="memId" value="weshare02">
-													<a class="user_name">姓名:${friendVO.setFriendAcc}&nbsp;&nbsp;&nbsp;&nbsp;</a>
-													<a class="user_name">ID:${memberVO.memId}</a><br> 
-													<input type="hidden" name="friendAcc" value="${memberVO.memId}">
-													<a class="user_name">興趣:
-														<c:forEach var="courseVO" items="${courseSvc.getAll()}">
-															<c:if test="${memberVO.memSkill==courseVO.courseId}"> ${courseVO.courseName}
-													</c:if>
-														</c:forEach></a><br> <a class="user_name">想學的
-														<c:forEach var="courseVO" items="${courseSvc.getAll()}">
-															<c:if test="${memberVO.memWantSkill==courseVO.courseId}">  ${courseVO.courseName}
-												</c:if>
-														</c:forEach></a>
-												</div>
-											</div>
-											<div class="row1">
-                                                 <input type="hidden" name="action" value="insert1">
-												 <input type="submit" value="確認好友"class="btn btn-primary">
-											</div>
-										</div>
-										</FORM>
-										<div class="w-10"></div>
-										<div class="card-footer w-100 text-muted ">
-											<a href="yahoo.com.tw">查看個人資料</a>
-
-										</div>
-									</div>
-								</c:forEach>
-								<%@ include file="page2.file"%>
-							</div>
-						
-						
+						<h8>聊天室</h8>
+						<h3 id="statusOutput" class="statusOutput"></h3>
+						<textarea id="messagesArea" class="panel message-area" readonly
+							sytle=hight=500px;></textarea>
+						<div class="panel input-area">
+							<input id="userName" class="text-field" type="text"
+								placeholder="User name" /> <input id="message"
+								class="text-field" type="text" placeholder="Message"
+								onkeydown="if (event.keyCode == 13) sendMessage();" /> <input
+								type="submit" id="sendMessage" class="button" value="送出"
+								onclick="sendMessage();" /> <input type="button" id="connect"
+								class="button" value="Connect" onclick="connect();" /> <input
+								type="button" id="disconnect" class="button" value="Disconnect"
+								onclick="disconnect();" />
 						</div>
-						
-	
+					</div>
 				</div>
 			</div>
 		</div>
@@ -423,7 +358,7 @@ textarea{
 			document.getElementById('sendMessage').disabled = false;
 			document.getElementById('connect').disabled = true;
 			document.getElementById('disconnect').disabled = false;
-		}; 
+		};
 
 		webSocket.onmessage = function(event) {
 			var messagesArea = document.getElementById("messagesArea");

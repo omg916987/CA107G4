@@ -20,6 +20,8 @@ public interface FriendNexusDAO_interface {
 	public List<FriendNexusVO> friendNexus(String memId);
 
 	
+
+	
 	
 	
 }

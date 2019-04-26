@@ -10,6 +10,10 @@ import java.util.List;
 
 
 
+
+
+
+
 public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -21,7 +25,8 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 	
 	private static final String GET_ALL_STMT1 = "SELECT * FROM FRIENDNEXUS where FRIENDSTATUS='0' AND memId= ?";
 	private static final String GET_ALL_STMT = "SELECT memId,friendAcc,friendstatus FROM FriendNexus order by memId";
-	private static final String UPDATE = "UPDATE FRIENDNEXUS set memId=?, friendAcc=?, friendstatus=? where memId = ?";
+	
+	private static final String UPDATE = "UPDATE FRIENDNEXUS set friendstatus =1 where memId = ? AND FRIENDACC= ?";
 
 	@Override
 	public void insert(FriendNexusVO scorpionChatRecordVO) {
@@ -238,14 +243,55 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 		}
 		return list;
 	}
+	
+	public void update(FriendNexusVO friendNexusVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setString(1, friendNexusVO.getMemId());
+			pstmt.setString(2, friendNexusVO.getFriendAcc());
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
 
 
 	
 
-	private PreparedStatement setString(int i, String memId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public static void main(String[] args) {
 		FriendNexusJDBCDAO dao = new FriendNexusJDBCDAO();
@@ -276,14 +322,22 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 //		}
 	
 		
-		List<FriendNexusVO> list = dao.friendNexus("weshare02");
-		for (FriendNexusVO FriendNexusVO3 : list) {
-			System.out.print(FriendNexusVO3.getMemId() + ",");
-			System.out.print(FriendNexusVO3.getFriendAcc() + ",");
-			System.out.println(FriendNexusVO3.getFriendstatus());
-			System.out.println();
-		}
+//		List<FriendNexusVO> list = dao.friendNexus("weshare02");
+//		for (FriendNexusVO FriendNexusVO3 : list) {
+//			System.out.print(FriendNexusVO3.getMemId() + ",");
+//			System.out.print(FriendNexusVO3.getFriendAcc() + ",");
+//			System.out.println(FriendNexusVO3.getFriendstatus());
+//			System.out.println();
+//		}
+//		System.out.println("---------------------");
+		
+		FriendNexusVO FriendNexusVO4 = new FriendNexusVO();
+		FriendNexusVO4.setMemId("weshare02");
+		FriendNexusVO4.setFriendAcc("weshare04");
+		dao.update(FriendNexusVO4);
 		System.out.println("---------------------");
+		
+		
 
 		
 		
@@ -296,10 +350,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 		
 	}
 
-	@Override
-	public void update(FriendNexusVO friendNexusVO) {
-		// TODO Auto-generated method stub
-		
-	}
+
+	
 
 }

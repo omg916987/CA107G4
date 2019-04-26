@@ -8,6 +8,8 @@ public class FriendNexusVO implements java.io.Serializable {
 	private String friendAcc;
 	private Integer friendstatus;
 
+	
+
 	public String getMemId() {
 		return memId;
 	}
