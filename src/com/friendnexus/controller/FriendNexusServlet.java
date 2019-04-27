@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-
 import com.friendnexus.model.FriendNexusService;
 import com.friendnexus.model.FriendNexusVO;
 
@@ -25,6 +24,7 @@ public class FriendNexusServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		System.out.println(action);
 
 		if ("insert1".equals(action)) { // 來自addEmp.jsp的請求
 
@@ -62,59 +62,85 @@ public class FriendNexusServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		
-		
-if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
-			
+
+		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
+
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-		
+
 			try {
-				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String memId = new String(req.getParameter("memId").trim());
-				String friendAcc= new String(req.getParameter("friendAcc").trim());
+				String friendAcc = new String(req.getParameter("friendAcc").trim());
 				Integer friendstatus = new Integer(req.getParameter("friendstatus").trim());
-				
+
 				FriendNexusVO friendNexusVO = new FriendNexusVO();
 				friendNexusVO.setMemId(memId);
 				friendNexusVO.setFriendAcc(friendAcc);
 				friendNexusVO.setFriendstatus(friendstatus);
-				
-				
+
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("friendNexusVO", friendNexusVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/friend/friendCheck.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/friend/friendCheck.jsp");
 					failureView.forward(req, res);
-					return; //程式中斷
+					return; // 程式中斷
 				}
-				
-				/***************************2.開始修改資料*****************************************/
+
+				/*************************** 2.開始修改資料 *****************************************/
 				FriendNexusService friendNexusSvc = new FriendNexusService();
 				friendNexusVO = friendNexusSvc.updatefriendNexus(memId, friendAcc, friendstatus);
-				
+
 				System.out.println(memId);
 				System.out.println(friendAcc);
 				System.out.println(friendstatus);
-				
-				
-				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("friendNexusVO", friendNexusVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/friend/friendCheck.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************其他可能的錯誤處理*************************************/
+				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/friend/friendCheck.jsp");
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/friend/friendCheck.jsp");
 				failureView.forward(req, res);
 			}
-		}
-	}
 
+		
+			}
+		if ("delete".equals(action)) { // 來自listAllEmp.jsp
+			System.out.println("666666666666");
+			List<String> errorMsgs1 = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs1);
+
+			try {
+
+				/*************************** 1.接收請求參數 ***************************************/
+				String friendAcc = new String(req.getParameter("friendAcc"));
+
+				/*************************** 2.開始刪除資料 ***************************************/
+				FriendNexusService friendNexusSvc = new FriendNexusService();
+				friendNexusSvc.deletefriendNexusp(friendAcc);
+
+				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+				String url = "/friend/Myfriend.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs1.add("刪除資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/emp/listAllEmp.jsp");
+				failureView.forward(req, res);
+			}
+
+		}
+
+	}
 }

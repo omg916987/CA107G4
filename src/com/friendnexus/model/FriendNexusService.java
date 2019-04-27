@@ -34,16 +34,18 @@ public class FriendNexusService {
 		return friendNexusVO;
 	}
 
-//	public void deletefriendNexusp(String memId) {
-//		dao.delete(memId);
-//	}
+	public void deletefriendNexusp(String friendAcc) {
+		dao.delete(friendAcc);
+	}
 
 //	public FriendNexusVO getOneFriendNexus(String memId) {
 //		return dao.findByPrimaryKey(memId);
 //	}
-	public List<FriendNexusVO>friendNexus(String memId){
-		return dao.friendNexus(memId);
+	public List<FriendNexusVO>friendNexus0(String memId){
+		return dao.friendNexus0(memId);
 	}
 
-	
+	public List<FriendNexusVO>friendNexus1(String memId){
+		return dao.friendNexus1(memId);
+	}
 }

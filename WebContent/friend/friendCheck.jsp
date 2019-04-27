@@ -7,7 +7,7 @@
 
 <%
     FriendNexusService friendSvc = new FriendNexusService();
-	List<FriendNexusVO> list = friendSvc.friendNexus("weshare02");
+	List<FriendNexusVO> list = friendSvc.friendNexus0("weshare02");
 	pageContext.setAttribute("list", list);
 %>
 
@@ -154,7 +154,7 @@ textarea{
 	</div>
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 	<div class="title TitleImg">
-		<h1 class="hader-title" style="text-align: center">建立您的&nbsp;好友關係</h1>
+		<h1 class="hader-title" style="text-align: center">我的好友申請</h1>
 	</div>
 	<div class="container">
 		<div class="row">

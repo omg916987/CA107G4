@@ -9,7 +9,7 @@ public interface FriendNexusDAO_interface {
 
 	public FriendNexusVO findByPrimaryKey(String memId);
 
-//	public void delete(String memId);
+	public void delete(String friendAcc);
 
 	public List<FriendNexusVO> getAll();
 
@@ -17,7 +17,9 @@ public interface FriendNexusDAO_interface {
 
 	
 
-	public List<FriendNexusVO> friendNexus(String memId);
+	public List<FriendNexusVO> friendNexus0(String memId); //送出申請
+
+	public List<FriendNexusVO> friendNexus1(String memId); //成為好友
 
 	
 

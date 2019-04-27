@@ -23,7 +23,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			  "INSERT INTO Member(memId,memIdCard,memPsw,memPswHint,memName,memSex,memImage,memEmail,memPhone,memBirth,memAdd,memBalance,memBlock,memStatus)"
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT = 
-		"SELECT * FROM Member  order by memId";
+		"SELECT * FROM Member order by dbms_random.value";
 	private static final String GET_ONE_STMT = 
 		"SELECT * FROM Member where memId = ?";
 	private static final String UPDATE = 

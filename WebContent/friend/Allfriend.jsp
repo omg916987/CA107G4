@@ -5,19 +5,13 @@
 <%@ page import="com.friendnexus.model.*"%>
 
 
-
 <%
 	MemberService memberSvc = new MemberService();
 	List<MemberVO> list = memberSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
 
-<%
-	
-    FriendNexusService friendSvc = new FriendNexusService();
-	List<FriendNexusVO> list2 = friendSvc.friendNexus("weshare02");
-	pageContext.setAttribute("list", list);
-%>
+
 <jsp:useBean id="courseSvc" scope="page"
 	class="com.course.model.CourseService" />
 	
@@ -107,6 +101,10 @@ textarea{
 .btn-info {
     margin-top: 30px;
 }
+.btn btn-secondary {
+     magin-top:30px;
+
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -167,7 +165,7 @@ textarea{
 						class="list-group-item list-group-item-action"
 						id="list-profile-list" data-toggle="list" href="#list-profile"
 						role="tab" aria-controls="profile">聊天室</a>
-						
+						<input class="btn btn-secondary" type="submit" value="我的好友列表">
 				</div>
 			</div>
 			<div class="col-9">
@@ -209,7 +207,6 @@ textarea{
 										<div class="w-10"></div>
 										<div class="card-footer w-100 text-muted ">
 											<a href="yahoo.com.tw">查看個人資料</a>
-
 										</div>
 									</div>
 								</c:forEach>
@@ -226,10 +223,7 @@ textarea{
 											<input type="text" class="form-control" placeholder="請輸入好友帳號">
 											<div class="input-group-append">
 												<button type="submit" class="btn btn-secondary">尋找</button>
-												
-						                         
-											</div>
-											
+											</div>		
 										</div>
 									</form>
 									<div>
@@ -238,8 +232,6 @@ textarea{
 								</ul>
 							</div>
 						</div>
-
-
 					</div>
 					<!-- ----------------------------------------------------------第二頁---------------------------------------------- -->
 					<div class="tab-pane fade" id="list-profile" role="tabpanel"
