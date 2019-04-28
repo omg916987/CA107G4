@@ -17,7 +17,7 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 	final String SEARCH_COURSEALL = "SELECT * FROM INSCOURSE WHERE INSCTYPE=?";  
 	final String FINDBYCOURSE = "SELECT * FROM INSCOURSE WHERE COURSEID=?";
 	
-	final String SEARCH_COURSETRANSFERALL1 =" SELECT * FROM (INSCOURSE INNER JOIN COURSE ON INSCOURSE.COURSEID= COURSE.COURSEID) INNER JOIN TEAM ON TEAM.INSCID=INSCOURSE.INSCID WHERE INSCTYPE ='1' AND MemId ?";
+	final String SEARCH_COURSETRANSFERALL1 = " SELECT * FROM (INSCOURSE INNER JOIN COURSE ON INSCOURSE.COURSEID= COURSE.COURSEID) INNER JOIN TEAM ON TEAM.INSCID=INSCOURSE.INSCID WHERE INSCTYPE ='1' And COURSENAME LIKE ?";
 	
 	
 	
@@ -293,7 +293,7 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 				Class.forName(driver);
 				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement(SEARCH_COURSETRANSFERALL1);
-				pstmt.setString(1,"%"+ str+"%");
+				pstmt.setString(1,"%"+str+"%");
 				rs = pstmt.executeQuery();
 
 				while (rs.next()) {

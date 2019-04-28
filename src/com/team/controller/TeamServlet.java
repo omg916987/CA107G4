@@ -29,54 +29,57 @@ public class TeamServlet extends HttpServlet {
 		String action = req.getParameter("action");
 
 		if ("Search_One".equals(action)) { // 來自select_page.jsp的請求
-			
+
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("str");
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入課程");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/team/One.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
 				
-//				if (str == null || (str.trim()).length() == 0) {
-//					errorMsgs.add("請輸入課程");
-//				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/team/listOneInsCourse.jsp");
-//					failureView.forward(req, res);
-//					return;//程式中斷
 				
-//				}
-				/*************************** 2.開始查詢資料 *****************************************/
+				
+				/***************************2.開始查詢資料*****************************************/
+				
 				InsCourseService insCourseSvc = new InsCourseService();
 				
-				List<InsCourseVO> incrouseVO = insCourseSvc.findByCourse(str);
-                
-				System.out.println(str);
+				List<InsCourseVO> insCourseVOList = insCourseSvc.findClassName(str);
 				
-				System.out.println("到武一游2");
-				if (incrouseVO.size() == 0) {
+				if (insCourseVOList.size()==0) {
 					errorMsgs.add("查無資料");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/team/findOneTeam.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/team/One.jsp");
 					failureView.forward(req, res);
-					return;// 程式中斷
+					return;//程式中斷
 				}
-				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("insCourseVOList", incrouseVO);
+			
+				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("insCourseVOList", insCourseVOList);
 				// 資料庫取出的empVO物件,存入req
-				String url = "/team/findOneTeam.jsp";
+				String url = "/team/One.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
-				/*************************** 其他可能的錯誤處理 *************************************/
+				System.out.println("1234");
+				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/team/findOneTeam.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/team/One.jsp");
 				failureView.forward(req, res);
 			}
 		}

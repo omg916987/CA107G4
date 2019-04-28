@@ -9,6 +9,9 @@
     FriendNexusService friendSvc = new FriendNexusService();
 	List<FriendNexusVO> list = friendSvc.friendNexus0("weshare02");
 	pageContext.setAttribute("list", list);
+	
+	
+	response.setIntHeader("Refresh", 5);
 %>
 
 <jsp:useBean id="courseSvc" scope="page"
@@ -38,8 +41,7 @@
 
 .title.TitleImg {
 	background-size: cover;
-	background-image: url(img/hero-image-wrapper.png);
-	padding: 40px;
+	background-image:url(<%=request.getContextPath()%>/friend/img/hero-image-wrapper.png);
 	margin-top: 76px;
 }
 

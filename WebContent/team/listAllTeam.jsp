@@ -217,7 +217,7 @@
 		<div class="container">
 			<div class="plan">
 				<div class="plan_iamge">
- 					<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(insCourseVO.teacherId).memId}"width="175" height="185""/>  
+ 					<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(insCourseVO.teacherId).memId}"width="175" height="185"/>  
 				</div>
 				<div class="plan_info"> 					
 			<h4> 

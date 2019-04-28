@@ -1,15 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.friendnexus.model.*"%>
+<%@ page import="com.member.model.*"%>
+
+<%MemberVO memberVO = (MemberVO) request.getAttribute("memId");%>
 
 
 
-<%
-	FriendNexusService friendSvc = new FriendNexusService();
-	List<FriendNexusVO> list = friendSvc.friendNexus1("weshare02");
-	pageContext.setAttribute("list", list);
-%>
 
 <jsp:useBean id="courseSvc" scope="page"
 	class="com.course.model.CourseService" />
@@ -38,7 +35,7 @@
 
 .title.TitleImg {
 	background-size: cover;
-	background-image: url(<%=request.getContextPath()%>/friend/img/hero-image-wrapper.png);
+	background-image:url(<%=request.getContextPath()%>/friend/img/hero-image-wrapper.png);
 	padding: 40px;
 	margin-top: 76px;
 }
@@ -95,7 +92,7 @@ h6 {
 }
 
 textarea {
-	height: 500px;
+	height: 200px;
 	width: 700px;
 }
 
@@ -115,7 +112,7 @@ textarea {
 <!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
 <div class="header headerImg">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-		<img src="<%=request.getContextPath()%>/friend/icon/logo.png" width="80" height="60" alt="" /><a
+		<img src="<%=request.getContextPath()%>/icon/logo.png" width="80" height="60" alt="" /><a
 			class="navbar-brand" href="#">教育共享平台</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
@@ -170,13 +167,12 @@ textarea {
 					role="tabpanel" aria-labelledby="list-home-list">
 					<div class="row">
 						<div class="col-8">
-							<%@ include file="page1.file"%>
-							<c:forEach var="friendNexusVO" items="${list}"
-								begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+							
+							
 								<div class="card flex-row flex-wrap">
 									<div class="card-header border-0">
-										<img
-											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendNexusVO.friendAcc}"
+										<img 
+											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}"
 											width="100" height="50">
 									</div>
 									<FORM METHOD="get"
@@ -191,16 +187,15 @@ textarea {
 														type="hidden" name="friendAcc"
 														value="${friendNexusVO.friendAcc}"> 
 														<div class="wrod">
-													<a class="user_name">姓名:${memberSvc.getOneMember(friendNexusVO.friendAcc).memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
-													<a class="user_name">ID:${friendNexusVO.friendAcc}</a><br>
-													<a class="user_name">專長:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.friendAcc).memSkill).courseName}&nbsp;</a><br>
-								                    <a class="user_name">想學的課:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.friendAcc).memWantSkill).courseName}&nbsp;</a>
+													<a class="user_name">姓名:${memberVO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
+													<a class="user_name">ID:${memberVO.memId}</a><br>
+													<a class="user_name">專長:${courseSvc.findOneById(memberVO.memSkill).courseName}&nbsp;</a><br>
+								                    <a class="user_name">想學的課:${courseSvc.findOneById(memberVO.memWantSkill).courseName}&nbsp;</a>
 												</div>
 										<div class="btn1">
-											<input type="hidden" name="action" value="delete"> 
-											<input type="submit" value="刪除好友" class="btn btn-primary">
-											<input type="hidden" name="action1" value="chate"> <input
-												type="submit" value="聊天" class="btn btn-primary">
+											<input type="hidden" name="action" value="insert1"> 
+											<input type="submit" value="加入好友" class="btn btn-primary">
+											
 										</div>		
 												</div>	
 											</div>
@@ -212,8 +207,8 @@ textarea {
 										
 									</div>
 								</div>
-							</c:forEach>
-							<%@ include file="page2.file"%>
+						
+						
 						</div>
 
 						<div class="col-4">

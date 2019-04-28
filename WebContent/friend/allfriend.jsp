@@ -37,7 +37,7 @@
 
 .title.TitleImg {
 	background-size: cover;
-	background-image: url(img/hero-image-wrapper.png);
+	background-image: url(<%=request.getContextPath()%>/friend/img/hero-image-wrapper.png);
 	padding: 40px;
 	margin-top: 76px;
 }
@@ -217,18 +217,21 @@ textarea{
 
 								<ul class="list-group mb-3">
 
-									<form class="card p-2">
+									<div class="card p-2">
 										<h6 class="my-1">搜尋好友</h6>
-										<div class="input-group">
-											<input type="text" class="form-control" placeholder="請輸入好友帳號">
-											<div class="input-group-append">
+										<FORM METHOD="get"
+											ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+									<div class="input-group">
+										<input type="text" class="form-control" name="memId" placeholder="請輸入好友帳號">
+								<div class="input-group-append">
 												<button type="submit" class="btn btn-secondary">尋找</button>
 											</div>		
 										</div>
-									</form>
+									</div>
 									<div>
-									<input type="hidden" name="action" value="friend">
-									<input class="btn btn-info" type="button" value="申請好友列表"></div>
+									<input type="hidden" name="action" value="getOne_For_Display">
+									<input class="btn btn-info" type="button" value="申請好友列表"></FORM></div>
+								
 								</ul>
 							</div>
 						</div>
