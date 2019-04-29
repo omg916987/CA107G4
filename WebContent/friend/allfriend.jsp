@@ -345,7 +345,7 @@ textarea{
 
     
 	<script>
-	var MyPoint = "/TogetherWS/${memberVO.memId}/106";
+	var MyPoint = "/TogetherWS";
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -393,8 +393,8 @@ textarea{
 			} else {
 				var jsonObj = {
 						"type" : "chat",
-						"sender" : "${memberVO.memId}",
-						"receiver" : "weshare05",
+						"sender" :"weshare01",
+						"receiver" :"weshare05",
 						"message" : message
 				};
 				webSocket.send(JSON.stringify(jsonObj));

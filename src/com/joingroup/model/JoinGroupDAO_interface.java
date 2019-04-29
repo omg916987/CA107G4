@@ -14,11 +14,13 @@ public interface JoinGroupDAO_interface {
 	 
      public List<JoinGroupVO> findByPrimaryKey(String memId);
      
-	 public void insert(JoinGroupVO joinGroupVO);
+     public void insert(JoinGroupVO joinGroupVO);
 //	public void update(JoinGroupVO joinGroupVO);
 	 
 	 
 	public void delete(String memId, String teamId);
+	
+	public JoinGroupVO findById(String memId, String teamId);
 
 	List<JoinGroupVO> findByTeamId(String teamId);
 }

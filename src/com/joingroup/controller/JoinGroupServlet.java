@@ -53,7 +53,7 @@ public class JoinGroupServlet extends HttpServlet {
 				/***************************2.開始新增資料***************************************/
 				JoinGroupService joinGroupSvc = new JoinGroupService();
 				System.out.println("1234");
-				joinGroupVO = joinGroupSvc.addJoinGroup(memId,teamId);
+				joinGroupVO = joinGroupSvc.addJoinGroupVO(memId,teamId);
 			
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/joinGroup/listAllEmp.jsp";

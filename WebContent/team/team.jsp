@@ -7,20 +7,13 @@
 <%@ page import="com.joingroup.model.*"%>
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.inscourse.model.*"%>
-
-
 <%
 	InsCourseService inscourseSvc = new InsCourseService();
 	List<InsCourseVO> list = inscourseSvc.getAll("1");
 	pageContext.setAttribute("list", list);
-%> 
 
+	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
 
-<%
-   JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
-%>
-
-<%
 	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 %>
 
@@ -212,12 +205,13 @@
 			<div class="form-row">
 				<div class="form-group col-md-4">
 
-					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do">
+					<FORM METHOD="get"
+						ACTION="<%=request.getContextPath()%>/team/team.do">
 						<b>請輸入課程</b> <input type="text" name="str">
 
 						<div class="form-row">
-							<input type="hidden" name="action" value="Search_One"> 
-							<input type="submit" name="commit" value="查詢"
+							<input type="hidden" name="action" value="Search_One"> <input
+								type="submit" name="commit" value="查詢"
 								class="btn btn-info submit" data-disable-with="find" />
 						</div>
 					</FORM>
@@ -243,7 +237,8 @@
 	</div>
 
 	<%@ include file="page1.file"%>
-	<c:forEach var="insCourseVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	<c:forEach var="insCourseVO" items="${list}" begin="<%=pageIndex%>"
+		end="<%=pageIndex+rowsPerPage-1%>">
 		<div class="container">
 			<div class="plan">
 				<div class="plan_iamge">
@@ -265,16 +260,15 @@
 
 					<hr>
 					<div>
-						<span class="badge badge-light">收費模式</span> 
-						<span class="badge badge-success">預先扣款</span> 
-					    <span class="badge badge-lisght"> 
-					    <i class="fas fa-dollar-sign"></i>
+						<span class="badge badge-light">收費模式</span> <span
+							class="badge badge-success">預先扣款</span> <span
+							class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
 						</span>每小時 ${insCourseVO.inscPrice}元$<br>
 					</div>
 					<div class="class1">
-						<span class="badge badge-light"> 隊伍型態 </span> 
-						<span class="badge badge-info">自主性揪團</span> 
-						<span class="badge badge-info">揪團編號</span>
+						<span class="badge badge-light"> 隊伍型態 </span> <span
+							class="badge badge-info">自主性揪團</span> <span
+							class="badge badge-info">揪團編號</span>
 					</div>
 				</div>
 				<div class="button-group">
@@ -297,8 +291,7 @@
 								<div class="modal-body">
 									<a>團主姓名:${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memName}</a><br>
 									<a>連絡電話:${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memPhone}</a><br>
-									<a>預扣金額:${insCourseVO.inscPrice}</a><br> 
-									<a>開團時間:${teamSvc.getAll().get(0).getTemaMFD()}</a><br>
+									<a>預扣金額:${insCourseVO.inscPrice}</a><br> <a>開團時間:${teamSvc.getAll().get(0).getTemaMFD()}</a><br>
 									<a>截團時間:${teamSvc.getAll().get(0).getTeamEXP()}</a><br>
 									<div class="picture">
 
@@ -368,10 +361,6 @@
 												readonly="readonly"></td>
 										</tr>
 									</table>
-
-
-
-
 
 									<div class="modal-footer">
 										<button type="button" class="btn btn-info"

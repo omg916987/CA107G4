@@ -16,7 +16,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/TogetherWS/{myName}/{myRoom}")
+@ServerEndpoint("/TogetherWS")
 public class TogetherWS {
 	private static final Set<Session> allSessions = Collections.synchronizedSet(new HashSet<>());
 	private static final Map<Session, String> map = Collections.synchronizedMap(new HashMap<>());
