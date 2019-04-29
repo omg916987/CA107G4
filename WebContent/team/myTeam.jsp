@@ -13,6 +13,13 @@
 	JoinGroupService joinGroupSvc = new JoinGroupService();
 	List<JoinGroupVO> list = joinGroupSvc.findByPrimaryKey("weshare01");
 	pageContext.setAttribute("list", list);
+	
+	TeamService teamSvc1 = new TeamService();
+	List<TeamVO> list1 = teamSvc1.getAll();
+	pageContext.setAttribute("list", list);
+	
+	
+	
 %>
 
 <!--  	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); -->
@@ -21,7 +28,7 @@
   <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
   <jsp:useBean id="teamSvc" scope="page" class="com.team.model.TeamService" />
   <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />	
-	
+	 <jsp:useBean id="joinGroupSvc1" scope="page" class="com.joingroup.model.JoinGroupService" />	
 <!doctype html>
 <html lang="en">
 
@@ -340,16 +347,14 @@
 				</div>
 				
 				<!-- Button trigger modal -->
-<button type="button1" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-  成員名單
-</button>
+<button type="button1" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">成員名單</button>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">團員名單</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">團員名單(${joinGroupVO.teamId})</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -360,7 +365,7 @@
 
 
 
-
+ 
 
 
 
@@ -369,19 +374,32 @@
 <div class="container">
          
   <table class="table table-dark table-striped">
+  
     <thead>
+   
+    
+   
+    
+   
       <tr>
         <th>姓名</th>
         <th>email</th>
       </tr>
+      
+
     </thead>
+     
     <tbody>
+       <c:forEach var="teamVO" items="${list}">
       <tr>
-        <td>${joinGroupSvc.findByTeamId(teamVO.teamId).memId}</td>
-        <td>john@example.com</td>
+   
+        <td>${joinGroupSvc1.findByTeamId(teamVO.teamId).memId}</td>
+        <td></td>
         
       </tr>
+       </c:forEach>
     </tbody>
+ 
   </table>
 </div>
 

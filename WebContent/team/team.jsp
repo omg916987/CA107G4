@@ -207,12 +207,21 @@
 
 					<FORM METHOD="get"
 						ACTION="<%=request.getContextPath()%>/team/team.do">
-						<b>請輸入課程</b> <input type="text" name="str">
+						
 
 						<div class="form-row">
-							<input type="hidden" name="action" value="Search_One"> <input
-								type="submit" name="commit" value="查詢"
-								class="btn btn-info submit" data-disable-with="find" />
+						
+						
+						
+						
+						<input type="hidden" name="action" value="Search_One"> 
+						
+						<label for="inputEmail" class="sr-only">請輸入課程</label>
+						<div class="input-group group-sm">
+                        <input type="text"  id="inputEmail"  name="str" class="form-control-addon" placeholder="請輸入課程" required autofocus></div>
+<!--                         <input type="text" class="form-control" name="str" id="username" placeholder="請輸入課程">	  -->
+						<input type="submit" name="commit" value="查詢" class="btn btn-info submit" data-disable-with="find"/>
+						<div class="invalid-feedback" id="username-feedback"></div>
 						</div>
 					</FORM>
 				</div>
@@ -224,7 +233,7 @@
 						ACTION="<%=request.getContextPath()%>/team/team.do">
 						<div class="form-row">
 							<input type="hidden" name="action" value="findOneteam"> <input
-								type="submit" name="memId" value="wesahre01"
+								type="submit" name="memId" value="查看我的揪團"
 								class="btn btn-info submit" data-disable-with="find" />
 						</div>
 					</FORM>
@@ -338,7 +347,7 @@
 									</ul>
 								</c:if>
 
-
+----{insCourseVO}---
 								<FORM METHOD="get" ACTION="team.do" name="form1">
 									<table>
 										<tr>
@@ -460,5 +469,9 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		
+		
+		
+		
 </body>
 </html>

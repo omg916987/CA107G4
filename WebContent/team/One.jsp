@@ -7,17 +7,16 @@
 <%@ page import="com.joingroup.model.*"%>
 <%@ page import="com.inscourse.model.*"%>
 <%
-    InsCourseService inscourseSvc = new InsCourseService();
-	List<InsCourseVO> list =inscourseSvc.findClassName("str") ;
+	InsCourseService inscourseSvc = new InsCourseService();
+	List<InsCourseVO> list = inscourseSvc.findClassName("str");
 	pageContext.setAttribute("list", list);
-	
 %>
 
 <%
 	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
 %>
 
- <jsp:useBean id="memberSvc" scope="page"
+<jsp:useBean id="memberSvc" scope="page"
 	class="com.member.model.MemberService" />
 <jsp:useBean id="incourseSvc" scope="page"
 	class="com.inscourse.model.InsCourseService" />
@@ -28,8 +27,8 @@
 <jsp:useBean id="teacherSvc" scope="page"
 	class="com.teacher.model.TeacherService" />
 
-	
-	
+
+
 <!doctype html>
 <html lang="en">
 
@@ -50,8 +49,8 @@
 .breadcrumb-item+.breadcrumb-item::before {
 	content: "|";
 }
-}
 
+}
 .page-link:hover {
 	background-color: #8af;
 	color: #fff;
@@ -206,12 +205,13 @@
 			<div class="form-row">
 				<div class="form-group col-md-4">
 
-					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do">
+					<FORM METHOD="get"
+						ACTION="<%=request.getContextPath()%>/team/team.do">
 						<b>請輸入課程</b> <input type="text" name="str">
 
 						<div class="form-row">
-							<input type="hidden" name="action" value="Search_One"> 
-							<input type="submit" name="commit" value="查詢"
+							<input type="hidden" name="action" value="Search_One"> <input
+								type="submit" name="commit" value="查詢"
 								class="btn btn-info submit" data-disable-with="find" />
 						</div>
 					</FORM>
@@ -237,7 +237,8 @@
 	</div>
 
 	<%@ include file="page1.file"%>
-	<c:forEach var="insCourseVO" items="${insCourseVOList}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	<c:forEach var="insCourseVO" items="${insCourseVOList}"
+		begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		<div class="container">
 			<div class="plan">
 				<div class="plan_iamge">
@@ -259,16 +260,15 @@
 
 					<hr>
 					<div>
-						<span class="badge badge-light">收費模式</span> 
-						<span class="badge badge-success">預先扣款</span> 
-					    <span class="badge badge-lisght"> 
-					    <i class="fas fa-dollar-sign"></i>
+						<span class="badge badge-light">收費模式</span> <span
+							class="badge badge-success">預先扣款</span> <span
+							class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
 						</span>每小時 ${insCourseVO.inscPrice}元$<br>
 					</div>
 					<div class="class1">
-						<span class="badge badge-light"> 隊伍型態 </span> 
-						<span class="badge badge-info">自主性揪團</span> 
-						<span class="badge badge-info">揪團編號</span>
+						<span class="badge badge-light"> 隊伍型態 </span> <span
+							class="badge badge-info">自主性揪團</span> <span
+							class="badge badge-info">揪團編號</span>
 					</div>
 				</div>
 				<div class="button-group">
@@ -291,8 +291,7 @@
 								<div class="modal-body">
 									<a>團主姓名:${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memName}</a><br>
 									<a>連絡電話:${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memPhone}</a><br>
-									<a>預扣金額:${insCourseVO.inscPrice}</a><br> 
-									<a>開團時間:${teamSvc.getAll().get(0).getTemaMFD()}</a><br>
+									<a>預扣金額:${insCourseVO.inscPrice}</a><br> <a>開團時間:${teamSvc.getAll().get(0).getTemaMFD()}</a><br>
 									<a>截團時間:${teamSvc.getAll().get(0).getTeamEXP()}</a><br>
 									<div class="picture">
 
@@ -465,6 +464,14 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+	
+	
+
+
+
+
+
 </body>
 </html>
-	

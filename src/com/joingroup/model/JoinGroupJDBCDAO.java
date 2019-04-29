@@ -357,9 +357,9 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 //		dao.insert(JoinGroupVO3);
 //		System.out.println("------以新增資料---------");
 		
-		JoinGroupVO JoinGroupVO3 = new JoinGroupVO();
-		JoinGroupVO3=dao.findById("weshare02", "TM00002");
-		System.out.println(JoinGroupVO3);
+//		JoinGroupVO JoinGroupVO3 = new JoinGroupVO();
+//		JoinGroupVO3=dao.findById("weshare02", "TM00002");
+//		System.out.println(JoinGroupVO3);
 		
 		
 //
@@ -388,12 +388,12 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 //				System.out.println(JoinGroupV05.getTeamId());
 //				System.out.println();
 				
-//				List<JoinGroupVO> list = dao.findByTeamId("TM00001");
-//				for (JoinGroupVO JoinGroupV06 : list) {
-//					System.out.print(JoinGroupV06.getTeamId() + ",");
-//					System.out.println(JoinGroupV06.getMemId());
-//					System.out.println();
-//		}
+				List<JoinGroupVO> list = dao.findByTeamId("TM00002");
+				for (JoinGroupVO JoinGroupV06 : list) {
+					System.out.print(JoinGroupV06.getTeamId() + ",");
+					System.out.println(JoinGroupV06.getMemId());
+					System.out.println();
+		}
 	
 
 
