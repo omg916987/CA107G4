@@ -22,5 +22,5 @@ public interface JoinGroupDAO_interface {
 	
 	public JoinGroupVO findById(String memId, String teamId);
 
-	List<JoinGroupVO> findByTeamId(String teamId);
+	public List<JoinGroupVO> findByTeamId(String teamId);
 }

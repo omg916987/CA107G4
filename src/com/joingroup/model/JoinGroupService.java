@@ -46,7 +46,7 @@ public class JoinGroupService {
 	}
 	
 	public List<JoinGroupVO> findByTeamId(String teamId) {
-		return dao.findByPrimaryKey(teamId);
+		return dao.findByTeamId(teamId);
 	}
 
 	public List<JoinGroupVO> getAll() {

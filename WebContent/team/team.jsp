@@ -272,7 +272,7 @@
 						<span class="badge badge-light">收費模式</span> <span
 							class="badge badge-success">預先扣款</span> <span
 							class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
-						</span>每小時 ${insCourseVO.inscPrice}元$<br>
+						</span>每小時 ${insCourseVO.inscPrice}元<br>
 					</div>
 					<div class="class1">
 						<span class="badge badge-light"> 隊伍型態 </span> <span
@@ -347,7 +347,7 @@
 									</ul>
 								</c:if>
 
-----{insCourseVO}---
+
 								<FORM METHOD="get" ACTION="team.do" name="form1">
 									<table>
 										<tr>

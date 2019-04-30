@@ -19,6 +19,10 @@
 	pageContext.setAttribute("list", list);
 	
 	
+	JoinGroupService joinGroupSvc1 = new JoinGroupService();
+	pageContext.setAttribute("joinGroupSvc1",joinGroupSvc1);
+// 	List<JoinGroupVO> list2 = joinGroupSvc.findByTeamId("teamId");
+	pageContext.setAttribute("list", list);
 	
 %>
 
@@ -28,7 +32,7 @@
   <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
   <jsp:useBean id="teamSvc" scope="page" class="com.team.model.TeamService" />
   <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />	
-	 <jsp:useBean id="joinGroupSvc1" scope="page" class="com.joingroup.model.JoinGroupService" />	
+  
 <!doctype html>
 <html lang="en">
 
@@ -384,20 +388,24 @@
       <tr>
         <th>姓名</th>
         <th>email</th>
+        <td></td>
       </tr>
       
 
     </thead>
      
     <tbody>
-       <c:forEach var="teamVO" items="${list}">
+  
+     <c:set var="list2" value="${joinGroupSvc1.findByTeamId(joinGroupVO.teamId)}" scope="request" />
       <tr>
-   
-        <td>${joinGroupSvc1.findByTeamId(teamVO.teamId).memId}</td>
-        <td></td>
+       
+      <c:forEach var="joinGroupVO" items="${list2}">
+      <tr>
+        <td>${memberSvc.getOneMember(joinGroupVO.memId).memName}</td>
         
+        <td>${memberSvc.getOneMember(joinGroupVO.memId).memEmail}</td>
       </tr>
-       </c:forEach>
+      </c:forEach>
     </tbody>
  
   </table>

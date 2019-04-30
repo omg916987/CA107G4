@@ -93,6 +93,7 @@ System.out.println(action);
 					System.out.println("餘額"+blance);
 					System.out.println("要扣的錢"+inscPrice1);
 					System.out.println("預扣款項"+memblance);
+				
 					if (blance < memBlock) {
 						RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/withdrawalrecord.jsp");
 						failureView.forward(req, res);
