@@ -8,7 +8,10 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
-
+import com.team.model.TeamService;
+import com.team.model.TeamVO;
+import com.withdrawalrecord.model.WithdrawalRecordService;
+import com.withdrawalrecord.model.WithdrawalRecordVO;
 import com.inscourse.model.InsCourseService;
 import com.inscourse.model.InsCourseVO;
 import com.joingroup.model.JoinGroupService;
@@ -34,7 +37,7 @@ public class TeamServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-System.out.println(action);
+
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("str");
@@ -178,5 +181,79 @@ System.out.println(action);
 			
 			}
 		}
+			
+			
+			if ("insert1".equals(action)) { // 來自addEmp.jsp的請求
+				  System.out.println(action);
+				List<String> errorMsgs = new LinkedList<String>();
+System.out.println("1");
+				req.setAttribute("errorMsgs", errorMsgs);
+				System.out.println("2");     
+				try {
+
+					/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+					String leaderID = req.getParameter("memid");
+					System.out.println("3");
+					String memidReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+					if (leaderID == null || leaderID.trim().length() == 0) {
+						errorMsgs.add("會員帳號請勿空白");
+					} else if (!leaderID.trim().matches(memidReg)) { // 以下練習正則(規)表示式(regular-expression)
+						errorMsgs.add("會員帳號: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					}
+System.out.println("4");
+					String inscID = req.getParameter("inscID");
+					if(inscID == null) {
+						errorMsgs.add("課程編號請勿空白");
+					}
+				System.out.println("5");
+					java.sql.Date teamMFD = null;
+					try {
+						teamMFD = java.sql.Date.valueOf(req.getParameter("temaMFD").trim());
+					} catch (IllegalArgumentException e) {
+						teamMFD = new java.sql.Date(System.currentTimeMillis());
+						errorMsgs.add("請輸入日期!");
+					}
+
+					java.sql.Date teamEXP = null;
+					try {
+						teamEXP = java.sql.Date.valueOf(req.getParameter("teamEXP").trim());
+					} catch (IllegalArgumentException e) {
+						teamEXP = new java.sql.Date(System.currentTimeMillis());
+						errorMsgs.add("請輸入日期!");
+					}
+					TeamVO teamVO = new TeamVO();
+
+					teamVO.setLeaderID(leaderID);;
+					teamVO.setInscID(inscID);
+					teamVO.setTemaMFD(teamMFD);;
+					teamVO.setTeamEXP(teamEXP);
+					System.out.println(leaderID);
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("teamVO", teamVO); // 含有輸入格式錯誤的withdrawalRecordVO物件,也存入req
+						RequestDispatcher failureView = req.getRequestDispatcher("/team/addTeam.jsp");
+						failureView.forward(req, res);
+						return; // 程式中斷
+					}
+
+					/*************************** 2.開始新增資料 *****************************************/
+					TeamService teamSvc = new TeamService();
+					teamVO = teamSvc.addTeam(leaderID, inscID, teamMFD, teamEXP, 1);
+
+					/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+					
+					req.setAttribute("teamVO",teamVO);
+				
+					String url = "/team/listAllTeam.jsp";
+				    
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+					successView.forward(req, res);
+
+					/*************************** 其他可能的錯誤處理 *************************************/
+				} catch (Exception e) {
+					errorMsgs.add(e.getMessage());
+					RequestDispatcher failureView = req.getRequestDispatcher("/team/addTeam.jsp");
+					failureView.forward(req, res);
+				}
+			}
 	}
 }

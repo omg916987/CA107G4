@@ -1,25 +1,16 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="com.team.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.friendnexus.model.*"%>
-
-
+<%@ page import="com.course.model.*"%>
+<%@ page import="com.joingroup.model.*"%>
+<%@ page import="com.member.model.*"%>
+<%@ page import="com.inscourse.model.*"%>
 
 <%
-	FriendNexusService friendSvc = new FriendNexusService();
-	List<FriendNexusVO> list = friendSvc.friendNexus1("weshare02");
-	pageContext.setAttribute("list", list);
-	
-	
+	TeamVO teamVO = (TeamVO) request.getAttribute("teamVO");
 %>
-
-<jsp:useBean id="courseSvc" scope="page"
-	class="com.course.model.CourseService" />
-
-<jsp:useBean id="friendnexusSvc" scope="page"
-	class="com.friendnexus.model.FriendNexusService" />
-<jsp:useBean id="memberSvc" scope="page"
-	class="com.member.model.MemberService" />
 
 <!doctype html>
 <html lang="en">
@@ -32,15 +23,18 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/friend/css/G4.css ">
-<style type="text/css">
+<link rel="stylesheet" type="text/css" href="css/G4.css ">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<title>WeShare | 最棒的教育共享平台</title>
+<style type="">
 .friend {
 	margin-top: auto;
 }
 
 .title.TitleImg {
 	background-size: cover;
-	background-image: url(<%=request.getContextPath()%>/friend/img/hero-image-wrapper.png);
+	background-image: url(<%= request.getContextPath ()%>/friend/img/hero-image-wrapper.png);
 	padding: 40px;
 	margin-top: 76px;
 }
@@ -101,13 +95,10 @@ textarea {
 	width: 700px;
 }
 
-
 .btn1 {
-    margin-left: 260px;
-    margin-top: -60px;;
-	
+	margin-left: 260px;
+	margin-top: -60px;;
 }
-
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -117,8 +108,8 @@ textarea {
 <!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
 <div class="header headerImg">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-		<img src="<%=request.getContextPath()%>/friend/icon/logo.png" width="80" height="60" alt="" /><a
-			class="navbar-brand" href="#">教育共享平台</a>
+		<img src="<%=request.getContextPath()%>/friend/icon/logo.png"
+			width="80" height="60" alt="" /><a class="navbar-brand" href="#">教育共享平台</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -155,96 +146,57 @@ textarea {
 </div>
 <!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 <div class="title TitleImg">
-	<h1 class="hader-title" style="text-align: center">我的好友列表</h1>
+	<h1 class="hader-title" style="text-align: center">創建揪團</h1>
 </div>
+
+
 <div class="container">
-	<div class="row">
-		<div class="col-3">
-			<div class="list-group" id="list-tab" role="tablist">
 
-				<input class="btn btn-secondary" type="submit" value="返回推薦的好友">
+
+
+	<c:if test="${not empty errorMsgs}">
+			<h4 style="color: red; text-align: center;">請修正以下錯誤:</h4>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red; text-align: center;">${message}</li>
+				</c:forEach>
+			</ul>
+		</c:if>
+
+
+	<FORM METHOD="GET" ACTION="/CA107G4/team/team.do" name="form2">
+		<div class="form-row">
+
+			<div class="form-group col-md-6">
+				<label for="inputEmail4">請輸入您的帳號</label> <input type="text"
+					class="form-control" name="leaderID" value="weshare01" id="inputEmail4"
+					placeholder="請輸入團主帳號">
+			</div>
+
+			<div class="form-group col-md-6">
+				<label for="inputPassword4">請輸入課程編號</label> <input type="text"
+					class="form-control" id="inputPassword4" name="inscID" value=""
+					placeholder="請輸入課程編號">
 			</div>
 		</div>
-		<div class="col-9">
-			<div class="tab-content" id="nav-tabContent">
-				<!-- ----------------------------------------------------------第一頁---------------------------------------------- -->
-				<div class="tab-pane fade show active" id="list-home"
-					role="tabpanel" aria-labelledby="list-home-list">
-					<div class="row">
-						<div class="col-8">
-							<%@ include file="page1.file"%>
-							<c:forEach var="friendNexusVO" items="${list}"
-								begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-								<div class="card flex-row flex-wrap">
-									<div class="card-header border-0">
-										<img
-											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendNexusVO.friendAcc}"
-											width="100" height="50">
-									</div>
-									<FORM METHOD="get"
-										ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do"
-										name="form1">
-										<div class="card-block px-2">
-											<div class="d-flex">
-												<div>
-													<input type="hidden" name="memId" value="weshare02">
-													<input type="hidden" name="friendstatus"
-														value="${friendNexusVO.friendstatus}"> <input
-														type="hidden" name="friendAcc"
-														value="${friendNexusVO.friendAcc}"> 
-														<div class="wrod">
-													<a class="user_name">姓名:${memberSvc.getOneMember(friendNexusVO.friendAcc).memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
-													<a class="user_name">ID:${friendNexusVO.friendAcc}</a><br>
-													<a class="user_name">專長:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.friendAcc).memSkill).courseName}&nbsp;</a><br>
-								                    <a class="user_name">想學的課:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.friendAcc).memWantSkill).courseName}&nbsp;</a>
-												</div>
-										<div class="btn1">
-											<input type="hidden" name="action" value="delete"> 
-											<input type="submit" value="刪除好友" class="btn btn-primary">
-											<input type="hidden" name="action1" value="chate"> <input
-												type="submit" value="聊天" class="btn btn-primary">
-										</div>		
-												</div>	
-											</div>
-										</div>
-									</FORM>
-									<div class="w-10"></div>
-									<div class="card-footer w-100 text-muted ">
-										<a href="yahoo.com.tw">查看個人資料</a>
-										
-									</div>
-								</div>
-							</c:forEach>
-							<%@ include file="page2.file"%>
-						</div>
-
-						<div class="col-4">
-
-							<ul class="list-group mb-3">
-
-								<div class="card p-2">
-									<h6 class="my-1">搜尋好友</h6>
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="請輸入好友帳號">
-										<div class="input-group-append">
-											<button type="submit" class="btn btn-secondary">尋找</button>
-										</div>
-									</div>
-								</div>
-								<div class="but">
-								
-									<input type="hidden" name="action" value="friend"> 
-									<input class="btn btn-info" type="button" value="申請好友列表">
-								</div>
-							</ul>
-						</div>
-					</div>
-				</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="date">成團日期</label> <input class="form-control"
+					type="date" id="teamMFD" name="temaMFD" page[end_date]="">
 			</div>
-			<!-- ----------------------------------------------------------第二頁---------------------------------------------- -->
+                   
+			<div class="form-group col-md-6">
+				<label for="date">截團日期</label> <input class="form-control"
+					type="date" id="teamEXP" name="teamEXP" page[end_date]="">
+			</div>
 		</div>
-	</div>
+         <input type="hidden" name="action" value="insert1">
+		<button type="submit" class="btn btn-primary">送出</button>
+
+	</Form>
+
 </div>
+
 <!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
 <footer class="section footer-classic context-dark bg-image"
 	style="background: #74b49b;">
@@ -256,8 +208,9 @@ textarea {
 					<p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
 					<!-- Rights-->
 					<p class="rights">
-						<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>©
-							All Rights Reserved. .</span>
+						<span>© </span><span class="copyright-year">2018</span><span>
+						</span><span>WeShare教育共享平台</span><span>.</span><span>© All Rights
+							Reserved. .</span>
 					</p>
 				</div>
 			</div>
@@ -318,3 +271,5 @@ textarea {
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
