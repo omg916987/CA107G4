@@ -186,13 +186,14 @@ public class TeamServlet extends HttpServlet {
 			if ("insert1".equals(action)) { // 來自addEmp.jsp的請求
 				  System.out.println(action);
 				List<String> errorMsgs = new LinkedList<String>();
-System.out.println("1");
+
 				req.setAttribute("errorMsgs", errorMsgs);
-				System.out.println("2");     
+		   
 				try {
 
 					/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-					String leaderID = req.getParameter("memid");
+					String leaderID = req.getParameter("leaderID");
+					System.out.println(leaderID);
 					System.out.println("3");
 					String memidReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 					if (leaderID == null || leaderID.trim().length() == 0) {
@@ -227,7 +228,11 @@ System.out.println("4");
 					teamVO.setInscID(inscID);
 					teamVO.setTemaMFD(teamMFD);;
 					teamVO.setTeamEXP(teamEXP);
+					
 					System.out.println(leaderID);
+					System.out.println(inscID);
+					System.out.println(teamMFD);
+					System.out.println(teamEXP);
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("teamVO", teamVO); // 含有輸入格式錯誤的withdrawalRecordVO物件,也存入req
 						RequestDispatcher failureView = req.getRequestDispatcher("/team/addTeam.jsp");
@@ -243,7 +248,7 @@ System.out.println("4");
 					
 					req.setAttribute("teamVO",teamVO);
 				
-					String url = "/team/listAllTeam.jsp";
+					String url = "/team/team.jsp";
 				    
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);

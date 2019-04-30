@@ -168,9 +168,9 @@ textarea {
 		<div class="form-row">
 
 			<div class="form-group col-md-6">
-				<label for="inputEmail4">請輸入您的帳號</label> <input type="text"
-					class="form-control" name="leaderID" value="weshare01" id="inputEmail4"
-					placeholder="請輸入團主帳號">
+				<label for="inputPassword4">請輸入課程編號</label> <input type="text"
+					class="form-control" id="inputPassword4" name="leaderID" value=""
+					placeholder="請輸入課程編號">
 			</div>
 
 			<div class="form-group col-md-6">
