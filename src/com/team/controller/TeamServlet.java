@@ -8,6 +8,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
+import com.sun.jmx.snmp.Timestamp;
 import com.team.model.TeamService;
 import com.team.model.TeamVO;
 import com.withdrawalrecord.model.WithdrawalRecordService;
@@ -86,8 +87,11 @@ public class TeamServlet extends HttpServlet {
 		/*************************** 2.開始新增資料 ***************************************/
 					JoinGroupVO joinGroupVO = new JoinGroupVO();
 					joinGroupVO =joinGroupSvc.addJoinGroupVO(memId, teamId);
+//					===========================================================
 					MemberService memberSvc = new MemberService();
 					MemberVO membe = memberSvc.getOneMember(req.getParameter("memId"));
+//					===========================================================
+					
 					joinGroupSvc.getAll();
 					int memblance =0;
 					int blance = membe.getMemBalance();
@@ -104,7 +108,8 @@ public class TeamServlet extends HttpServlet {
 					} else {			
 						memblance = blance - inscPrice1;
 						memBlock = inscPrice1 + memBlock; 
-						System.out.println("memblance="+ memblance);				
+						System.out.println("memblance="+ memblance);
+						
 					}
 					memberSvc.update1(memblance, memBlock, membe.getMemId());           
 					/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
