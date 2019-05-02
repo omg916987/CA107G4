@@ -1,6 +1,8 @@
 package com.team.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,7 +10,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
-import com.sun.jmx.snmp.Timestamp;
 import com.team.model.TeamService;
 import com.team.model.TeamVO;
 import com.withdrawalrecord.model.WithdrawalRecordService;
@@ -76,7 +77,8 @@ public class TeamServlet extends HttpServlet {
 			}
 		}
 //	---------------------------------------------------------------------------------------------	
-		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
+		if ("insert".equals(action)) {
+			System.out.println("請進");// 來自addEmp.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);	
 			try {
@@ -87,18 +89,18 @@ public class TeamServlet extends HttpServlet {
 		/*************************** 2.開始新增資料 ***************************************/
 					JoinGroupVO joinGroupVO = new JoinGroupVO();
 					joinGroupVO =joinGroupSvc.addJoinGroupVO(memId, teamId);
-//					===========================================================
 					MemberService memberSvc = new MemberService();
 					MemberVO membe = memberSvc.getOneMember(req.getParameter("memId"));
-//					===========================================================
+				
+					
 					
 					joinGroupSvc.getAll();
 					int memblance =0;
 					int blance = membe.getMemBalance();
-					Integer inscPrice1 = new Integer(req.getParameter("inscPrice"));			
+					Integer wrmoney = new Integer(req.getParameter("inscPrice"));			
 					int memBlock = membe.getMemBlock();
 					System.out.println("餘額"+blance);
-					System.out.println("要扣的錢"+inscPrice1);
+					System.out.println("要扣的錢"+wrmoney);
 					System.out.println("預扣款項"+memblance);
 				
 					if (blance < memBlock) {
@@ -106,12 +108,21 @@ public class TeamServlet extends HttpServlet {
 						failureView.forward(req, res);
 						return;			    
 					} else {			
-						memblance = blance - inscPrice1;
-						memBlock = inscPrice1 + memBlock; 
-						System.out.println("memblance="+ memblance);
-						
+						memblance = blance - wrmoney;
+						memBlock  = (wrmoney + memBlock) ; 
+						System.out.println("memblance="+ memblance);				
 					}
-					memberSvc.update1(memblance, memBlock, membe.getMemId());           
+					memberSvc.update1(memblance, memBlock, membe.getMemId()); 
+					//新增交易紀錄
+					WithdrawalRecordService wrSvc = new WithdrawalRecordService();
+					wrSvc.addWithdrawalRecord(membe.getMemId(), - wrmoney ,new Date(new GregorianCalendar().getTimeInMillis()));
+					
+					
+					System.out.println("新增完成");
+					
+					
+					
+					
 					/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 					String url = "/team/myTeam.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
@@ -157,7 +168,8 @@ public class TeamServlet extends HttpServlet {
 		
 		
 		
-			if ("delete".equals(action)) { // 來自listAllEmp.jsp 或  /dept/listEmps_ByDeptno.jsp的請求
+			if ("delete".equals(action)) { 
+				    System.out.println("再見");      // 來自listAllEmp.jsp 或  /dept/listEmps_ByDeptno.jsp的請求
 				List<String> errorMsgs = new LinkedList<String>();
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
@@ -265,5 +277,41 @@ System.out.println("4");
 					failureView.forward(req, res);
 				}
 			}
+			
+			if ("include1".equals(action)) { // 來自listAllEmp.jsp 或 /dept/listEmps_ByDeptno.jsp 的請求
+
+				List<String> errorMsgs = new LinkedList<String>();
+
+				try {
+					/*************************** 1.接收請求參數 ****************************************/
+					String inscId = req.getParameter("inscId");
+					
+					TeamService teamSvc = new TeamService();
+					TeamVO teamVO = teamSvc.getOneTeam(inscId);
+					
+					MemberService memberSvc = new MemberService();
+					MemberVO memberVO = memberSvc.getOneMember(teamVO.getLeaderID());
+					
+					req.setAttribute("memberVO", memberVO);
+					
+					
+					boolean openModal=true;
+					req.setAttribute("openModal",openModal );
+					/***************************2.開始查詢資料****************************************/						
+					
+////					/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/	
+					String url = "/team/team.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+					successView.forward(req, res);
+				}catch (Exception e) {
+					errorMsgs.add("無法取得資料:" + e.getMessage());
+					RequestDispatcher failureView = req.getRequestDispatcher("/team/team.jsp");
+					failureView.forward(req, res);
+			}
+		}	
+			
+			
+			
+			
 	}
 }

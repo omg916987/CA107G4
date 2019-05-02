@@ -15,6 +15,8 @@
 <%
 	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
 %>
+<%int p = 0; %>
+
 
 <jsp:useBean id="memberSvc" scope="page"
 	class="com.member.model.MemberService" />
@@ -268,6 +270,7 @@
 						<span class="badge badge-light"> 隊伍型態 </span> <span
 							class="badge badge-info">自主性揪團</span> <span
 							class="badge badge-info">揪團編號</span>
+							
 					</div>
 				</div>
 				<div class="button-group">
@@ -286,6 +289,7 @@
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
+								
 								<!------Modal body------>
 								<div class="modal-body">
 									<a>團主姓名:${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memName}</a><br>
@@ -293,7 +297,6 @@
 									<a>預扣金額:${insCourseVO.inscPrice}</a><br> <a>開團時間:${teamSvc.getAll().get(0).getTemaMFD()}</a><br>
 									<a>截團時間:${teamSvc.getAll().get(0).getTeamEXP()}</a><br>
 									<div class="picture">
-
 										<img
 											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memId}"
 											width="175" height="150">

@@ -253,200 +253,104 @@
 						<span class="badge badge-info">揪團編號</span>
 					</div>
 				</div>
-				<div class="button-group">
-					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-info submit"
-						data-toggle="modal" data-target="#teamclass">詳情</button>
-					<!-- Modal -->
-					<div class="modal fade" id="teamclass" tabindex="-1" role="dialog"
-						aria-labelledby="teamclassTitle" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLongTitle">揪團詳情</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-<!-- 								----Modal body---- -->
-						<div class="modal-body">
- 								<a>團主姓名:${memberSvc.getOneMember(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).leaderID).memName}</a><br> 
-								<a>連絡電話:${memberSvc.getOneMember(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).leaderID).memPhone}</a><br> 
-								<a>預扣金額:${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscPrice}</a><br>
-								<a>開團時間:${teamSvc.getAll().get(0).getTemaMFD()}</a><br>
-								<a>截團時間:${teamSvc.getAll().get(0).getTeamEXP()}</a><br>		
-                         <div class="picture">
-					
-	               <img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).leaderID}"width="175" height="150" >
-	
-		            </div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-info" data-dismiss="modal">關閉</button>
-
-								</div>
-							</div>
-							</div>
-							</div>
-					<button type="button" class="btn btn-info submit"
-						data-toggle="modal" data-target="#myModal">退出揪團</button>
-						
+				
+              <div class="button-group">
+              <div class="row">
+	                    <button type="button" class="btn btn-info submit"
+						 data-toggle="modal" data-target="#teamclass">詳情</button>
+                <FORM METHOD="get" ACTION="team.do" name="delete">      
+                        <input type="hidden" name="memId" value="weshare01">
+                        <input type="hidden" name="teamId" value="${joinGroupVO.teamId}">	 	
+						<input type="hidden" name="action" value="delete"> 
+ 					<input type="submit" value="退出揪團"
+								class="btn btn-info submit" data-disable-with="find" /></form>
 						</div>
-						<div>
-	              </div>			
-				<!-- 				------------------------------------------------------ -->
-				<!-- The Modal -->
-
-				<div class="modal fade" id="myModal">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<!-- Modal Header -->
-							<div class="modal-header">
-								<h4 class="modal-title">退出揪團</h4>
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-							</div>
-							<!-- Modal body -->
-							<div class="modal-body">
-
-								<%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">
-									<font style="color: red">請修正以下錯誤:</font>
-									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
-											<li style="color: red">${message}</li>
-										</c:forEach>
-									</ul>
-								</c:if>
-
-
-								<FORM METHOD="get" ACTION="team.do" name="form1">
-									<table>
-										<tr>
-											<td>帳號:</td>
-											<td><input class="form-control" type="text"
-												placeholder="請輸入帳號" name="memId" size="20" readonly="readonly"
-												value="${joinGroupVO.memId}" /></td>
-										</tr>
-										<tr>
-											<td>揪團編號:</td>
-											<td><input type="TEXT" class="form-control " readonly="readonly" 
-												name="teamId" size="35"
-												value="${joinGroupVO.teamId}" /></td>
-										</tr>
-									</table>
-									
-									<div class="modal-footer">
-										<button type="button" class="btn btn-info"
-											data-dismiss="modal">取消</button>
-
-										<input type="hidden" name="action" value="delete">
-										<button type="submit" class="btn btn-info"
-											data-dismiss="insert">退出</button>
-									</div>
-								</Form>
-							</div>
 						</div>
-					</div>
+				</div>
 				</div>
 				
-				<!-- Button trigger modal -->
-<button type="button1" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">成員名單</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">團員名單(${joinGroupVO.teamId})</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       
-
-
-
-
- 
-
-
-
-
-
-<div class="container">
-         
-  <table class="table table-dark table-striped">
-  
-    <thead>
-   
-    
-   
-    
-   
-      <tr>
-        <th>姓名</th>
-        <th>email</th>
-        <td></td>
-      </tr>
-      
-
-    </thead>
-     
-    <tbody>
-  
-     <c:set var="list2" value="${joinGroupSvc1.findByTeamId(joinGroupVO.teamId)}" scope="request" />
-      <tr>
-       
-      <c:forEach var="joinGroupVO" items="${list2}">
-      <tr>
-        <td>${memberSvc.getOneMember(joinGroupVO.memId).memName}</td>
-        
-        <td>${memberSvc.getOneMember(joinGroupVO.memId).memEmail}</td>
-      </tr>
-      </c:forEach>
-    </tbody>
- 
-  </table>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-     
-      </div>
-    </div>
-  </div>
-</div>
-				
-			</div>
-		</div>
+	
 
 
 
 	</c:forEach>
 	<%@ include file="page2.file"%>
+				
+				<!-- Button trigger modal -->
+<!-- <button type="button1" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">成員名單</button> -->
+
+<!-- <!-- Modal --> 
+
+       
+
+
+
+
+ 
+
+
+
+
+
+<!-- <div class="container"> -->
+         
+<!--   <table class="table table-dark table-striped"> -->
+  
+<!--     <thead> -->
+   
+    
+   
+    
+   
+<!--       <tr> -->
+<!--         <th>姓名</th> -->
+<!--         <th>email</th> -->
+<!--         <td></td> -->
+<!--       </tr> -->
+      
+
+<!--     </thead> -->
+     
+<!--     <tbody> -->
+  
+<%--      <c:set var="list2" value="${joinGroupSvc1.findByTeamId(joinGroupVO.teamId)}" scope="request" /> --%>
+<!--       <tr> -->
+       
+<%--       <c:forEach var="joinGroupVO" items="${list2}"> --%>
+<!--       <tr> -->
+<%--         <td>${memberSvc.getOneMember(joinGroupVO.memId).memName}</td> --%>
+        
+<%--         <td>${memberSvc.getOneMember(joinGroupVO.memId).memEmail}</td> --%>
+<!--       </tr> -->
+<%--       </c:forEach> --%>
+<!--     </tbody> -->
+ 
+<!--   </table> -->
+<!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+				
+
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
 	<footer class="section footer-classic context-dark bg-image"
 		style="background: #74b49b;">
