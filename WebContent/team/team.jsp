@@ -324,7 +324,7 @@ swal.resetDefaults();//清空自訂預設值
 $(function () {
     $("#${teamSvc.getOneTeam(insCourseVO.inscId).teamId}").click(function () {
         //confirm dialog範例
-        swal({
+        swal({ 
             title: "確定加入揪團？",
             html: "按下確定後即將扣除餘額，並產生訂單明細",
             type: "question",
