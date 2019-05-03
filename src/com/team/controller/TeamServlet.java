@@ -8,6 +8,10 @@ import java.util.List;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 import com.team.model.TeamService;
@@ -280,10 +284,11 @@ System.out.println("4");
 			
 			if ("include1".equals(action)) { // 來自listAllEmp.jsp 或 /dept/listEmps_ByDeptno.jsp 的請求
 
-				List<String> errorMsgs = new LinkedList<String>();
-
+				
 				try {
 					/*************************** 1.接收請求參數 ****************************************/
+				    
+					System.out.println("有近來");
 					String inscId = req.getParameter("inscId");
 					
 					TeamService teamSvc = new TeamService();
@@ -293,20 +298,19 @@ System.out.println("4");
 					MemberVO memberVO = memberSvc.getOneMember(teamVO.getLeaderID());
 					
 					req.setAttribute("memberVO", memberVO);
-					
-					
+				
 					boolean openModal=true;
 					req.setAttribute("openModal",openModal );
+				
 					/***************************2.開始查詢資料****************************************/						
 					
 ////					/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/	
-					String url = "/team/team.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+					
+					RequestDispatcher successView = req.getRequestDispatcher("/team/team.jsp"); // 成功轉交 loginSuccess.jsp
 					successView.forward(req, res);
+					System.out.println("走完了");
 				}catch (Exception e) {
-					errorMsgs.add("無法取得資料:" + e.getMessage());
-					RequestDispatcher failureView = req.getRequestDispatcher("/team/team.jsp");
-					failureView.forward(req, res);
+					throw new ServletException(e);
 			}
 		}	
 			

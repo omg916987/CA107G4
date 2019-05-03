@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.team.model.*"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
-<%@ page import="com.course.model.*"%>
-<%@ page import="com.joingroup.model.*"%>
+
+
+
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.inscourse.model.*"%>
 
 
+<!doctype html>
 <html>
 <head>
 
@@ -24,10 +24,7 @@
     display: block;
     margin: 5px;
   }
-  h4 {
-    color: blue;
-    display: inline;
-  }
+
 </style>
 
 <style>
@@ -53,6 +50,8 @@
 <table id="table-1" class="myTable">
 	
 </table>
+
+
 <table class="myTable">
 	<tr>
 		<th>團主姓名</th>
@@ -64,8 +63,7 @@
 	<tr>
 		<td>${memberVO.memName}</td>
 		<td>${memberVO.memPhone}</td>
-<%-- 		<td>${insCourseVO.inscPrice}</td> --%>
-<%-- 		<td>${teamSvc.getAll().get(0).getTeamEXP()}</td> --%>
+
 	</tr>
 	
 </table>

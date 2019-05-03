@@ -160,14 +160,25 @@ textarea{
 	<div class="container">
 		<div class="row">
 			<div class="col-3">
+			<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do" name="form1" id="form1">
 				<div class="list-group" id="list-tab" role="tablist">
+				
 					<a class="list-group-item list-group-item-action active"
 						id="list-home-list" data-toggle="list" href="#list-home"
 						role="tab" aria-controls="home">建議的好友</a> <a
 						class="list-group-item list-group-item-action"
 						id="list-profile-list" data-toggle="list" href="#list-profile"
 						role="tab" aria-controls="profile">聊天室</a>
+						
+						
+						
+				
+						<input type="hidden" name="memId" value="weshare01">
+					    <input type="hidden" name="action" value="getmyFriend">
 						<input class="btn btn-secondary" type="submit" value="我的好友列表">
+						</Form>
+						
+					
 				</div>
 			</div>
 			<div class="col-9">
@@ -194,8 +205,7 @@ textarea{
 													<div>
 														<input type="hidden" name="memId" value="weshare02">
 														<a class="user_name">姓名:${memberVO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
-														<a class="user_name">ID:${memberVO.memId}</a><br> <input
-															type="hidden" name="friendAcc" value="${memberVO.memId}">
+													<br> <input type="hidden" name="friendAcc" value="${memberVO.memId}">
 														<a class="user_name">專長:&nbsp;${courseSvc.findOneById(memberVO.memSkill).courseName}</a><br>
 														<a class="user_name">想學的課:&nbsp;${courseSvc.findOneById(memberVO.memWantSkill).courseName}</a>
 													</div>
@@ -221,19 +231,25 @@ textarea{
 
 									<div class="card p-2">
 										<h6 class="my-1">搜尋好友</h6>
-										<FORM METHOD="get"
-											ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+										<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<div class="input-group">
-										<input type="text" class="form-control" name="memId" placeholder="請輸入好友帳號">
+								<input type="text" class="form-control" name="memName" placeholder="請輸入好友帳號">
 								<div class="input-group-append">
-												<button type="submit" class="btn btn-secondary">尋找</button>
+								<button type="submit" class="btn btn-secondary">尋找</button>
+								<input type="hidden" name="action" value="getOne_For_Display">
 											</div>		
 										</div>
+										</FORM>
 									</div>
 									<div>
-									<input type="hidden" name="action" value="getOne_For_Display">
-									<input class="btn btn-info" type="button" value="申請好友列表"></FORM></div>
-								
+									
+									
+									<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+									<input type="hidden" name="action" value="getmyFriendCheck">
+									<input type="hidden" name="memId" value="weshare01">
+									<input class="btn btn-info" type="submit" value="申請好友列表"></div>
+								    </FORM>
+								    
 								</ul>
 							</div>
 						</div>

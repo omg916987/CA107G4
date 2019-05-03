@@ -146,7 +146,9 @@ public class MemberService {
     public MemberVO getOnepicture(byte[] memImage) {
     	return dao.findByPrimaryKey(memImage);
     }
-    
+    public MemberVO findMemName(String memName) {
+    	return dao.findMemName(memName);
+    }
     
   
     

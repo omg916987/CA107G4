@@ -34,6 +34,8 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			"UPDATE Member set memPsw=?,memAdd=? ,memText=?, memBank=?,memSkill=?, memWantSkill=? where  memId =? ";
 	private static final String UPDATE1 = 
 			"UPDATE Member set memBalance=? ,memBlock=? where memId =? ";
+	private static final String GET_MEMNAME = 
+			"SELECT * FROM Member where memName = ?";
 	@Override
 	public void insert(MemberVO memberVO) {
 		Connection con = null;
@@ -656,30 +658,30 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 //		dao.insert(memberVO1);
 		
 		// 查詢全部
-		List<MemberVO> list = dao.getAll();
-		for (MemberVO memberVO2 : list) {
-			System.out.print(memberVO2.getMemId() + ",");
-			System.out.print(memberVO2.getMemPsw()+ ",");
-			System.out.print(memberVO2.getMemPswHint()+ ",");
-			System.out.print(memberVO2.getMemIdCard()+ ",");
-			System.out.print(memberVO2.getMemName()+ ",");
-			System.out.print(memberVO2.getMemSex()+ ",");
-			System.out.print(memberVO2.getMemImage()+ ",");
-			System.out.print(memberVO2.getMemEmail()+ ",");
-			System.out.print(memberVO2.getMemPhone()+ ",");
-			System.out.print(memberVO2.getMemBirth()+ ",");
-			System.out.print(memberVO2.getMemAdd()+ ",");
-			System.out.print(memberVO2.getMemText()+ ",");
-			System.out.print(memberVO2.getMemBank()+ ",");
-			System.out.print(memberVO2.getMemBalance()+ ",");
-			System.out.print(memberVO2.getMemBlock()+ ",");
-			System.out.print(memberVO2.getMemStatus()+ ",");
-			System.out.print(memberVO2.getMemSkill()+ ",");
-			System.out.print(memberVO2.getMemWantSkill()+ ",");
-			System.out.print(memberVO2.getMemPair()+ ",");
-	
-			System.out.println("---------------------");
-		}
+//		List<MemberVO> list = dao.getAll();
+//		for (MemberVO memberVO2 : list) {
+//			System.out.print(memberVO2.getMemId() + ",");
+//			System.out.print(memberVO2.getMemPsw()+ ",");
+//			System.out.print(memberVO2.getMemPswHint()+ ",");
+//			System.out.print(memberVO2.getMemIdCard()+ ",");
+//			System.out.print(memberVO2.getMemName()+ ",");
+//			System.out.print(memberVO2.getMemSex()+ ",");
+//			System.out.print(memberVO2.getMemImage()+ ",");
+//			System.out.print(memberVO2.getMemEmail()+ ",");
+//			System.out.print(memberVO2.getMemPhone()+ ",");
+//			System.out.print(memberVO2.getMemBirth()+ ",");
+//			System.out.print(memberVO2.getMemAdd()+ ",");
+//			System.out.print(memberVO2.getMemText()+ ",");
+//			System.out.print(memberVO2.getMemBank()+ ",");
+//			System.out.print(memberVO2.getMemBalance()+ ",");
+//			System.out.print(memberVO2.getMemBlock()+ ",");
+//			System.out.print(memberVO2.getMemStatus()+ ",");
+//			System.out.print(memberVO2.getMemSkill()+ ",");
+//			System.out.print(memberVO2.getMemWantSkill()+ ",");
+//			System.out.print(memberVO2.getMemPair()+ ",");
+//	
+//			System.out.println("---------------------");
+//		}
 //		
 		// 查詢單筆
 //		MemberVO memberVO3 = dao.findByPrimaryKey("weshare03");
@@ -752,7 +754,33 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 //			memberVO1.setMemBlock(0);
 //			memberVO1.setMemStatus(0);
 //			dao.registered(memberVO1);
-				
+	
+		
+		// 查詢單筆
+		MemberVO memberVO3 = dao.findMemName("蓋兒加朵");
+			System.out.print(memberVO3.getMemId() + ",");
+			System.out.print(memberVO3.getMemPsw()+ ",");
+			System.out.print(memberVO3.getMemPswHint()+ ",");
+
+			System.out.print(memberVO3.getMemName()+ ",");
+			System.out.print(memberVO3.getMemSex()+ ",");
+////			Base64.Encoder encoder = Base64.getEncoder();
+////			String encodedText = encoder.encodeToString(memberVO3.getMemImage());
+			//System.out.println("???"+encodedText);
+			System.out.print(memberVO3.getMemEmail()+ ",");
+			System.out.print(memberVO3.getMemPhone()+ ",");
+			System.out.print(memberVO3.getMemBirth()+ ",");
+			System.out.print(memberVO3.getMemAdd()+ ",");
+			System.out.print(memberVO3.getMemText()+ ",");
+			System.out.print(memberVO3.getMemBank()+ ",");
+			System.out.print(memberVO3.getMemBalance()+ ",");
+			System.out.print(memberVO3.getMemBlock()+ ",");
+			System.out.print(memberVO3.getMemStatus()+ ",");
+			System.out.print(memberVO3.getMemSkill()+ ",");
+			System.out.print(memberVO3.getMemWantSkill()+ ",");
+			System.out.print(memberVO3.getMemPair()+ ",");
+//	
+			System.out.println("---------------------");
 		
 			MemberVO MemberVO5 = new MemberVO();
 		
@@ -761,6 +789,83 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			MemberVO5.setMemId("weshare03");
 			dao.update1(MemberVO5);
 	}
+	
+	///////////合併用
+	@Override
+	public MemberVO findMemName(String memName) {
+		MemberVO memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_MEMNAME);
+
+			pstmt.setString(1,memName);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				memberVO = new MemberVO();
+				memberVO.setMemId(rs.getString("memId"));
+				memberVO.setMemSkill(rs.getString("memSkill"));
+				memberVO.setMemWantSkill(rs.getString("memWantSkill"));
+				memberVO.setMemPair(rs.getString("memPair"));
+				memberVO.setMemPsw(rs.getString("memPsw"));
+				memberVO.setMemPswHint(rs.getString("memPswHint"));
+				memberVO.setMemName(rs.getString("memName"));
+				memberVO.setMemSex(rs.getInt("memSex"));
+				memberVO.setMemImage(rs.getBytes("memImage"));
+				memberVO.setMemEmail(rs.getString("memEmail"));
+				memberVO.setMemPhone(rs.getString("memPhone"));
+				memberVO.setMemBirth(rs.getDate("memBirth"));
+				memberVO.setMemAdd(rs.getString("memAdd"));
+				memberVO.setMemText(rs.getString("memText"));
+				memberVO.setMemBank(rs.getString("memBank"));
+				memberVO.setMemBalance(rs.getInt("memBalance"));
+				memberVO.setMemBlock(rs.getInt("memBlock"));
+				memberVO.setMemStatus(rs.getInt("memStatus"));
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberVO;
+		
+	}
+
 
 	
 

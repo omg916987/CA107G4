@@ -309,26 +309,28 @@
 					
 
 <!-- Button trigger modal -->
-          <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do">
+
+          <FORM id="submitRequest" METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do">
           	<input type="hidden" name="action" value="include1">
           	<input type="hidden" name="inscId" value="${insCourseVO.inscId}">
-         <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
+         <button type="submit" id="submitExample" class="btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
           </button>
-        </FORM>
-        
-<c:if test="${openModal!=null}">
+      </FORM>
+   
+
 <!-- Modal -->
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
      <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 class="modal-title" id="myModalLabel">The Bootstrap modal-header</h3>
+                
             </div>
 			
 			<div class="modal-body">
-       <jsp:include page="listOneEmp.jsp"/>
+        <jsp:include page="listOneEmp.jsp" />
       </div>
+       
       <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
@@ -337,45 +339,8 @@
   </div>
 </div>
 
-   <script>
-    		 $("#basicModal").modal({show: true});
-        </script>
- </c:if>
 
-
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 							
 							
 							
@@ -478,10 +443,11 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
- <!--引用jQuery-->
+ <!--引用jQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
-    <!--引用SweetAlert2.js-->
+<!--     引用SweetAlert2.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
+   
    
 
 
@@ -517,7 +483,68 @@ $(function () {
             });//end then 
     });
 });
+
+
+<%-- <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do"> --%>
+// 	<input type="hidden" name="action" value="include1">
+// 	<input type="hidden" name="inscId" value="${insCourseVO.inscId}">
+// <button type="submit" id="submitExample" class="btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
+// </button>
+// </FORM>
+
+//   $(document).ready(function)(){
+	  
+// 	  $("#submitExample").click(function()){
+// 		  $.ajax({
+// 	            type: "get", //傳送方式
+<%-- 	            url: "<%=request.getContextPath()%>/team/team.do", //傳送目的地 --%>
+// 	            dataType: "json", //資料格式
+// 	            data: { //傳送資料
+// 	            	inscId: $("${insCourseVO.inscId}").val(), //表單欄位 ID nickname
+// 	                gender: $("#gender").val() //表單欄位 ID gender
+// 	            },
+// 	            success: function(data) {
+// 	                if (data.nickname) { //如果後端回傳 json 資料有 nickname
+// 	                    $("#demo")[0].reset(); //重設 ID 為 demo 的 form (表單)
+// 	                    $("#result").html('<font color="#007500">您的暱稱為「<font color="#0000ff">' + data.nickname + '</font>」，性別為「<font color="#0000ff">' + data.gender + '</font>」！</font>');
+// 	                } else { //否則讀取後端回傳 json 資料 errorMsg 顯示錯誤訊息
+// 	                    $("#demo")[0].reset(); //重設 ID 為 demo 的 form (表單)
+// 	                    $("#result").html('<font color="#ff0000">' + data.errorMsg + '</font>');
+// 	                }
+// 	            },
+// 	            error: function(jqXHR) {
+// 	                $("#demo")[0].reset(); //重設 ID 為 demo 的 form (表單)
+// 	                $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
+// 	            }
+// 	        })
+// 	    })        
+// 	});
+
+
+
+
+
+
+
 </script>
    
+
+
+<!-- 实现局部刷新js -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        var options = {   
+            //需要刷新的区域id 
+            target:'#basicModal',    
+        };   
+        //绑定FORM提交事件  
+        $('#submitRequest').submit(function() {  
+            $(this).ajaxSubmit(options);   
+            return false;   
+        }); 
+    });     
+</script>
+
+
 </body>
 </html>

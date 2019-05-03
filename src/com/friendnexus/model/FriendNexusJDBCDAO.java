@@ -427,12 +427,12 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 //		dao.insert(FriendNexusVO1);
 
 //		 查詢
-//		FriendNexusVO FriendNexusVO2 = dao.findByPrimaryKey("weshare02");
-//		System.out.print(FriendNexusVO2.getMemId() + ",");
-//		System.out.print(FriendNexusVO2.getFriendAcc() + ",");
-//		System.out.println(FriendNexusVO2.getFriendstatus() + ",");
-//
-//		System.out.println("---------------------");
+		FriendNexusVO FriendNexusVO2 = dao.findByPrimaryKey("weshare02");
+		System.out.print(FriendNexusVO2.getMemId() + ",");
+		System.out.print(FriendNexusVO2.getFriendAcc() + ",");
+		System.out.println(FriendNexusVO2.getFriendstatus() + ",");
+
+		System.out.println("---------------------");
 
 		// 查詢
 //		List<FriendNexusVO> list = dao.getAll();

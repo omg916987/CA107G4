@@ -45,7 +45,7 @@
 	margin-top: 76px;
 }
 
-.col-8 {;
+.col-8 {
 	border: 1px solid;
 	height: 800px;
 	width: 900px;
@@ -153,6 +153,21 @@ textarea {
 		</div>
 	</nav>
 </div>
+
+
+
+	<c:if test="${not empty errorMsgs}">
+			<h4 style="color: red; text-align: center;">請修正以下錯誤:</h4>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red; text-align: center;">${message}</li>
+				</c:forEach>
+			</ul>
+		</c:if>
+
+
+
+
 <!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 <div class="title TitleImg">
 	<h1 class="hader-title" style="text-align: center">我的好友列表</h1>
@@ -161,8 +176,8 @@ textarea {
 	<div class="row">
 		<div class="col-3">
 			<div class="list-group" id="list-tab" role="tablist">
-
-				<input class="btn btn-secondary" type="submit" value="返回推薦的好友">
+<a class="btn btn-secondary" href="<%=request.getContextPath()%>/friend/allfriend.jsp" role="button">返回推薦的好友</a>
+			
 			</div>
 		</div>
 		<div class="col-9">
@@ -233,8 +248,11 @@ textarea {
 								</div>
 								<div class="but">
 								
-									<input type="hidden" name="action" value="friend"> 
-									<input class="btn btn-info" type="button" value="申請好友列表">
+								<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+									<input type="hidden" name="action" value="getmyFriendCheck">
+									<input type="hidden" name="memId" value="weshare01">
+									<input class="btn btn-info" type="submit" value="申請好友列表"></div>
+								    </FORM>
 								</div>
 							</ul>
 						</div>

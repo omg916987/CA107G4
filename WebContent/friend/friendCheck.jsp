@@ -10,8 +10,6 @@
 	List<FriendNexusVO> list = friendSvc.friendNexus0("weshare02");
 	pageContext.setAttribute("list", list);
 	
-	
-	response.setIntHeader("Refresh", 5);
 %>
 
 <jsp:useBean id="courseSvc" scope="page"
@@ -33,7 +31,7 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/G4.css ">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/friend/css/G4.css ">
 <style type="text/css">
 .friend {
 	margin-top: auto;
@@ -41,13 +39,14 @@
 
 .title.TitleImg {
 	background-size: cover;
-	background-image:url(<%=request.getContextPath()%>/friend/img/hero-image-wrapper.png);
+	background-image: url(<%=request.getContextPath()%>/friend/img/hero-image-wrapper.png);
+	padding: 40px;
 	margin-top: 76px;
 }
 
 .col-8 {;
 	border: 1px solid;
-	height: 900px;
+	height: 900px;	
     width: 900px;
 }
 
@@ -107,7 +106,10 @@ textarea{
 .btn-info {
     margin-top: 30px;
 }
+.btn btn-secondary {
+     magin-top:30px;
 
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -117,7 +119,7 @@ textarea{
 	<!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
 	<div class="header headerImg">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-			<img src="images/icon/logo.png" width="80" height="60" alt="" /><a
+				<img src="<%=request.getContextPath()%>/friend/icon/logo.png" width="80" height="60" alt="" /><a
 				class="navbar-brand" href="#">教育共享平台</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
@@ -210,7 +212,7 @@ textarea{
 								<%@ include file="page2.file"%>
 							</div>
 
-							<div class="col-4">
+							<div class="col-3">
 
 								<ul class="list-group mb-3">
 
@@ -229,9 +231,13 @@ textarea{
 									 <div class ="but">
 									<input type="hidden" name="action" value="friend">
 									
-									<input class="btn btn-info" type="button" value="申請好友列表">
 									
 									
+										<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do" name="form1" id="form1">
+						<input type="hidden" name="memId" value="weshare01">
+					    <input type="hidden" name="action" value="getmyFriend">
+						<input class="btn btn-info" type="submit" value="我的好友列表">
+						</Form>
 									</div>
 									
 												

@@ -9,11 +9,12 @@ import java.util.Map;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-
 import com.friendnexus.model.FriendNexusService;
 import com.friendnexus.model.FriendNexusVO;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
+import com.team.model.TeamService;
+import com.team.model.TeamVO;
 
 public class FriendNexusServlet extends HttpServlet {
 
@@ -113,10 +114,9 @@ public class FriendNexusServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 
-		
-			}
+		}
 		if ("delete".equals(action)) { // 來自listAllEmp.jsp
-			
+
 			List<String> errorMsgs1 = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -152,59 +152,106 @@ public class FriendNexusServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				String str = req.getParameter("memId");
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String str = req.getParameter("memName");
 				System.out.println(str);
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入好友ID");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/friend/allfriend.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
 					failureView.forward(req, res);
-					return;//程式中斷
+					return;// 程式中斷
 				}
-				
-				String memId = null;
+
+				String memName = null;
 				try {
-					memId = new String(str);
+					memName = new String(str);
 				} catch (Exception e) {
 					errorMsgs.add("好友ID不正確");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/friend/allfriend.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
 					failureView.forward(req, res);
-					return;//程式中斷	
+					return;// 程式中斷
 				}
-				
-				/***************************2.開始查詢資料*****************************************/
+
+				/*************************** 2.開始查詢資料 *****************************************/
 				MemberService memberSvc = new MemberService();
-				MemberVO memberVO = memberSvc.getOneMember(memId);
+				MemberVO memberVO = memberSvc.findMemName(memName);
 				if (memberVO == null) {
 					errorMsgs.add("查無資料");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/friend/allfriend.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
 					failureView.forward(req, res);
-					return;//程式中斷
+					return;// 程式中斷
 				}
-				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("memberVO", memberVO);
 				String url = "/friend/findOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************其他可能的錯誤處理*************************************/
+				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/friend/allfriend.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
 				failureView.forward(req, res);
+			}
+		}
+		if ("getmyFriend".equals(action)) { // 來自listAllEmp.jsp 或 /dept/listEmps_ByDeptno.jsp 的請求
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+
+				System.out.println("有近來");
+				String memId = req.getParameter("memId");
+
+				MemberService memberSvc = new MemberService();
+				MemberVO memberVO = memberSvc.getOneMember(memId);
+
+				req.setAttribute("memberVO", memberVO);
+
+				/*************************** 2.開始查詢資料 ****************************************/
+
+////				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/	
+
+				RequestDispatcher successView = req.getRequestDispatcher("/friend/myfriend.jsp"); // 成功轉交
+																									// loginSuccess.jsp
+				successView.forward(req, res);
+				System.out.println("走完了");
+			} catch (Exception e) {
+				throw new ServletException(e);
+			}
+		}
+		
+		if ("getmyFriendCheck".equals(action)) { // 來自listAllEmp.jsp 或 /dept/listEmps_ByDeptno.jsp 的請求
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+
+				System.out.println("有近來");
+				String memId = req.getParameter("memId");
+
+				MemberService memberSvc = new MemberService();
+				MemberVO memberVO = memberSvc.getOneMember(memId);
+
+				req.setAttribute("memberVO", memberVO);
+
+				/*************************** 2.開始查詢資料 ****************************************/
+
+////				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/	
+
+				RequestDispatcher successView = req.getRequestDispatcher("/friend/friendCheck.jsp"); // 成功轉交
+																									// loginSuccess.jsp
+				successView.forward(req, res);
+				System.out.println("走完了");
+			} catch (Exception e) {
+				throw new ServletException(e);
 			}
 		}
 	}
