@@ -277,8 +277,8 @@
 				</div>
 				<div class="plan_info">
 					<h4>
-						${courseSvc.findOneById(insCourseVO.courseId).courseName} <span
-							class="badge badge-light">團體課程</span>
+						${courseSvc.findOneById(insCourseVO.courseId).courseName} <span 
+							class="badge badge-light">團體課程 </span>
 					</h4>
 					<div>
 						<i class="far fa-calendar-alt"></i>
@@ -296,7 +296,7 @@
 					</div>
 					<div class="class1">
 						<span class="badge badge-light"> 隊伍型態 </span> <span
-							class="badge badge-info">自主性揪團</span> <span
+							class="badge badge-info">自主性揪團 ${insCourseVO.inscId}</span> <span
 							class="badge badge-info">揪團編號${teamSvc.getOneTeam(insCourseVO.inscId).teamId}</span>
 
 					</div>
@@ -305,17 +305,56 @@
 				<div class="button-group">
 					<div class="row">
 					
-					
+					<FORM METHOD="get" ACTION="team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
+							<input type="hidden" name="memId" value="weshare01">
+							<input type="hidden" name="teamId" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
+							<input type="hidden" name="inscPrice"
+								value="${insCourseVO.inscPrice}"> <input type="hidden"
+								name="action" value="insert"> 
+								<input type="button" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" class="btn btn-info submit" data-disable-with="find" />
+						</form>
+<script type="text/javascript">
+//自訂預設值
+swal.setDefaults({
+    confirmButtonText: "確定",
+    cancelButtonText: "取消"
+});
+swal.resetDefaults();//清空自訂預設值
+
+$(function () {
+    $("input:button").click(function () {
+        //confirm dialog範例
+        swal({
+            title: "確定加入揪團？",
+            html: "按下確定後即將扣除餘額，並產生訂單明細",
+            type: "question",
+            showCancelButton: true//顯示取消按鈕
+        }).then(
+            function (result) {
+                if (result.value) {
+                    //使用者按下「確定」要做的事
+                    swal("完成!", "資料已經刪除", "success");
+                    $("#${teamSvc.getOneTeam(insCourseVO.inscId).teamId}").submit();
+                    
+                } else if (result.dismiss === "cancel")  
+                {
+                     //使用者按下「取消」要做的事
+                    swal("取消", "資料未被刪除", "error");
+                }//end else  
+            });//end then 
+    });
+});
+</script>						 
 					
 
 <!-- Button trigger modal -->
 
-          <FORM id="submitRequest" METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do">
-          	<input type="hidden" name="action" value="include1">
-          	<input type="hidden" name="inscId" value="${insCourseVO.inscId}">
-         <button type="submit" id="submitExample" class="btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
+         
+          
+         <button type="button" class="submitExample btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
+        <input type="hidden" value="${insCourseVO.inscId}" class="ha">
           </button>
-      </FORM>
+    
    
 
 <!-- Modal -->
@@ -344,16 +383,6 @@
 							
 							
 							
-							
-						<FORM METHOD="get" ACTION="team.do" name="form1" id="form1">
-							<input type="hidden" name="memId" value="weshare01">
-							<input type="hidden" name="teamId" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
-							<input type="hidden" name="inscPrice"
-								value="${insCourseVO.inscPrice}"> <input type="hidden"
-								name="action" value="insert"> 
-								<input type="button" id="bt1" value="加入揪團" class="btn btn-info submit" data-disable-with="find" />
-						</form>
-						
 						 
    
  
@@ -452,75 +481,39 @@
 
 
 <script type="text/javascript">
-//自訂預設值
-swal.setDefaults({
-    confirmButtonText: "確定",
-    cancelButtonText: "取消"
-});
-//swal.resetDefaults();//清空自訂預設值
 
 
-$(function () {
-    $("input:button").click(function () {
-        //confirm dialog範例
-        swal({
-            title: "確定加入揪團？",
-            html: "按下確定後即將扣除餘額，並產生訂單明細",
-            type: "question",
-            showCancelButton: true//顯示取消按鈕
-        }).then(
-            function (result) {
-                if (result.value) {
-                    //使用者按下「確定」要做的事
-                    swal("完成!", "資料已經刪除", "success");
-                    $('#form1').submit();
-                    
-                } else if (result.dismiss === "cancel")  
-                {
-                     //使用者按下「取消」要做的事
-                    swal("取消", "資料未被刪除", "error");
-                }//end else  
-            });//end then 
-    });
-});
 
 
-<%-- <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do"> --%>
-// 	<input type="hidden" name="action" value="include1">
-// 	<input type="hidden" name="inscId" value="${insCourseVO.inscId}">
-// <button type="submit" id="submitExample" class="btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
-// </button>
-// </FORM>
 
-//   $(document).ready(function)(){
+
+
+
+  $(document).ready(function(){
+	
 	  
-// 	  $("#submitExample").click(function()){
-// 		  $.ajax({
-// 	            type: "get", //傳送方式
-<%-- 	            url: "<%=request.getContextPath()%>/team/team.do", //傳送目的地 --%>
-// 	            dataType: "json", //資料格式
-// 	            data: { //傳送資料
-// 	            	inscId: $("${insCourseVO.inscId}").val(), //表單欄位 ID nickname
-// 	                gender: $("#gender").val() //表單欄位 ID gender
-// 	            },
-// 	            success: function(data) {
-// 	                if (data.nickname) { //如果後端回傳 json 資料有 nickname
-// 	                    $("#demo")[0].reset(); //重設 ID 為 demo 的 form (表單)
-// 	                    $("#result").html('<font color="#007500">您的暱稱為「<font color="#0000ff">' + data.nickname + '</font>」，性別為「<font color="#0000ff">' + data.gender + '</font>」！</font>');
-// 	                } else { //否則讀取後端回傳 json 資料 errorMsg 顯示錯誤訊息
-// 	                    $("#demo")[0].reset(); //重設 ID 為 demo 的 form (表單)
-// 	                    $("#result").html('<font color="#ff0000">' + data.errorMsg + '</font>');
-// 	                }
-// 	            },
-// 	            error: function(jqXHR) {
-// 	                $("#demo")[0].reset(); //重設 ID 為 demo 的 form (表單)
-// 	                $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
-// 	            }
-// 	        })
-// 	    })        
-// 	});
+	  $(".submitExample").click(function(){
+		 
+		  $.ajax({
+	            type: "get", //傳送方式
+	            url:  "<%=request.getContextPath()%>/team/team.do", 
+	            data:  {"action": "include1",
+	            	    "inscId":  $(".ha").val()},
+	          dataType:"json",
+	            
+	            success: function(data) {
+	            	console.log(data.member_name);
+	                if (data.iscnId) { //如果後端回傳 json 資料有 nickname
+	                }     
+	            },
+	            error: function() {
+	                alert("有錯誤")
+	            }
+	        })
+	    })        
+	});
 
-
+  
 
 
 
@@ -530,20 +523,7 @@ $(function () {
    
 
 
-<!-- 实现局部刷新js -->
-<script type="text/javascript">
-    $(document).ready(function() {
-        var options = {   
-            //需要刷新的区域id 
-            target:'#basicModal',    
-        };   
-        //绑定FORM提交事件  
-        $('#submitRequest').submit(function() {  
-            $(this).ajaxSubmit(options);   
-            return false;   
-        }); 
-    });     
-</script>
+
 
 
 </body>

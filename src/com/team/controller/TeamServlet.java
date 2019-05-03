@@ -1,6 +1,7 @@
 package com.team.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -290,17 +291,26 @@ System.out.println("4");
 				    
 					System.out.println("有近來");
 					String inscId = req.getParameter("inscId");
-					
+					System.out.println(inscId);
 					TeamService teamSvc = new TeamService();
 					TeamVO teamVO = teamSvc.getOneTeam(inscId);
 					
 					MemberService memberSvc = new MemberService();
 					MemberVO memberVO = memberSvc.getOneMember(teamVO.getLeaderID());
 					
+					System.out.println(teamVO.getLeaderID());
 					req.setAttribute("memberVO", memberVO);
 				
-					boolean openModal=true;
-					req.setAttribute("openModal",openModal );
+				   JSONObject obj = new JSONObject();
+				   
+				   obj.put("member_name", memberVO.getMemName());
+				   
+				   res.setContentType("text/plain");
+				   res.setCharacterEncoding("UTF-8");
+				   PrintWriter out = res.getWriter();
+				   out.write(obj.toString());
+				 
+				   
 				
 					/***************************2.開始查詢資料****************************************/						
 					

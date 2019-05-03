@@ -61,8 +61,8 @@
 		
 	</tr>
 	<tr>
-		<td>${memberVO.memName}</td>
-		<td>${memberVO.memPhone}</td>
+		<td id="n666"></td>
+<%-- 		<td>${memberVO.memPhone}</td> --%>
 
 	</tr>
 	
