@@ -311,7 +311,7 @@
 							<input type="hidden" name="inscPrice"
 								value="${insCourseVO.inscPrice}"> <input type="hidden"
 								name="action" value="insert"> 
-								<input type="button" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" class="btn btn-info submit" data-disable-with="find" />
+								<input type="button" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" class="btn btn-info submit" data-disable-with="find" />
 						</form>
 <script type="text/javascript">
 //自訂預設值
@@ -322,7 +322,7 @@ swal.setDefaults({
 swal.resetDefaults();//清空自訂預設值
 
 $(function () {
-    $("input:button").click(function () {
+    $("#${teamSvc.getOneTeam(insCourseVO.inscId).teamId}").click(function () {
         //confirm dialog範例
         swal({
             title: "確定加入揪團？",
