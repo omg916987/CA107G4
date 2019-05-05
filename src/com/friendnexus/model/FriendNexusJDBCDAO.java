@@ -23,7 +23,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 	private static final String INSERT_FriendNexus = "INSERT INTO FRIENDNEXUS (memId,friendAcc,friendstatus) VALUES (?, ?, ?)";
 	private static final String GET_ONE_STMT = "SELECT * FROM FRIENDNEXUS where memId=?";
 	private static final String DELETE_friendacc = "DELETE FROM FRIENDNEXUS where friendacc =?";
-	private static final String GET_ALL_STMT0 = "SELECT * FROM FRIENDNEXUS where FRIENDSTATUS='0' AND memId= ?";
+	private static final String GET_ALL_STMT0 = "SELECT * FROM FRIENDNEXUS where FRIENDSTATUS='0' AND friendAcc= ?";
 	private static final String GET_ALL_STMT1 = "SELECT * FROM FRIENDNEXUS where FRIENDSTATUS='1' AND memId= ?";
 	private static final String GET_ALL_STMT = "SELECT memId,friendAcc,friendstatus FROM FriendNexus order by memId";
 	
@@ -187,7 +187,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 	}
 	
 	@Override
-	public List<FriendNexusVO> friendNexus0(String memId) {
+	public List<FriendNexusVO> friendNexus0(String friendAcc) {
 		List<FriendNexusVO> list = new ArrayList<FriendNexusVO>();
 		FriendNexusVO friendNexusVO = null;
 
@@ -200,7 +200,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT0);
-			pstmt.setString(1, memId);;
+			pstmt.setString(1, friendAcc);;
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -427,12 +427,12 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 //		dao.insert(FriendNexusVO1);
 
 //		 查詢
-		FriendNexusVO FriendNexusVO2 = dao.findByPrimaryKey("weshare02");
-		System.out.print(FriendNexusVO2.getMemId() + ",");
-		System.out.print(FriendNexusVO2.getFriendAcc() + ",");
-		System.out.println(FriendNexusVO2.getFriendstatus() + ",");
-
-		System.out.println("---------------------");
+//		FriendNexusVO FriendNexusVO2 = dao.findByPrimaryKey("weshare02");
+//		System.out.print(FriendNexusVO2.getMemId() + ",");
+//		System.out.print(FriendNexusVO2.getFriendAcc() + ",");
+//		System.out.println(FriendNexusVO2.getFriendstatus() + ",");
+//
+//		System.out.println("---------------------");
 
 		// 查詢
 //		List<FriendNexusVO> list = dao.getAll();
@@ -444,13 +444,13 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 //		}
 	
 		
-//		List<FriendNexusVO> list = dao.friendNexus0("weshare02");
-//		for (FriendNexusVO FriendNexusVO3 : list) {
-//			System.out.print(FriendNexusVO3.getMemId() + ",");
-//			System.out.print(FriendNexusVO3.getFriendAcc() + ",");
-//			System.out.println(FriendNexusVO3.getFriendstatus());
-//			System.out.println();
-//		}
+		List<FriendNexusVO> list = dao.friendNexus0("weshare03");
+		for (FriendNexusVO FriendNexusVO3 : list) {
+			System.out.print(FriendNexusVO3.getMemId() + ",");
+			System.out.print(FriendNexusVO3.getFriendAcc() + ",");
+			System.out.println(FriendNexusVO3.getFriendstatus());
+			System.out.println();
+		}
 //		System.out.println("---------------------");
 		
 //		FriendNexusVO FriendNexusVO4 = new FriendNexusVO();

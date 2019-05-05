@@ -7,7 +7,7 @@
 
 <%
     FriendNexusService friendSvc = new FriendNexusService();
-	List<FriendNexusVO> list = friendSvc.friendNexus0("weshare02");
+	List<FriendNexusVO> list = friendSvc.friendNexus0("weshare03");
 	pageContext.setAttribute("list", list);
 	
 %>
@@ -178,21 +178,22 @@ textarea{
 									<div class="card flex-row flex-wrap">
 										<div class="card-header border-0">
 											<img
-												src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendNexusVO.friendAcc}"
+												src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendNexusVO.memId}"
 												width="100" height="50">
 										</div>
 										<FORM METHOD="get"
 											ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do"
 											name="form1">
 											<div class="card-block px-2">
-												<div class="d-flex">
+												<div class="d-flex">	
 													<div>
-														<input type="hidden" name="memId" value="weshare02">
+														<input type="hidden" name="friendAcc" value="weshare03">
 														<input type="hidden" name="friendstatus" value="${friendNexusVO.friendstatus}">	
-														<input type="hidden" name="friendAcc" value="${friendNexusVO.friendAcc}">												<a class="user_name">姓名:${memberSvc.getOneMember(friendNexusVO.friendAcc).memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
-														<a class="user_name">ID:${friendNexusVO.friendAcc}</a><br> 													
-														<a class="user_name">專長:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.friendAcc).memSkill).courseName}&nbsp;</a><br>
-														<a class="user_name">想學的課:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.friendAcc).memWantSkill).courseName}&nbsp;</a>
+														<input type="hidden" name="memId" value="${friendNexusVO.memId}">										
+														<a class="user_name">姓名:${memberSvc.getOneMember(friendNexusVO.memId).memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
+														<a class="user_name">ID:${friendNexusVO.memId}</a><br> 													
+														<a class="user_name">專長:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.memId).memSkill).courseName}&nbsp;</a><br>
+														<a class="user_name">想學的課:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.memId).memWantSkill).courseName}&nbsp;</a>
 													</div>
 												</div>
 												<input type="hidden" name="action" value="update">

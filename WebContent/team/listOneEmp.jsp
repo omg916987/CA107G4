@@ -61,9 +61,11 @@
 		
 	</tr>
 	<tr>
-		<td id="n666"></td>
-<%-- 		<td>${memberVO.memPhone}</td> --%>
-
+		
+		<td class="subjectName">data.member_name</td>
+		<td class="subjectPhone">data.member_phone</td>
+		<td class="subjectPrice">datateam_price</td>
+        <td class="subjectTime">data.team_MFD</td>
 	</tr>
 	
 </table>

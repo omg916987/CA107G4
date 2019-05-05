@@ -15,7 +15,7 @@
 <%
 	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
 %>
-<%int p = 0; %>
+
 
 
 <jsp:useBean id="memberSvc" scope="page"
@@ -45,6 +45,9 @@
 <link rel="stylesheet" type="text/css" href="css/G4.css ">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+	type="text/javascript"></script>
 <title>WeShare | 最棒的教育共享平台</title>
 <style type="">
 }
@@ -264,7 +267,7 @@
 						<span class="badge badge-light">收費模式</span> <span
 							class="badge badge-success">預先扣款</span> <span
 							class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
-						</span>每小時 ${insCourseVO.inscPrice}元$<br>
+						</span>每小時 $ ${insCourseVO.inscPrice}元<br>
 					</div>
 					<div class="class1">
 						<span class="badge badge-light"> 隊伍型態 </span> <span
@@ -273,125 +276,161 @@
 							
 					</div>
 				</div>
+				
 				<div class="button-group">
-					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-info submit"
-						data-toggle="modal" data-target="#teamclass">詳情</button>
-					<!-- Modal -->
-					<div class="modal fade" id="teamclass" tabindex="-1" role="dialog"
-						aria-labelledby="teamclassTitle" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLongTitle">揪團詳情</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								
-								<!------Modal body------>
-								<div class="modal-body">
-									<a>團主姓名:${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memName}</a><br>
-									<a>連絡電話:${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memPhone}</a><br>
-									<a>預扣金額:${insCourseVO.inscPrice}</a><br> <a>開團時間:${teamSvc.getAll().get(0).getTemaMFD()}</a><br>
-									<a>截團時間:${teamSvc.getAll().get(0).getTeamEXP()}</a><br>
-									<div class="picture">
-										<img
-											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberSvc.getOneMember(teamSvc.getOneTeam(insCourseVO.inscId).leaderID).memId}"
-											width="175" height="150">
+					<div class="row">
+					
+					<FORM METHOD="get" ACTION="team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
+							<input type="hidden" name="memId" value="weshare01">
+							<input type="hidden" name="teamId" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
+							<input type="hidden" name="inscPrice"
+								value="${insCourseVO.inscPrice}"> <input type="hidden"
+								name="action" value="insert"> 
+								<input type="button" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" value="加入揪團" class="btn btn-info submit" data-disable-with="find" />
+						</form>
+<script type="text/javascript">
+//自訂預設值
+swal.setDefaults({
+    confirmButtonText: "確定",
+    cancelButtonText: "取消"
+});
+swal.resetDefaults();//清空自訂預設值
+
+$(function () {
+    $("#${teamSvc.getOneTeam(insCourseVO.inscId).teamId}").click(function () {
+        //confirm dialog範例
+        swal({ 
+            title: "確定加入揪團？",
+            html: "按下確定後即將扣除餘額，並產生訂單明細",
+            type: "question",
+            showCancelButton: true//顯示取消按鈕
+        }).then(
+            function (result) {
+                if (result.value) {
+                    //使用者按下「確定」要做的事
+                    swal("完成!", "資料已經刪除", "success");
+                    $("#${teamSvc.getOneTeam(insCourseVO.inscId).teamId}").submit();
+                    
+                } else if (result.dismiss === "cancel")  
+                {
+                     //使用者按下「取消」要做的事
+                    swal("取消", "資料未被刪除", "error");
+                }//end else  
+            });//end then 
+    });
+});
+</script>						 
+					
+
+<!-- Button trigger modal -->
+
+         
+          
+         <button type="button" id="${insCourseVO.inscId}"class="btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
+        <input type="hidden" value="${insCourseVO.inscId}" class="ha">
+          </button>
+ 
+<!-- Modal -->
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+     <div class="modal-header">
+     <h5 class="modal-title">揪團詳情</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+             
+            </div>
+				
+			<div class="modal-body">
+        <jsp:include page="listOneEmp.jsp" />
+      </div>
+       
+      <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">關閉</button>
+                
+            </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
 
 
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-info" data-dismiss="modal">關閉</button>
+//自訂預設值
+swal.setDefaults({
+    confirmButtonText: "確定",
+    cancelButtonText: "取消"
+});
+swal.resetDefaults();//清空自訂預設值
 
-								</div>
-							</div>
+$(function () {
+    $("#${teamSvc.getOneTeam(insCourseVO.inscId).teamId}").click(function () {
+        //confirm dialog範例
+        swal({ 
+            title: "確定加入揪團？",
+            html: "按下確定後即將扣除餘額，並產生訂單明細",
+            type: "question",
+            showCancelButton: true//顯示取消按鈕
+        }).then(
+            function (result) {
+                if (result.value) {
+                    //使用者按下「確定」要做的事
+                    swal("完成!", "交易已完成已成功參加揪團", "success");
+                    $("#${teamSvc.getOneTeam(insCourseVO.inscId).teamId}").submit();
+                    
+                } else if (result.dismiss === "cancel")  
+                {
+                     //使用者按下「取消」要做的事
+                    swal("取消", "資料未被刪除", "error");
+                }//end else  
+            });//end then 
+    });
+});
+  $(document).ready(function(){
+	
+	  
+	  $("#${insCourseVO.inscId}").click(function(){
+		 
+		  $.ajax({
+	            type: "get", //傳送方式
+	            url:  "<%=request.getContextPath()%>/team/team.do" ,
+	            data:  {"action": "include1",
+	            	    "inscId": "${insCourseVO.inscId}"},
+	          dataType:"json",
+	            
+	            success: function(data) {
+	            	$.each(data,function(i,item){
+	            		document.getElementsByClassName('subjectName')[i].innerHTML=item.member_name;
+		            	document.getElementsByClassName('subjectPhone')[i].innerHTML=item.member_phone;
+		            	document.getElementsByClassName('subjectTime')[i].innerHTML=item.team_MFD;
+		            	document.getElementsByClassName('subjectPrice')[i].innerHTML=item.team_price;
+	            	});
+	            	
+	            	
+	            	
+	            	
+	            },
+	            error: function() {
+	                alert("有錯誤")
+	            }
+	        })
+	    })        
+	});
+</script>
+
+ 
+							
+							
+							
+						 
+   
+ 
 						</div>
 					</div>
-
-
-					<button type="button" class="btn btn-info submit"
-						data-toggle="modal" data-target="#myModal">加入揪團</button>
 				</div>
-				<!-- 				------------------------------------------------------ -->
-				<!-- The Modal -->
-
-				<div class="modal fade" id="myModal">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<!-- Modal Header -->
-							<div class="modal-header">
-								<h4 class="modal-title">加入揪團</h4>
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-							</div>
-							<!-- Modal body -->
-							<div class="modal-body">
-
-								<%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">
-									<font style="color: red">請修正以下錯誤:</font>
-									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
-											<li style="color: red">${message}</li>
-										</c:forEach>
-									</ul>
-								</c:if>
-
-
-								<FORM METHOD="get" ACTION="team.do" name="form1">
-									<table>
-										<tr>
-											<td>帳號:</td>
-											<td><input class="form-control" type="text"
-												placeholder="請輸入帳號" name="memId" size="20"
-												readonly="readonly"
-												value="<%=(joinGroupVO == null) ? "weshare01" : joinGroupVO.getMemId()%>" /></td>
-										</tr>
-										<tr>
-											<td>揪團編號:</td>
-											<td><input type="TEXT" class="form-control "
-												readonly="readonly" name="teamId" size="35"
-												value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" /></td>
-										</tr>
-										<tr>
-											<td>預扣金額:</td>
-											<td><input type="text" class="form-control"
-												name="inscPrice" value="${insCourseVO.inscPrice}"
-												readonly="readonly"></td>
-										</tr>
-									</table>
-
-
-
-
-
-									<div class="modal-footer">
-										<button type="button" class="btn btn-info"
-											data-dismiss="modal">取消</button>
-
-										<input type="hidden" name="action" value="insert">
-										<button type="submit" class="btn btn-info"
-											data-dismiss="insert">加入</button>
-									</div>
-								</Form>
-							</div>
-						</div>
-					</div>
-
-
-
-				</div>
-
 			</div>
-		</div>
-
-
-
 	</c:forEach>
 	<%@ include file="page2.file"%>
+				
+
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
 	<footer class="section footer-classic context-dark bg-image"
 		style="background: #74b49b;">
@@ -462,11 +501,16 @@
 	<!-------------------------------------------------------------------------footerEnd------------------------------------------------------------------------->
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script
+<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <!--引用jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+<!--     引用SweetAlert2.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
 
 	
 	

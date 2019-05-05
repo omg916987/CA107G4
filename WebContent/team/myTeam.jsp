@@ -41,15 +41,17 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- Bootstrap CSS -->
+<<!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/G4.css ">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+	type="text/javascript"></script>
 <title>WeShare | 最棒的教育共享平台</title>
 <style type="">
-}
 .breadcrumb-item+.breadcrumb-item::before {
 	content: "|";
 }
@@ -255,31 +257,94 @@
 				</div>
 				
               <div class="button-group">
-              <div class="row">
-	                    <button type="button" class="btn btn-info submit"
-						 data-toggle="modal" data-target="#teamclass">詳情</button>
+              <div class="row">   
                 <FORM METHOD="get" ACTION="team.do" name="delete">      
                         <input type="hidden" name="memId" value="weshare01">
                         <input type="hidden" name="teamId" value="${joinGroupVO.teamId}">	 	
 						<input type="hidden" name="action" value="delete"> 
  					<input type="submit" value="退出揪團"
-								class="btn btn-info submit" data-disable-with="find" /></form>
+								class="btn btn-info submit" data-disable-with="find" />
+			</form>
+			 <button type="button" id="${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}"class="btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
+        <input type="hidden" value="${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}" class="ha">
+          </button>
+ 
+<!-- Modal -->
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+     <div class="modal-header">
+     <h5 class="modal-title">揪團詳情</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+             
+            </div>
+				
+			<div class="modal-body">
+        <jsp:include page="listOneEmp.jsp" />
+      </div>
+       
+      <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">關閉</button>
+                
+            </div>
+    </div>
+  </div>
+</div>
+			<script type="text/javascript">
+
+
+//自訂預設值
+
+  $(document).ready(function(){
+	
+	  
+	  $("#${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}").click(function(){
+		 
+		  $.ajax({
+	            type: "get", //傳送方式
+	            url:  "<%=request.getContextPath()%>/team/team.do" ,
+	            data:  {"action": "include1",
+	            	    "inscId": "${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}"},
+	          dataType:"json",
+	            
+	            success: function(data) {
+	            	$.each(data,function(i,item){
+	            		document.getElementsByClassName('subjectName')[i].innerHTML=item.member_name;
+		            	document.getElementsByClassName('subjectPhone')[i].innerHTML=item.member_phone;
+		            	document.getElementsByClassName('subjectTime')[i].innerHTML=item.team_MFD;
+		            	document.getElementsByClassName('subjectPrice')[i].innerHTML=item.team_price;
+	            	});     	
+	            },
+	            error: function() {
+	                alert("有錯誤")
+	            }
+	        })
+	    })        
+	});
+</script>
+
+ 
+							
+							
+							
+						 
+   <button type="button1" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">成員名單</button>
+   
+ 
 						</div>
-						</div>
+					</div>
 				</div>
-				</div>
+			</div>
+	</c:forEach>
+	<%@ include file="page2.file"%>
 				
 	
 
 
 
-	</c:forEach>
-	<%@ include file="page2.file"%>
-				
-				<!-- Button trigger modal -->
-<!-- <button type="button1" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">成員名單</button> -->
 
-<!-- <!-- Modal --> 
+
+<!-- Modal 
 
        
 
@@ -313,16 +378,16 @@
      
 <!--     <tbody> -->
   
-<%--      <c:set var="list2" value="${joinGroupSvc1.findByTeamId(joinGroupVO.teamId)}" scope="request" /> --%>
+<!--      <c:set var="list2" value="${joinGroupSvc1.findByTeamId(joinGroupVO.teamId)}" scope="request" /> -->
 <!--       <tr> -->
        
-<%--       <c:forEach var="joinGroupVO" items="${list2}"> --%>
+<!--       <c:forEach var="joinGroupVO" items="${list2}"> -->
 <!--       <tr> -->
-<%--         <td>${memberSvc.getOneMember(joinGroupVO.memId).memName}</td> --%>
+<!--         <td>${memberSvc.getOneMember(joinGroupVO.memId).memName}</td> -->
         
-<%--         <td>${memberSvc.getOneMember(joinGroupVO.memId).memEmail}</td> --%>
+<!--         <td>${memberSvc.getOneMember(joinGroupVO.memId).memEmail}</td> -->
 <!--       </tr> -->
-<%--       </c:forEach> --%>
+<!--       </c:forEach> -->
 <!--     </tbody> -->
  
 <!--   </table> -->
@@ -424,5 +489,12 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <!--引用jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+<!--     引用SweetAlert2.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
+
 </body>
 </html>

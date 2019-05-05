@@ -172,8 +172,8 @@ textarea{
 						
 						
 						
-				
-						<input type="hidden" name="memId" value="weshare01">
+		<!----------------------------------------------------------------------------------需登入帳號	--------------------------------------------------------------------------------------------->		
+						<input type="hidden" name="memId" value="${memberVO.memId}">
 					    <input type="hidden" name="action" value="getmyFriend">
 						<input class="btn btn-secondary" type="submit" value="我的好友列表">
 						</Form>
@@ -193,8 +193,7 @@ textarea{
 									end="<%=pageIndex+rowsPerPage-1%>">
 									<div class="card flex-row flex-wrap">
 										<div class="card-header border-0">
-											<img
-												src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}"
+											<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}"
 												width="100" height="50">
 										</div>
 										<FORM METHOD="get"
@@ -218,7 +217,7 @@ textarea{
 										</FORM>
 										<div class="w-10"></div>
 										<div class="card-footer w-100 text-muted ">
-											<a href="yahoo.com.tw">查看個人資料</a>
+										<a href="yahoo.com.tw">查看個人資料</a>
 										</div>
 									</div>
 								</c:forEach>
@@ -243,11 +242,11 @@ textarea{
 									</div>
 									<div>
 									
-									
+<!----------------------------------------------------------------------------------需登入帳號	--------------------------------------------------------------------------------------------->
 									<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<input type="hidden" name="action" value="getmyFriendCheck">
-									<input type="hidden" name="memId" value="weshare01">
-									<input class="btn btn-info" type="submit" value="申請好友列表"></div>
+									<input type="hidden" name="friendAcc" value="weshare03">
+									<input class="btn btn-info" type="submit" value="確認好友列表"></div>
 								    </FORM>
 								    
 								</ul>
@@ -262,6 +261,8 @@ textarea{
 	<h3 id="statusOutput" class="statusOutput"></h3>
 	<textarea id="messagesArea" class="panel message-area" readonly></textarea>
 	<div class="panel input-area">
+	
+	<!----------------------------------------------------------------------------------需登入帳號	--------------------------------------------------------------------------------------------->
 		<input id="userName" name="username" value="weshare01" class="text-field" type="text"
 			placeholder="User name" /> 
 			

@@ -40,16 +40,16 @@
         <div class="wechat">
             <div class="sidestrip">
                 <div class="am-dropdown" data-am-dropdown>
-                    <!--头像插件-->
+                    <!--圖片-->
                     <div class="own_head am-dropdown-toggle"></div>
                  
                 </div>
-                <!--三图标-->
+                <!---->
                 <div class="sidestrip_icon">
                     <a id="si_1"></a>                  
                 </div>
 
-                <!--底部扩展键-->
+                <!--底部-->
                 <div id="doc-dropdown-justify-js">
                     <div class="am-dropdown" id="doc-dropdown-js" style="position: initial;">
                       
@@ -86,10 +86,10 @@
                 </div>
                 <!--聊天内容-->
                 <div class="windows_body">
-                    <div class="office_text" style="height: 100%;">
+                    <div class="office_text" id="who" style="height: 100%;">
                         <ul class="content" id="chatbox">
-                           <!--  <li class="me"><img src="images/own_head.jpg" title="金少凯"><span>疾风知劲草，板荡识诚臣</span></li>
-                            <li class="other"><img src="images/head/15.jpg" title="张文超"><span>勇夫安知义，智者必怀仁</span></li> -->
+                            <li class="me" id="me" value="0"></li>      <!-- 我方DIV -->
+                            <li class="other" id="other" value="1"></li>  <!-- 對方DIV -->
                         </ul>
                     </div>
                 </div>
@@ -104,8 +104,12 @@
                         <a href="javascript:;"></a>
                     </div>
                     <div class="input_box">
+                    
+                    <!-- 輸入框在這 -->
                         <textarea name="" rows="" cols="" id="input_box"></textarea>
-                        <button id="send">送出</button>
+                        <input type="submit" class="button" id="sendMessage" value="送出" onclick="sendMessage();"/>
+                        <input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
+		                <input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
                     </div>
                 </div>
             </div>
@@ -168,7 +172,44 @@
 
 
       <script type="text/javascript">
-        //三图标
+      
+      
+      
+      var MyPoint = "/TogetherWS";
+      var host = window.location.host;
+      var path = window.location.pathname;
+      var webCtx = path.substring(0, path.indexOf('/', 1));
+      var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+
+      var webSocket;
+      
+      
+      
+      function connect() {
+          // create a websocket
+          webSocket = new WebSocket(endPointURL);
+
+          webSocket.onopen = function(event) {
+              updateStatus("WebSocket Connected");
+              document.getElementById('sendMessage').disabled = false;
+              document.getElementById('connect').disabled = true;
+              document.getElementById('disconnect').disabled = false;
+          };
+
+          webSocket.onmessage = function(event) {
+              var me = document.getElementById("me");
+              var other = document.getElementById("other")
+              var jsonObj = JSON.parse(event.data);
+              var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+              messagesArea.value = messagesArea.value + message;
+              messagesArea.scrollTop = messagesArea.scrollHeight;
+          };
+
+          webSocket.onclose = function(event) {
+              updateStatus("WebSocket Disconnected");
+          };
+      }
+        
         window.onload = function () {
             function a() {
                 var si1 = document.getElementById('si_1');
@@ -181,19 +222,40 @@
             };
             function b() {
                 var text = document.getElementById('input_box');
+                var Who = document.getElementById("who");
                 var chat = document.getElementById('chatbox');
-                var btn = document.getElementById('send');
+                var btn = document.getElementById('sendMessage');
                 var talk = document.getElementById('talkbox');
                 btn.onclick = function () {
                     if (text.value == '') {
                         alert('請輸入訊息');
-                    } else {
-                        chat.innerHTML += '<li class="me"><img src="' + 'images/own_head.jpg' + '"><span>' + text.value + '</span></li>';
+                        return;
+                    } 
+                    
+                   if(who.value == 0){
+                	   var jsonObj={
+                			   "type" : "chat",
+           					   "sender" : "weshare06",
+           					   "receiver" : "weshare05",
+           					   "message" : message
+                			};
+                	   webSocket.send(JSON.stringify(jsonObj));
+           			   inputMessage.value = "";
+           			   inputMessage.focus();
+           		
+                        chat.innerHTML += '<li class="other"><img src="' + 'images/own_head.jpg' + '"><span>' + text.value + '</span></li>';
                         text.value = '';
                         chat.scrollTop = chat.scrollHeight;
                         talk.style.background = "#fff";
                         text.style.background = "#fff";
-                    };
+                    }
+                   else{
+                	   chat.innerHTML += '<li class="me"><img src="' + 'images/own_head.jpg' + '"><span>' + text.value + '</span></li>';
+                       text.value = '';
+                       chat.scrollTop = chat.scrollHeight;
+                       talk.style.background = "#fff";
+                       text.style.background = "#fff";
+                   }
                 };
             };
             a();

@@ -7,7 +7,7 @@
 
 <%
 	FriendNexusService friendSvc = new FriendNexusService();
-	List<FriendNexusVO> list = friendSvc.friendNexus1("weshare02");
+	List<FriendNexusVO> list = friendSvc.friendNexus1("weshare03");
 	pageContext.setAttribute("list", list);
 	
 	

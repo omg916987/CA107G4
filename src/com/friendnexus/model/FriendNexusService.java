@@ -41,8 +41,8 @@ public class FriendNexusService {
 //	public FriendNexusVO getOneFriendNexus(String memId) {
 //		return dao.findByPrimaryKey(memId);
 //	}
-	public List<FriendNexusVO>friendNexus0(String memId){
-		return dao.friendNexus0(memId);
+	public List<FriendNexusVO>friendNexus0(String friendAcc){
+		return dao.friendNexus0(friendAcc);
 	}
 
 	public List<FriendNexusVO>friendNexus1(String memId){

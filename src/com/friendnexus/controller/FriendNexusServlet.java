@@ -101,6 +101,9 @@ public class FriendNexusServlet extends HttpServlet {
 				System.out.println(friendAcc);
 				System.out.println(friendstatus);
 
+				
+				FriendNexusService friendnexusSvc = new FriendNexusService();
+				friendnexusSvc.addfriendNexus(friendAcc, memId,1);
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("friendNexusVO", friendNexusVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/friend/friendCheck.jsp";
@@ -235,12 +238,15 @@ public class FriendNexusServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 ****************************************/
 
 				System.out.println("有近來");
-				String memId = req.getParameter("memId");
+				String friendAcc = req.getParameter("friendAcc");
+                
+				FriendNexusService friendNexusSvc = new FriendNexusService();
+				List<FriendNexusVO> friendNexusVO = friendNexusSvc.friendNexus0(friendAcc);
+				
+                
+			System.out.println(friendAcc);
 
-				MemberService memberSvc = new MemberService();
-				MemberVO memberVO = memberSvc.getOneMember(memId);
-
-				req.setAttribute("memberVO", memberVO);
+				req.setAttribute("friendNexusVO", friendNexusVO);
 
 				/*************************** 2.開始查詢資料 ****************************************/
 

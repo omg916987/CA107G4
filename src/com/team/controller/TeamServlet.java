@@ -11,6 +11,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.member.model.MemberService;
@@ -223,7 +224,7 @@ public class TeamServlet extends HttpServlet {
 					} else if (!leaderID.trim().matches(memidReg)) { // 以下練習正則(規)表示式(regular-expression)
 						errorMsgs.add("會員帳號: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 					}
-System.out.println("4");
+              System.out.println("4");
 					String inscID = req.getParameter("inscID");
 					if(inscID == null) {
 						errorMsgs.add("課程編號請勿空白");
@@ -265,6 +266,14 @@ System.out.println("4");
 					/*************************** 2.開始新增資料 *****************************************/
 					TeamService teamSvc = new TeamService();
 					teamVO = teamSvc.addTeam(leaderID, inscID, teamMFD, teamEXP, 1);
+					
+					InsCourseService inscourseSvc = new InsCourseService();
+					InsCourseVO incrouseVO = inscourseSvc.findOneById(inscID);
+					
+					int status = incrouseVO.getInscType();
+					
+					status = 1;
+					inscourseSvc.updateStatus(inscID, status);
 
 					/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 					
@@ -286,29 +295,46 @@ System.out.println("4");
 			if ("include1".equals(action)) { // 來自listAllEmp.jsp 或 /dept/listEmps_ByDeptno.jsp 的請求
 
 				
-				try {
+				
 					/*************************** 1.接收請求參數 ****************************************/
 				    
 					System.out.println("有近來");
 					String inscId = req.getParameter("inscId");
+					
+					JSONArray array = new JSONArray();
 					System.out.println(inscId);
 					TeamService teamSvc = new TeamService();
 					TeamVO teamVO = teamSvc.getOneTeam(inscId);
 					
+					InsCourseService inscourseSvc = new InsCourseService();
+					InsCourseVO incrouseVO = inscourseSvc.findOneById(inscId);
+					
 					MemberService memberSvc = new MemberService();
 					MemberVO memberVO = memberSvc.getOneMember(teamVO.getLeaderID());
-					
+					JSONObject obj = new JSONObject();
 					System.out.println(teamVO.getLeaderID());
-					req.setAttribute("memberVO", memberVO);
-				
-				   JSONObject obj = new JSONObject();
-				   
-				   obj.put("member_name", memberVO.getMemName());
-				   
+					
+
+				   try {
+					obj.put("member_name", memberVO.getMemName());
+					obj.put("member_phone", memberVO.getMemPhone());
+					obj.put("team_price", incrouseVO.getInscPrice());
+					obj.put("team_MFD", teamVO.getTemaMFD());
+					
+					array.put(obj);
+					
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				   System.out.println(obj);
 				   res.setContentType("text/plain");
 				   res.setCharacterEncoding("UTF-8");
 				   PrintWriter out = res.getWriter();
-				   out.write(obj.toString());
+				   out.write(array.toString());
+//				   out.flush();
+				   out.close();
+				
 				 
 				   
 				
@@ -316,12 +342,7 @@ System.out.println("4");
 					
 ////					/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/	
 					
-					RequestDispatcher successView = req.getRequestDispatcher("/team/team.jsp"); // 成功轉交 loginSuccess.jsp
-					successView.forward(req, res);
-					System.out.println("走完了");
-				}catch (Exception e) {
-					throw new ServletException(e);
-			}
+			
 		}	
 			
 			

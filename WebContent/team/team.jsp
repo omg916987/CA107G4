@@ -213,10 +213,6 @@
 
 
 						<div class="form-row">
-
-
-
-
 							<input type="hidden" name="action" value="Search_One"> <label
 								for="inputEmail" class="sr-only">請輸入課程</label>
 							<div class="input-group group-sm">
@@ -245,9 +241,6 @@
 					</FORM>
 				</div>
 			</div>
-
-
-
 		</div>
 	</div>
 
@@ -283,7 +276,7 @@
 					<div>
 						<i class="far fa-calendar-alt"></i>
 						<div>課程大綱: ${insCourseVO.inscCourser}</div>
-						<div>上課語言: ${insCourseVO.inscLang}</div>
+						<div>上課語言: ${insCourseVO.inscLang}</div> 	
 						<div>上課地點: ${insCourseVO.inscLoc}</div>
 					</div>
 
@@ -296,7 +289,7 @@
 					</div>
 					<div class="class1">
 						<span class="badge badge-light"> 隊伍型態 </span> <span
-							class="badge badge-info">自主性揪團 ${insCourseVO.inscId}</span> <span
+							class="badge badge-info">自主性揪團</span> <span
 							class="badge badge-info">揪團編號${teamSvc.getOneTeam(insCourseVO.inscId).teamId}</span>
 
 					</div>
@@ -311,7 +304,7 @@
 							<input type="hidden" name="inscPrice"
 								value="${insCourseVO.inscPrice}"> <input type="hidden"
 								name="action" value="insert"> 
-								<input type="button" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" class="btn btn-info submit" data-disable-with="find" />
+								<input type="button" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" value="加入揪團" class="btn btn-info submit" data-disable-with="find" />
 						</form>
 <script type="text/javascript">
 //自訂預設值
@@ -351,33 +344,95 @@ $(function () {
 
          
           
-         <button type="button" class="submitExample btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
+         <button type="button" id="${insCourseVO.inscId}"class="btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
         <input type="hidden" value="${insCourseVO.inscId}" class="ha">
           </button>
-    
-   
-
+ 
 <!-- Modal -->
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
      <div class="modal-header">
+     <h5 class="modal-title">揪團詳情</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                
+             
             </div>
-			
+				
 			<div class="modal-body">
         <jsp:include page="listOneEmp.jsp" />
       </div>
        
       <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">關閉</button>
+                
             </div>
     </div>
   </div>
 </div>
+<script type="text/javascript">
 
+
+//自訂預設值
+swal.setDefaults({
+    confirmButtonText: "確定",
+    cancelButtonText: "取消"
+});
+swal.resetDefaults();//清空自訂預設值
+
+$(function () {
+    $("#${teamSvc.getOneTeam(insCourseVO.inscId).teamId}").click(function () {
+        //confirm dialog範例
+        swal({ 
+            title: "確定加入揪團？",
+            html: "按下確定後即將扣除餘額，並產生訂單明細",
+            type: "question",
+            showCancelButton: true//顯示取消按鈕
+        }).then(
+            function (result) {
+                if (result.value) {
+                    //使用者按下「確定」要做的事
+                    swal("完成!", "交易已完成已成功參加揪團", "success")
+                    $("#${teamSvc.getOneTeam(insCourseVO.inscId).teamId}").submit();
+                    
+                } else if (result.dismiss === "cancel")  
+                {
+                     //使用者按下「取消」要做的事
+                    swal("取消", "取消交易", "error");
+                }//end else  
+            });//end then 
+    });
+});
+  $(document).ready(function(){
+	
+	  
+	  $("#${insCourseVO.inscId}").click(function(){
+		 
+		  $.ajax({
+	            type: "get", //傳送方式
+	            url:  "<%=request.getContextPath()%>/team/team.do" ,
+	            data:  {"action": "include1",
+	            	    "inscId": "${insCourseVO.inscId}"},
+	          dataType:"json",
+	            
+	            success: function(data) {
+	            	$.each(data,function(i,item){
+	            		document.getElementsByClassName('subjectName')[i].innerHTML=item.member_name;
+		            	document.getElementsByClassName('subjectPhone')[i].innerHTML=item.member_phone;
+		            	document.getElementsByClassName('subjectTime')[i].innerHTML=item.team_MFD;
+		            	document.getElementsByClassName('subjectPrice')[i].innerHTML=item.team_price;
+	            	});
+	            	
+	            	
+	            	
+	            	
+	            },
+	            error: function() {
+	                alert("有錯誤")
+	            }
+	        })
+	    })        
+	});
+</script>
 
  
 							
@@ -480,46 +535,7 @@ $(function () {
    
 
 
-<script type="text/javascript">
 
-
-
-
-
-
-
-
-  $(document).ready(function(){
-	
-	  
-	  $(".submitExample").click(function(){
-		 
-		  $.ajax({
-	            type: "get", //傳送方式
-	            url:  "<%=request.getContextPath()%>/team/team.do", 
-	            data:  {"action": "include1",
-	            	    "inscId":  $(".ha").val()},
-	          dataType:"json",
-	            
-	            success: function(data) {
-	            	console.log(data.member_name);
-	                if (data.iscnId) { //如果後端回傳 json 資料有 nickname
-	                }     
-	            },
-	            error: function() {
-	                alert("有錯誤")
-	            }
-	        })
-	    })        
-	});
-
-  
-
-
-
-
-
-</script>
    
 
 
