@@ -2,24 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.friendnexus.model.*"%>
-
-
-<%
-	FriendNexusService friendSvc = new FriendNexusService();
-	List<FriendNexusVO> list = friendSvc.friendNexus1("weshare03");
-	pageContext.setAttribute("list", list);
-
-%>
-
-<jsp:useBean id="courseSvc" scope="page"
-	class="com.course.model.CourseService" />
-
-<jsp:useBean id="friendnexusSvc" scope="page"
-	class="com.friendnexus.model.FriendNexusService" />
-<jsp:useBean id="memberSvc" scope="page"
-	class="com.member.model.MemberService" />
-
-
  <!doctype html>
     <html lang="en">
 
@@ -84,59 +66,28 @@
                     <button>+</button>
                 </div>
                 <div class="office_text">
-                
-                
-                
-                
-             	
-                
-                
-                
-                
-                
-                
-                
-                
-                <c:forEach var="friendNexusVO" items="${list}">
-                    <ul class="user_list">      
-                        <li>
-                            <div class="user_head"><img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendNexusVO.friendAcc}" /></div>
+                    <ul class="user_list">
+                        <li class="user_active">
+                            <div class="user_head"><img src="images/head/15.jpg" /></div>
                             <div class="user_text">
-                                <p class= "intername">${memberSvc.getOneMember(friendNexusVO.friendAcc).memName}</p>
-                                <p class="infor">上線</p>
+                                <p class="user_name">大吳</p>
+                                <p class="user_message">上線</p>
                             </div> 
                         </li>
                     </ul>
-                   
-                    
-                    
-                    
-                  <script type="text/javascript">   
-                  $('.office_text li').on('click',function(){
-                	  
-                	  $('.bg').removeClass('bg');
-                	  $(this).addClass('bg');
-              		$('.content').html('');
-              		
-              	})
-                    
-                    
-                    
-                    </script>
-                    </c:forEach> 
                 </div>
             </div>
             <!--聊天窗口-->
             <div class="talk_window">
                 <div class="windows_top">
                     <div class="windows_top_box">
-                        <div class="headName">	</div>
+                        <span>weShare聊天室</span>
                     </div>
                 </div>
                 <!--聊天内容-->
-                <div class="windows_body" style="overflow:auto;">
+                <div class="windows_body">
                     <div class="office_text" id="who" style="height: 100%;">
-                        <ul class="content" id="chatbox" style="overflow:auto;">
+                        <ul class="content" id="chatbox">
                             
                         </ul>
                     </div>
@@ -227,7 +178,7 @@
       
       
       
-      var MyPoint = "/FriendWS/weshare01";
+      var MyPoint = "/FriendWS/weshare02";
       var host = window.location.host;
       var path = window.location.pathname;
       var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -272,9 +223,9 @@
  //        btn.onclick = function () {
              if (text.value == '') {
                  alert('請輸入訊息');
-                 return;	
+                 return;
              } else{
-         	   chat.innerHTML += '<li><img src="' + 'images/own_head.jpg' + '"> '+ text.value + '</li>';
+         	   chat.innerHTML += '<li>' + text.value + '</li>';
 //          	  <img src="' + 'images/own_head.jpg' + '">
               
                chat.scrollTop = chat.scrollHeight;
@@ -282,14 +233,17 @@
                 text.style.background = "#fff";
                 var jsonObj = {
    					 "type" : "chat",
-    					   "sender" : "weshare01",
-    					   "receiver" : "weshare02",
+    					   "sender" : "weshare02",
+    					   "receiver" : "weshare01",
     					   "message" : text.value
    				};
    			webSocket.send(JSON.stringify(jsonObj));
    		    text.value = '';
    		}
-//           }	
+//           }
+         
+     
+  	
      };
   	
   	
@@ -303,15 +257,6 @@
  	function updateStatus(newStatus) {
  		statusOutput.innerHTML = newStatus;
  	}
- 	
- 	
- 	$('.conLeft li').on('click',function(){
-		$(this).addClass('bg').siblings().removeClass('bg');
-		var intername=$(this).children('.liRight').children('.intername').text();
-		$('.headName').text(intername);
-		$('.newsList').html('');
-	})
- 	
  </script>
   	
   	
