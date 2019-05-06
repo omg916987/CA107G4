@@ -204,7 +204,7 @@
              
               var jsonObj = JSON.parse(event.data);
               var message = jsonObj.sender + ": " + jsonObj.message + "\r\n";
-              chat.innerHTML += '<li>' + message + '</li>';
+              chat.innerHTML += '<li class="other"><img src="' + 'images/own_head.jpg' + '">' + message + '</li>';
           };
 
           webSocket.onclose = function(event) {
@@ -225,7 +225,7 @@
                  alert('請輸入訊息');
                  return;
              } else{
-         	   chat.innerHTML += '<li>' + text.value + '</li>';
+            	  chat.innerHTML += '<li class="me"> '+ text.value + '</li>';
 //          	  <img src="' + 'images/own_head.jpg' + '">
               
                chat.scrollTop = chat.scrollHeight;

@@ -34,6 +34,17 @@
     <link rel="stylesheet" href="css/main.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <title>WeShare | 最棒的教育共享平台</title>
+    <style type="text/css">
+    
+    .headName{
+        margin-top: 10px;
+        margin-left:10px;
+    
+    }
+    
+    
+    
+    </style>
     </head>
      <body onload="connect();" onunload="disconnect();">
     <!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->	
@@ -59,44 +70,27 @@
             <div class="sidestrip">
                 <div class="am-dropdown" data-am-dropdown>
                     <!--圖片-->
-                    <div class="own_head am-dropdown-toggle"></div>
-                 
+                    <div class="own_head am-dropdown-toggle"></div> 
                 </div>
                 <!---->
                 <div class="sidestrip_icon">
                     <a id="si_1"></a>                  
                 </div>
-
                 <!--底部-->
                 <div id="doc-dropdown-justify-js">
-                    <div class="am-dropdown" id="doc-dropdown-js" style="position: initial;">
-                      
+                    <div class="am-dropdown" id="doc-dropdown-js" style="position: initial;">      
                         <ul class="am-dropdown-content" style="">    
                         </ul>
                     </div>
                 </div>
             </div>
-
             <!--聊天列表-->
             <div class="middle on">
                 <div class="wx_search">
                     <input type="text" placeholder="搜索" />
                     <button>+</button>
                 </div>
-                <div class="office_text">
-                
-                
-                
-                
-             	
-                
-                
-                
-                
-                
-                
-                
-                
+                <div class="office_text">          
                 <c:forEach var="friendNexusVO" items="${list}">
                     <ul class="user_list">      
                         <li>
@@ -107,21 +101,16 @@
                             </div> 
                         </li>
                     </ul>
-                   
-                    
-                    
-                    
-                  <script type="text/javascript">   
+          <script type="text/javascript">   
                   $('.office_text li').on('click',function(){
                 	  
                 	  $('.bg').removeClass('bg');
                 	  $(this).addClass('bg');
+                	  var intername=$(this).children('.user_text').children('.intername').text();
+              		$('.headName').text(intername);
               		$('.content').html('');
               		
-              	})
-                    
-                    
-                    
+              	})       
                     </script>
                     </c:forEach> 
                 </div>
@@ -130,7 +119,8 @@
             <div class="talk_window">
                 <div class="windows_top">
                     <div class="windows_top_box">
-                        <div class="headName">	</div>
+                    
+                        <div class="headName"></div>
                     </div>
                 </div>
                 <!--聊天内容-->
@@ -154,22 +144,17 @@
                     <div class="input_box">
                     
                     <!-- 輸入框在這 -->
-                        <textarea name="" rows="" cols="" id="input_box"></textarea>
-                        <input type="submit" class="button" id="sendMessage" value="送出" onclick="sendMessage();"/>
+                        <textarea name="" rows="" cols="" id="input_box" onkeydown="if (event.keyCode == 13) sendMessage();"></textarea>
+                        <input type="hidden" class="button" id="sendMessage" value="送出" onclick="sendMessage();"/>
                         
-		               
-		                <input id="userName" class="text-field" type="text" placeholder="User name" />
-                    </div>
+                         <input type="button" value="sendFile" onclick="sendFile()"/> 
+  		                 <input type="file" id="file" />
+
+                  </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    
-  
-
-
-
     <!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->	
     <footer class="section footer-classic context-dark bg-image" style="background: #74b49b;">
       <div class="container">
@@ -250,18 +235,18 @@
           };
 
           webSocket.onmessage = function(event) {
-             
+        	  
               var jsonObj = JSON.parse(event.data);
               var message = jsonObj.sender + ": " + jsonObj.message + "\r\n";
-              chat.innerHTML += '<li>' + message + '</li>';
+              chat.innerHTML += '<li class="other"><img src="' + 'images/own_head.jpg' + '"><span>' + message +'</span></li>';
+              $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
           };
 
           webSocket.onclose = function(event) {
               updateStatus("WebSocket Disconnected");
           };
       }
-      var inputUserName = document.getElementById("userName");
-  	inputUserName.focus();
+ 
        
   	
   	 function sendMessage() {
@@ -271,19 +256,23 @@
          var talk = document.getElementById('talkbox');
  //        btn.onclick = function () {
              if (text.value == '') {
+            	 
                  alert('請輸入訊息');
                  return;	
-             } else{
-         	   chat.innerHTML += '<li><img src="' + 'images/own_head.jpg' + '"> '+ text.value + '</li>';
+             } else{           
+            	 
+            	 
+
+         	     chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=weshare01' + '"><span> '+ text.value +'</span> </li>';
 //          	  <img src="' + 'images/own_head.jpg' + '">
-              
+              $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
                chat.scrollTop = chat.scrollHeight;
                 talk.style.background = "#fff";
                 text.style.background = "#fff";
                 var jsonObj = {
-   					 "type" : "chat",
+   					 "type": "chat",
     					   "sender" : "weshare01",
-    					   "receiver" : "weshare02",
+    					   "receiver" :"weshare02",
     					   "message" : text.value
    				};
    			webSocket.send(JSON.stringify(jsonObj));
@@ -311,6 +300,54 @@
 		$('.headName').text(intername);
 		$('.newsList').html('');
 	})
+	
+	
+		$("#input_box").keypress(function(e){
+
+			  code = (e.keyCode ? e.keyCode : e.which);
+
+			  if (code == 13)
+
+			  {
+
+			      //targetForm是表單的ID
+
+			      $("sendMessage").submit();
+
+			  }
+
+			});
+ 	
+ 	
+ 	 function sendFile(isWithText){
+ 		var inputElement = document.getElementById("file");
+ 		var fileList = inputElement.files;
+ 		var file=fileList[0];
+ 		if(!file) return;
+ 		websocket.send(file.name+":fileStart");
+ 		var reader = new FileReader();
+ 		//以二进制形式读取文件
+ 		reader.readAsArrayBuffer(file);
+ 		//文件读取完毕后该函数响应
+ 		reader.onload = function loaded(evt) {
+ 	        var blob = evt.target.result;
+ 	        //发送二进制表示的文件
+ 	        websocket.send(blob);
+ 	        if(isWithText){
+ 	        	websocket.send(file.name+":fileFinishWithText");
+ 	        }else{
+ 	        	websocket.send(file.name+":fileFinishSingle");
+ 	        }
+ 	        console.log("finnish");
+ 		}
+ 		inputElement.outerHTML=inputElement.outerHTML; //清空<input type="file">的值
+ 	}
+
+
+
+ 	
+ 	
+
  	
  </script>
   	
