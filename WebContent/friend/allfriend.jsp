@@ -158,28 +158,21 @@ textarea{
 		<h1 class="hader-title" style="text-align: center">建立您的&nbsp;好友關係</h1>
 	</div>
 	<div class="container">
-		<div class="row">
-			<div class="col-3">
+			<div class="row">
+				<div class="col-3">
 			<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do" name="form1" id="form1">
-				<div class="list-group" id="list-tab" role="tablist">
-				
-					<a class="list-group-item list-group-item-action active"
-						id="list-home-list" data-toggle="list" href="#list-home"
-						role="tab" aria-controls="home">建議的好友</a> <a
-						class="list-group-item list-group-item-action"
-						id="list-profile-list" data-toggle="list" href="#list-profile"
-						role="tab" aria-controls="profile">聊天室</a>
-						
-						
-						
+				<div class="list-group" id="list-tab" role="tablist">	
 		<!----------------------------------------------------------------------------------需登入帳號	--------------------------------------------------------------------------------------------->		
 						<input type="hidden" name="memId" value="${memberVO.memId}">
 					    <input type="hidden" name="action" value="getmyFriend">
 						<input class="btn btn-secondary" type="submit" value="我的好友列表">
+						<input type="hidden" name="action" value="getmyFriend">
+						<input class="btn btn-secondary" type="submit" value="聊天室">
 						</Form>
-						
-					
 				</div>
+				
+				<input class="btn btn-secondary" type="submit" value="聊天室">
+				
 			</div>
 			<div class="col-9">
 				<div class="tab-content" id="nav-tabContent">
@@ -257,30 +250,10 @@ textarea{
 					<div class="tab-pane fade" id="list-profile" role="tabpanel"
 						aria-labelledby="list-profile-list">
 
-						<h1>Chat Room</h1>
+						
 	<h3 id="statusOutput" class="statusOutput"></h3>
-	<textarea id="messagesArea" class="panel message-area" readonly></textarea>
-	<div class="panel input-area">
+
 	
-	<!----------------------------------------------------------------------------------需登入帳號	--------------------------------------------------------------------------------------------->
-		<input id="userName" name="username" value="weshare01" class="text-field" type="text"
-			placeholder="User name" /> 
-			
-		<input id="message" class="text-field"
-			type="text" placeholder="Message"
-			onkeydown="if (event.keyCode == 13) sendMessage();" />
-			
-		<input
-			type="submit" id="sendMessage" class="button" value="Send"
-			onclick="sendMessage();" /> 
-			
-		<input type="button" id="connect"
-			class="button" value="Connect" onclick="connect();" /> 
-			
-		<input
-			type="button" id="disconnect" class="button" value="Disconnect"
-			onclick="disconnect();" />
-	</div>
 					</div>
 				</div>
 			</div>
@@ -359,78 +332,6 @@ textarea{
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    
-	<script>
-	var MyPoint = "/TogetherWS";
-	var host = window.location.host;
-	var path = window.location.pathname;
-	var webCtx = path.substring(0, path.indexOf('/', 1));
-	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
-    
-	var webSocket;
-
-		function connect() {
-			// create a websocket
-			webSocket = new WebSocket(endPointURL);
-
-			webSocket.onopen = function(event) {
-				updateStatus("WebSocket Connected");
-				document.getElementById('sendMessage').disabled = false;
-				document.getElementById('connect').disabled = true;
-				document.getElementById('disconnect').disabled = false;
-			};
-
-			webSocket.onmessage = function(event) {
-				var messagesArea = document.getElementById("messagesArea");
-				var sender = document.getElementById("sender");
-				var jsonObj = JSON.parse(event.data);
-				var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
-				messagesArea.value = messagesArea.value + message;
-				messagesArea.scrollTop = messagesArea.scrollHeight;
-			};
-
-			webSocket.onclose = function(event) {
-				updateStatus("WebSocket Disconnected");
-			};
-		}
-
-		var inputUserName = document.getElementById("userName");
-		inputUserName.focus();
-
-		function sendMessage() {
-			
-
-			var inputMessage = document.getElementById("message");
-			var message = inputMessage.value.trim();
-
-			if (message === "") {
-				alert("Input a message");
-				inputMessage.focus();
-			} else {
-				var jsonObj = {
-						"type" : "chat",
-						"sender" :"weshare01",
-						"receiver" :"weshare05",
-						"message" : message
-				};
-				webSocket.send(JSON.stringify(jsonObj));
-				inputMessage.value = "";
-				inputMessage.focus();
-			}
-		}
-
-		function disconnect() {
-			webSocket.close();
-			document.getElementById('sendMessage').disabled = true;
-			document.getElementById('connect').disabled = false;
-			document.getElementById('disconnect').disabled = true;
-		}
-
-		function updateStatus(newStatus) {
-			statusOutput.innerHTML = newStatus;
-		}
-	</script>
 
 </body>
 </html>

@@ -4,12 +4,6 @@
 <%@ page import="com.friendnexus.model.*"%>
 
 
-<%
-	FriendNexusService friendSvc = new FriendNexusService();
-	List<FriendNexusVO> list = friendSvc.friendNexus1("weshare03");
-	pageContext.setAttribute("list", list);
-
-%>
 
 <jsp:useBean id="courseSvc" scope="page"
 	class="com.course.model.CourseService" />
@@ -19,6 +13,7 @@
 <jsp:useBean id="memberSvc" scope="page"
 	class="com.member.model.MemberService" />
 
+<c:set var="list" value="${friendnexusSvc.friendNexus1(memberVO.memId)}" />
 
  <!doctype html>
     <html lang="en">
@@ -46,7 +41,7 @@
     
     </style>
     </head>
-     <body onload="connect();" onunload="disconnect();">
+     <body onload="connect();" onunload="disconnect();" >
     <!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->	
     <div class="header headerImg">
       <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> <img src="images/icon/logo.png" width="80" height="60" alt=""/><a class="navbar-brand" href="#">教育共享平台</a>
@@ -97,21 +92,36 @@
                             <div class="user_head"><img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendNexusVO.friendAcc}" /></div>
                             <div class="user_text">
                                 <p class= "intername">${memberSvc.getOneMember(friendNexusVO.friendAcc).memName}</p>
-                                <p class="infor">上線</p>
+                                 <p class="infor" id="${friendNexusVO.friendAcc}" value="${friendNexusVO.friendAcc}">${friendNexusVO.friendAcc}</p>
                             </div> 
                         </li>
                     </ul>
           <script type="text/javascript">   
+          
+          
                   $('.office_text li').on('click',function(){
                 	  
                 	  $('.bg').removeClass('bg');
                 	  $(this).addClass('bg');
                 	  var intername=$(this).children('.user_text').children('.intername').text();
+                	
               		$('.headName').text(intername);
               		$('.content').html('');
               		
-              	})       
+              	})      
+              	       
+              	
+  
+              	
+           
                     </script>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     </c:forEach> 
                 </div>
             </div>
@@ -212,7 +222,7 @@
       
       
       
-      var MyPoint = "/FriendWS/weshare01";
+      var MyPoint = "/FriendWS/${memberVO.memId}";
       var host = window.location.host;
       var path = window.location.pathname;
       var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -223,6 +233,18 @@
       
       var me = 'weshare01';
       var friend= 'weshare02';
+      
+      
+      var intername;
+
+ 	  $('.office_text li').on('click',function(){
+          intername=$(this).children('.user_text').children('.infor').text();
+           
+         	})  
+      
+      
+      
+      
       
       var chat = document.getElementById('chatbox');
       function connect() {
@@ -238,31 +260,31 @@
         	  
               var jsonObj = JSON.parse(event.data);
               var message = jsonObj.sender + ": " + jsonObj.message + "\r\n";
-              chat.innerHTML += '<li class="other"><img src="' + 'images/own_head.jpg' + '"><span>' + message +'</span></li>';
+              chat.innerHTML += '<li class="other"><img src="' + '/CA107G4/member/DBGifReader.do?memId=weshare03' + '"><span>' + message +'</span></li>';
               $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
           };
+          
+          
+          
+          
 
           webSocket.onclose = function(event) {
               updateStatus("WebSocket Disconnected");
           };
       }
- 
-       
-  	
+      
+      
   	 function sendMessage() {
+  		
          var text = document.getElementById('input_box');
        
 //          var btn = document.getElementById('sendMessage');
          var talk = document.getElementById('talkbox');
  //        btn.onclick = function () {
-             if (text.value == '') {
-            	 
+             if (text.value == '') {     	 
                  alert('請輸入訊息');
                  return;	
              } else{           
-            	 
-            	 
-
          	     chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=weshare01' + '"><span> '+ text.value +'</span> </li>';
 //          	  <img src="' + 'images/own_head.jpg' + '">
               $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
@@ -271,8 +293,8 @@
                 text.style.background = "#fff";
                 var jsonObj = {
    					 "type": "chat",
-    					   "sender" : "weshare01",
-    					   "receiver" :"weshare02",
+    					   "sender" : "${memberVO.memId}",
+    					   "receiver": intername,
     					   "message" : text.value
    				};
    			webSocket.send(JSON.stringify(jsonObj));
@@ -280,28 +302,21 @@
    		}
 //           }	
      };
-  	
-  	
      function disconnect() {
  		webSocket.close();
  		document.getElementById('sendMessage').disabled = true;
  		document.getElementById('connect').disabled = false;
  		document.getElementById('disconnect').disabled = true;
  	}
-
  	function updateStatus(newStatus) {
  		statusOutput.innerHTML = newStatus;
- 	}
- 	
- 	
+ 	} 	
  	$('.conLeft li').on('click',function(){
 		$(this).addClass('bg').siblings().removeClass('bg');
 		var intername=$(this).children('.liRight').children('.intername').text();
 		$('.headName').text(intername);
 		$('.newsList').html('');
 	})
-	
-	
 		$("#input_box").keypress(function(e){
 
 			  code = (e.keyCode ? e.keyCode : e.which);
@@ -319,32 +334,8 @@
 			});
  	
  	
- 	 function sendFile(isWithText){
- 		var inputElement = document.getElementById("file");
- 		var fileList = inputElement.files;
- 		var file=fileList[0];
- 		if(!file) return;
- 		websocket.send(file.name+":fileStart");
- 		var reader = new FileReader();
- 		//以二进制形式读取文件
- 		reader.readAsArrayBuffer(file);
- 		//文件读取完毕后该函数响应
- 		reader.onload = function loaded(evt) {
- 	        var blob = evt.target.result;
- 	        //发送二进制表示的文件
- 	        websocket.send(blob);
- 	        if(isWithText){
- 	        	websocket.send(file.name+":fileFinishWithText");
- 	        }else{
- 	        	websocket.send(file.name+":fileFinishSingle");
- 	        }
- 	        console.log("finnish");
- 		}
- 		inputElement.outerHTML=inputElement.outerHTML; //清空<input type="file">的值
- 	}
-
-
-
+	 
+ 	
  	
  	
 

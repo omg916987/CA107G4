@@ -169,6 +169,18 @@ public class MemberService {
 		// TODO Auto-generated method stub
 	
 	}
-  	
+//	 public void insertVerifyCode(String memId,String verifyCode) {
+//	    	jedis.insertVerifyCode(memId, verifyCode);
+//	    }
+//	    
+//	    public boolean checkVerifyCode(String userMemId,String userVerifyCode) {
+//	    	return jedis.checkVerifyCode(userMemId, userVerifyCode);
+//	    }
+//
+//	    public void updateStatus(String memId) {
+//	    	dao.updateStatus(memId);
+//	    }
+//	    	
+	
 	
 }
