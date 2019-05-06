@@ -88,7 +88,7 @@
                 <div class="office_text">          
                 <c:forEach var="friendNexusVO" items="${list}">
                     <ul class="user_list">      
-                        <li>
+                        <li class="bg">
                             <div class="user_head"><img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendNexusVO.friendAcc}" /></div>
                             <div class="user_text">
                                 <p class= "intername">${memberSvc.getOneMember(friendNexusVO.friendAcc).memName}</p>
@@ -110,17 +110,8 @@
               		
               	})      
               	       
-              	
-  
-              	
-           
+
                     </script>
-                    
-                    
-                    
-                    
-                    
-                    
                     
                     </c:forEach> 
                 </div>

@@ -9,12 +9,13 @@
 <%@ page import="com.inscourse.model.*"%>
 <%
 	InsCourseService inscourseSvc = new InsCourseService();
+
 	List<InsCourseVO> list = inscourseSvc.getAll("1");
 	pageContext.setAttribute("list", list);
 
 	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
-
-	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+	
+	
 %>
 
 
@@ -235,7 +236,7 @@
 						ACTION="<%=request.getContextPath()%>/team/team.do">
 						<div class="form-row">
 							<input type="hidden" name="action" value="findOneteam"> <input
-								type="submit" name="memId" value="查看我的揪團"
+								type="submit" name="memId" value="weshare01"
 								class="btn btn-info submit" data-disable-with="find" />
 						</div>
 					</FORM>

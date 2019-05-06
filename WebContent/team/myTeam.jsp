@@ -41,7 +41,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<<!-- Bootstrap CSS -->
+<!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/G4.css ">
@@ -266,9 +266,9 @@
 								class="btn btn-info submit" data-disable-with="find" />
 			</form>
 			 <button type="button" id="${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}"class="btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
-        <input type="hidden" value="${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}" class="ha">
+              
           </button>
- 
+ <input type="hidden" value="${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}" class="ha">
 <!-- Modal -->
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -328,7 +328,7 @@
 							
 							
 						 
-   <button type="button1" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">成員名單</button>
+   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">成員名單</button>
    
  
 						</div>
