@@ -62,10 +62,10 @@
 	</tr>
 	<tr>
 		
-		<td class="subjectName">data.member_name</td>
-		<td class="subjectPhone">data.member_phone</td>
-		<td class="subjectPrice">datateam_price</td>
-        <td class="subjectTime">data.team_MFD</td>
+		<td class="subjectName">item.member_name</td>
+		<td class="subjectPhone">item.member_phone</td>
+		<td class="subjectPrice">item.team_price</td>
+        <td class="subjectTime">item.team_MFD</td>
 	</tr>
 	
 </table>

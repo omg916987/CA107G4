@@ -388,7 +388,7 @@ public class JoinGroupJDBCDAO implements JoinGroupDAO_interface {
 //				System.out.println(JoinGroupV05.getTeamId());
 //				System.out.println();
 				
-				List<JoinGroupVO> list = dao.findByTeamId("TM00002");
+				List<JoinGroupVO> list = dao.findByTeamId("TM00003");
 				for (JoinGroupVO JoinGroupV06 : list) {
 					System.out.print(JoinGroupV06.getTeamId() + ",");
 					System.out.println(JoinGroupV06.getMemId());

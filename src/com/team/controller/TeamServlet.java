@@ -19,7 +19,6 @@ import com.member.model.MemberVO;
 import com.team.model.TeamService;
 import com.team.model.TeamVO;
 import com.withdrawalrecord.model.WithdrawalRecordService;
-import com.withdrawalrecord.model.WithdrawalRecordVO;
 import com.inscourse.model.InsCourseService;
 import com.inscourse.model.InsCourseVO;
 import com.joingroup.model.JoinGroupService;
@@ -311,6 +310,8 @@ public class TeamServlet extends HttpServlet {
 					
 					MemberService memberSvc = new MemberService();
 					MemberVO memberVO = memberSvc.getOneMember(teamVO.getLeaderID());
+					
+					
 					JSONObject obj = new JSONObject();
 					System.out.println(teamVO.getLeaderID());
 					
@@ -345,7 +346,74 @@ public class TeamServlet extends HttpServlet {
 			
 		}	
 			
+			if ("include2".equals(action)) { // 來自listAllEmp.jsp 或 /dept/listEmps_ByDeptno.jsp 的請求
+
+				
+				
+				/*************************** 1.接收請求參數 ****************************************/
+			    
+				System.out.println("有近來");
+				String teamId = req.getParameter("teamId");
+				
+				JSONArray array = new JSONArray();
+				
+				TeamService teamSvc = new TeamService();
+				TeamVO teamVO = teamSvc.findByPrimaryKey1(teamId);
+				
+			System.out.println(teamId);
+				
+				JoinGroupService joinGroupSvc = new JoinGroupService();
+				JSONArray array1 = new JSONArray();
+				List<JoinGroupVO> list = joinGroupSvc.findByTeamId(teamVO.getTeamId());
+				MemberService memberSvc = new MemberService();
+				JSONObject obj = new JSONObject();
+				for(JoinGroupVO joinGroupVO:list) {
+				MemberVO memberVO = memberSvc.getOneMember(joinGroupVO.getMemId());
+				try {
+					obj.put("member_Email", memberVO.getMemEmail());
+					obj.put("member_Name", memberVO.getMemName());
+					
+				} catch (JSONException e) {
+					
+					e.printStackTrace();
+				}
+				array1.put(obj);
+				 System.out.println(obj);
+				   res.setContentType("text/plain");
+				   res.setCharacterEncoding("UTF-8");
+				   PrintWriter out = res.getWriter();
+				   out.write(array1.toString());
+				   out.flush();
+				   out.close();
+				
+				
+				
+				}
+				
+				
+				
+				
+				
+
+			   
+				
+		    
+				
+				
+				
 			
+		
+	
+			
+			 
+			   
+			
+				/***************************2.開始查詢資料****************************************/						
+				
+////				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/	
+				
+		
+	}	
 			
 			
 	}

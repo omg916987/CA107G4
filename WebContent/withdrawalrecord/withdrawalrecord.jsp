@@ -297,13 +297,7 @@
 			document.getElementById("cc-cvv").value = "957";
 		}
 
-		//        $(function () {
-		//             $(#submit).click(function () {
-		//                 //alert範例
-		//                 swal("已成功付款", "請至檢查您的餘額", "success");},100000);
-
-		//             setTimeout(function(){window.location.reload(); },2000);
-		//         });
+		    
 	</script>
 
 </body>

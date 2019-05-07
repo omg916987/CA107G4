@@ -13,9 +13,7 @@
 	List<InsCourseVO> list = inscourseSvc.getAll("1");
 	pageContext.setAttribute("list", list);
 
-	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");
-	
-	
+	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");	
 %>
 
 
@@ -435,12 +433,6 @@ $(function () {
 	});
 </script>
 
- 
-							
-							
-							
-						 
-   
  
 						</div>
 					</div>

@@ -132,8 +132,7 @@
 }
 .btn-primary {
    
-    margin-left: 970px;
-    margin-top: -350px;
+   
 }
 
 </style>
@@ -265,13 +264,13 @@
  					<input type="submit" value="退出揪團"
 								class="btn btn-info submit" data-disable-with="find" />
 			</form>
-			 <button type="button" id="${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}"class="btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
+			 <button type="button" id="${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}"class="btn btn-info" data-toggle="modal" data-target="#createModal"> 詳情
               
           </button>
  <input type="hidden" value="${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}" class="ha">
 <!-- Modal -->
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="createModal" data-backdrop="false">
+  <div class="modal-dialog">
     <div class="modal-content">
      <div class="modal-header">
      <h5 class="modal-title">揪團詳情</h5>
@@ -290,29 +289,103 @@
     </div>
   </div>
 </div>
+			
+
+
+
+
+
+ <c:set var="list2" value="${joinGroupSvc1.findByTeamId(joinGroupVO.teamId)}" scope="request" />
+ 
+	 <button type="button" id="${joinGroupVO.teamId}"class="btn btn-info" data-toggle="modal" data-target="#createModal1"> 成員
+              
+          </button>
+ <input type="hidden" value="${joinGroupVO.teamId}" class="hr">
+<!-- Modal -->
+<div class="modal fade" id="createModal1" data-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header">
+     <h5 class="modal-title">揪團詳情</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+             
+            </div>
+				
+			<div class="modal-body">
+        <jsp:include page="findTeamMember.jsp" />
+      </div>
+       
+      <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">關閉</button>
+                
+            </div>
+    </div>
+  </div>
+</div>
+			
+			
+			
+				
+							
+						 
+   
+   
+ 
+						</div>
+					</div>
+				</div>
+			</div>
 			<script type="text/javascript">
+			//自訂預設值
+
+			  $(document).ready(function(){
+				
+				  
+				  $("#${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}").click(function(){
+					 
+					  $.ajax({
+				            type: "get", //傳送方式
+				            url:  "<%=request.getContextPath()%>/team/team.do" ,
+				            data:  {"action": "include1",
+				            	    "inscId": "${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}"},
+				          dataType:"json",
+				            
+				            success: function(data) {
+				            	$.each(data,function(i,item){
+				            		document.getElementsByClassName('subjectName')[i].innerHTML=item.member_name;
+					            	document.getElementsByClassName('subjectPhone')[i].innerHTML=item.member_phone;
+					            	document.getElementsByClassName('subjectTime')[i].innerHTML=item.team_MFD;
+					            	document.getElementsByClassName('subjectPrice')[i].innerHTML=item.team_price;
+				            	});     	
+				            },
+				            error: function() {
+				                alert("有錯誤")
+				            }
+				        })
+				    })        
+				});
 
 
 //自訂預設值
 
-  $(document).ready(function(){
+$(document).ready(function(){
 	
-	  
-	  $("#${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}").click(function(){
+	 
+	  $("#${joinGroupVO.teamId}").click(function(){
 		 
 		  $.ajax({
 	            type: "get", //傳送方式
 	            url:  "<%=request.getContextPath()%>/team/team.do" ,
-	            data:  {"action": "include1",
-	            	    "inscId": "${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}"},
+	            data:  {"action": "include2",
+	            	    "teamId": "${joinGroupVO.teamId}"},
 	          dataType:"json",
+	          
+	            success: function(data,item) {
+	            	
 	            
-	            success: function(data) {
 	            	$.each(data,function(i,item){
-	            		document.getElementsByClassName('subjectName')[i].innerHTML=item.member_name;
-		            	document.getElementsByClassName('subjectPhone')[i].innerHTML=item.member_phone;
-		            	document.getElementsByClassName('subjectTime')[i].innerHTML=item.team_MFD;
-		            	document.getElementsByClassName('subjectPrice')[i].innerHTML=item.team_price;
+	            		document.getElementsByClassName('subjectName')[i].innerHTML=item.member_Name;
+		            	document.getElementsByClassName('subjectEmail')[i].innerHTML=item.member_Email;
 	            	});     	
 	            },
 	            error: function() {
@@ -322,19 +395,6 @@
 	    })        
 	});
 </script>
-
- 
-							
-							
-							
-						 
-   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">成員名單</button>
-   
- 
-						</div>
-					</div>
-				</div>
-			</div>
 	</c:forEach>
 	<%@ include file="page2.file"%>
 				
@@ -344,54 +404,6 @@
 
 
 
-<!-- Modal 
-
-       
-
-
-
-
- 
-
-
-
-
-
-<!-- <div class="container"> -->
-         
-<!--   <table class="table table-dark table-striped"> -->
-  
-<!--     <thead> -->
-   
-    
-   
-    
-   
-<!--       <tr> -->
-<!--         <th>姓名</th> -->
-<!--         <th>email</th> -->
-<!--         <td></td> -->
-<!--       </tr> -->
-      
-
-<!--     </thead> -->
-     
-<!--     <tbody> -->
-  
-<!--      <c:set var="list2" value="${joinGroupSvc1.findByTeamId(joinGroupVO.teamId)}" scope="request" /> -->
-<!--       <tr> -->
-       
-<!--       <c:forEach var="joinGroupVO" items="${list2}"> -->
-<!--       <tr> -->
-<!--         <td>${memberSvc.getOneMember(joinGroupVO.memId).memName}</td> -->
-        
-<!--         <td>${memberSvc.getOneMember(joinGroupVO.memId).memEmail}</td> -->
-<!--       </tr> -->
-<!--       </c:forEach> -->
-<!--     </tbody> -->
- 
-<!--   </table> -->
-<!-- </div> -->
 
 
 
