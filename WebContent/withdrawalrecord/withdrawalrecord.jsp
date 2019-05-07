@@ -79,7 +79,7 @@
 				<jsp:useBean id="memberSvc" scope="page"
 					class="com.member.model.MemberService" />
 			</ul>
-			<a class="text-dark">餘額:</a>${memberSvc.getOneMember(withdrawalrecordVO.memid).memBalance}<a
+			<a class="text-dark">餘額:</a>${memberSvc.getOneMember(memberVO.memId).memBalance}<a
 				class="text-dark" id="wepoint"></a>
 		</div>
 	</nav>
