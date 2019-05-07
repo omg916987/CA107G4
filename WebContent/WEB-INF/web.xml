@@ -28,6 +28,7 @@
     <url-pattern>/teacher/addTeacher.jsp</url-pattern>
     <url-pattern>/coursereservation/allCourseUser.jsp</url-pattern>
     <url-pattern>/friend/chatroom.jsp</url-pattern>
+    <url-pattern>/withdrawalrecord/withdrawalrecord.jsp</url-pattern>
 <!--      <url-pattern>/team/team.jsp</url-pattern> -->
     
     <url-pattern>/team/myTeam.jsp</url-pattern>

@@ -4,7 +4,7 @@ import java.util.*;
 
 public interface WithdrawalRecordDAO_interface {
 
-	public void insert(WithdrawalRecordVO withdrawalRecordVO);
+	public WithdrawalRecordVO insert(WithdrawalRecordVO withdrawalRecordVO);
 
 	public void update(WithdrawalRecordVO withdrawalRecordVO);
 //	       public void delete(String withdrawalRecordVO);

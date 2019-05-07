@@ -92,6 +92,7 @@
 				<tbody>
 					<tr class="active">
 						<td class="track_dot"><span class="track_line"></span></td>
+					
 						<td>${withdrawalRecordVO.wrnum}</td>
 						<td>${withdrawalRecordVO.memid}</td>
 						<td>${withdrawalRecordVO.wrmoney}</td>

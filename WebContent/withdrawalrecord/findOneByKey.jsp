@@ -90,10 +90,11 @@
 			<thead>
 				<tr>
 					<th></th>
-					
+					<th>訂單編號</th>
 					<th>會員帳號</th>
 					<th>交易金額</th>
 					<th>交易日期</th>
+					
 				</tr>
 			</thead>
           <jsp:useBean id="withdrawalRecorSvc" scope="page" class="com.withdrawalrecord.model.WithdrawalRecordService" />
@@ -105,7 +106,7 @@
 				<tbody>
 					<tr class="active">
 						<td class="track_dot"><span class="track_line"></span></td>
-						
+						<td>${withdrawalRecordVO.wrnum}</td>
 						<td>${withdrawalRecordVO.memid}</td>
 						<td>${withdrawalRecordVO.wrmoney}</td>
 						<td>${withdrawalRecordVO.wrtime}</td>

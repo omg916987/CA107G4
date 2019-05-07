@@ -300,8 +300,8 @@
 					<FORM METHOD="get" ACTION="team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
 							<input type="hidden" name="memId" value="weshare01">
 							<input type="hidden" name="teamId" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
-							<input type="hidden" name="inscPrice"
-								value="${insCourseVO.inscPrice}"> <input type="hidden"
+							<input type="hidden" name="inscPrice" value="${insCourseVO.inscPrice}"> 
+							<input type="hidden"
 								name="action" value="insert"> 
 								<input type="button" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" value="加入揪團" class="btn btn-info submit" data-disable-with="find" />
 						</form>
