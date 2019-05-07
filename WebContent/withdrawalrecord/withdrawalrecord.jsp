@@ -311,21 +311,21 @@
 // 		    $("#pay").click(function () {
 // 		        //confirm dialog範例
 // 		        swal({ 
-// 		            title: "確定加入揪團？",
-// 		            html: "按下確定後即將扣除餘額，並產生訂單明細",
+// 		            title: "將會進行扣款!",
+// 		            html: "按下確定後進行儲值，並產生訂單明細",
 // 		            type: "question",
 // 		            showCancelButton: true//顯示取消按鈕
 // 		        }).then(
 // 		            function (result) {
 // 		                if (result.value) {
 // 		                    //使用者按下「確定」要做的事
-// 		                    swal("完成!", "交易已完成已成功參加揪團", "success")
+// 		                    swal("完成!", "交易已完成交易", "success")
 // 		                    $("#pay").submit();
 		                    
 // 		                } else if (result.dismiss === "cancel")  
 // 		                {
 // 		                     //使用者按下「取消」要做的事
-// 		                    swal("取消", "取消交易", "error");
+// 		                    swal("取消", "已取消交易", "error");
 // 		                }//end else  
 // 		            });//end then 
 // 		    });
