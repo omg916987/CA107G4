@@ -210,7 +210,7 @@
 			<div class="form-row">
 				<div class="form-group col-md-4">
 
-					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/team/team.do">
 						<b>請輸入課程</b> <input type="text" name="str">
 
 						<div class="form-row">
@@ -224,12 +224,12 @@
 
 			<div class="form-row">
 				<div class="form-group col-md-3">
-					<FORM METHOD="get"
+					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/team/team.do">
 						<div class="form-row">
-							<input type="hidden" name="action" value="findOneteam"> <input
-								type="submit" name="memId" value="wesahre01"
-								class="btn btn-info submit" data-disable-with="find" />
+							<input type="hidden" name="action" value="findOneteam"> 
+							<button class="btn btn-info submit" type="submit" value="${param.memId}" data-disable-with="find" >查看我的揪團</button>
+							
 						</div>
 					</FORM>
 				</div>
@@ -280,8 +280,8 @@
 				<div class="button-group">
 					<div class="row">
 					
-					<FORM METHOD="get" ACTION="team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
-							<input type="hidden" name="memId" value="weshare01">
+					<FORM METHOD="post" ACTION="team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
+							<input type="hidden" name="memId" value="${param.memId}">
 							<input type="hidden" name="teamId" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
 							<input type="hidden" name="inscPrice"
 								value="${insCourseVO.inscPrice}"> <input type="hidden"

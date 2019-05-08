@@ -99,7 +99,7 @@
 				</tr>
 			</thead>
 
-			<%@ include file="page1.file"%>
+			<%@ include file="page11.file"%>
 			<c:forEach var="withdrawalRecordVO" items="${list}"
 				begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
@@ -117,7 +117,7 @@
 				
 			</c:forEach>
 		</table>
-		<%@ include file="page2.file"%>
+		<%@ include file="page22.file"%>
 	
 	</div>
 </div>

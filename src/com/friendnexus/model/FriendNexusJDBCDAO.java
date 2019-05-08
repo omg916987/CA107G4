@@ -22,7 +22,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 
 	private static final String INSERT_FriendNexus = "INSERT INTO FRIENDNEXUS (memId,friendAcc,friendstatus) VALUES (?, ?, ?)";
 	private static final String GET_ONE_STMT = "SELECT * FROM FRIENDNEXUS where memId=?";
-	private static final String DELETE_friendacc = "DELETE FROM FRIENDNEXUS where friendacc =?";
+	private static final String DELETE_friendacc = "DELETE FROM FRIENDNEXUS where friendacc =? AND memId= ?";
 	private static final String GET_ALL_STMT0 = "SELECT * FROM FRIENDNEXUS where FRIENDSTATUS='0' AND friendAcc= ?";
 	private static final String GET_ALL_STMT1 = "SELECT * FROM FRIENDNEXUS where FRIENDSTATUS='1' AND memId= ?";
 	private static final String GET_ALL_STMT = "SELECT memId,friendAcc,friendstatus FROM FriendNexus order by memId";

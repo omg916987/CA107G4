@@ -27,7 +27,7 @@
 %>
 
 <!--  	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); -->
- <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
+  <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
   <jsp:useBean id="incourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
   <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
   <jsp:useBean id="teamSvc" scope="page" class="com.team.model.TeamService" />
@@ -130,10 +130,18 @@
    margin-top:-120px;
    margin-left:250px;
 }
-.btn-primary {
-   
-   
+
+
+.btn-secondary {
+    margin-top: -350px;
+    margin-left: 976px;
 }
+.btn-danger {
+
+    margin-top: 5px;
+}
+
+
 
 </style>
 </head>
@@ -254,7 +262,9 @@
 						<span class="badge badge-info">揪團編號</span>
 					</div>
 				</div>
-				
+<%-- 				<button type="button" id="${joinGroupVO.teamId}"class="btn btn-secondary" data-toggle="modal" data-target="#createModal1"> 成員 --%>
+              
+<!--           </button> -->
               <div class="button-group">
               <div class="row">   
                 <FORM METHOD="get" ACTION="team.do" name="delete">      
@@ -262,7 +272,7 @@
                         <input type="hidden" name="teamId" value="${joinGroupVO.teamId}">	 	
 						<input type="hidden" name="action" value="delete"> 
  					<input type="submit" value="退出揪團"
-								class="btn btn-info submit" data-disable-with="find" />
+								class="btn btn-danger" data-disable-with="find" />
 			</form>
 			 <button type="button" id="${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}"class="btn btn-info" data-toggle="modal" data-target="#createModal"> 詳情
               
@@ -297,9 +307,7 @@
 
  <c:set var="list2" value="${joinGroupSvc1.findByTeamId(joinGroupVO.teamId)}" scope="request" />
  
-	 <button type="button" id="${joinGroupVO.teamId}"class="btn btn-info" data-toggle="modal" data-target="#createModal1"> 成員
-              
-          </button>
+	 
  <input type="hidden" value="${joinGroupVO.teamId}" class="hr">
 <!-- Modal -->
 <div class="modal fade" id="createModal1" data-backdrop="false">
@@ -323,14 +331,7 @@
   </div>
 </div>
 			
-			
-			
-				
-							
-						 
-   
-   
- 
+
 						</div>
 					</div>
 				</div>
@@ -367,34 +368,36 @@
 
 
 //自訂預設值
-
-$(document).ready(function(){
+// $(document).ready(function(){
 	
 	 
-	  $("#${joinGroupVO.teamId}").click(function(){
+// 	  $("#${joinGroupVO.teamId}").click(function(){
 		 
-		  $.ajax({
-	            type: "get", //傳送方式
-	            url:  "<%=request.getContextPath()%>/team/team.do" ,
-	            data:  {"action": "include2",
-	            	    "teamId": "${joinGroupVO.teamId}"},
-	          dataType:"json",
+// 		  $.ajax({
+// 	            type: "get", //傳送方式
+<%-- 	            url:  "<%=request.getContextPath()%>/team/team.do", --%>
+// 	            data:  {"action": "include2",
+// 	            	    "teamId": "${joinGroupVO.teamId}"},
+// 	          dataType:"json",
 	          
-	            success:window.onload=function(data) {
-	            	
-	            	
-	            	$.each(data,function(i,item){
-	            		document.getElementsByClassName('subjectName')[i+1].innerHTML= item.member_Name;
-		            	document.getElementsByClassName('subjectEmail')[i+1].innerHTML = item.member_Email;
-		            	
-	            	});     	
-	            },
-	            error: function() {
-	                alert("有錯誤")
-	            }
-	        })
-	    })        
-	});
+// 	            success:function(data) {
+	            		
+// 	            	console.info(data);
+// 	            	$.each(data,function(i,item){
+	            		
+// 	            		document.getElementsByClassName('subjectName')[i+1].innerHTML= item.member_Name;
+// 		            	document.getElementsByClassName('subjectEmail')[i+1].innerHTML = item.member_Email;
+		            
+// 		            	console.info(item);
+// 	            	});     	
+// 	            },
+// 	            error: function() {
+// 	                alert("有錯誤")
+// 	            }
+// 	        })
+// 	    })        
+// 	});
+
 </script>
 	</c:forEach>
 	<%@ include file="page2.file"%>
@@ -405,10 +408,39 @@ $(document).ready(function(){
 
 
 
+<script type="text/javascript">
 
 
-
-
+$(document).ready(function(){
+	
+	 
+	  $("#${joinGroupVO.teamId}").click(function(){
+		 
+		  $.ajax({
+	            type: "get", //傳送方式
+	            url:  "<%=request.getContextPath()%>/team/team.do",
+	            data:  {"action": "include2",
+	            	    "teamId": "${joinGroupVO.teamId}"},
+	          dataType:"json",
+	          
+	            success:function(data) {
+	            		
+	            	console.info(data);
+	            	$.each(data,function(i,item){
+	            		
+	            		document.getElementsByClassName('subjectName')[i].innerHTML= item.member_Name;
+		            	document.getElementsByClassName('subjectEmail')[i].innerHTML = item.member_Email;
+		            
+		            	console.info(item);
+	            	});     	
+	            },
+	            error: function() {
+	                alert("有錯誤")
+	            }
+	        })
+	    })        
+	});
+</script>
 
 
 

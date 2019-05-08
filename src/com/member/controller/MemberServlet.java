@@ -93,11 +93,14 @@ public class MemberServlet extends HttpServlet {
 				String url = "/member/editMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
+				
+				return;// 程式中斷
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/member/loginMember.jsp");
 				failureView.forward(req, res);
+				return;// 程式中斷
 			}
 
 		}

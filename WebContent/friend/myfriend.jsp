@@ -2,12 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.friendnexus.model.*"%>
+<%@ page import="com.member.model.*"%>
 
 
 
 <%
 	FriendNexusService friendSvc = new FriendNexusService();
-	List<FriendNexusVO> list = friendSvc.friendNexus1("weshare03");
+    MemberVO memberVO=(MemberVO)request.getSession().getAttribute("memberVO");
+	List<FriendNexusVO> list = friendSvc.friendNexus1(memberVO.getMemId());
 	pageContext.setAttribute("list", list);
 	
 	
@@ -208,16 +210,17 @@ textarea {
 														type="hidden" name="friendAcc"
 														value="${friendNexusVO.friendAcc}"> 
 														<div class="wrod">
-													<a class="user_name">姓名:${memberSvc.getOneMember(friendNexusVO.friendAcc).memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
-													<a class="user_name">ID:${friendNexusVO.friendAcc}</a><br>
+													<a class="user_name">姓名:${memberSvc.getOneMember(friendNexusVO.friendAcc).memName}</a><br>
+													
 													<a class="user_name">專長:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.friendAcc).memSkill).courseName}&nbsp;</a><br>
 								                    <a class="user_name">想學的課:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.friendAcc).memWantSkill).courseName}&nbsp;</a>
 												</div>
 										<div class="btn1">
 											<input type="hidden" name="action" value="delete"> 
 											<input type="submit" value="刪除好友" class="btn btn-primary">
-											<input type="hidden" name="action1" value="chate"> <input
-												type="submit" value="聊天" class="btn btn-primary">
+											<input type="hidden" name="memId" value="delet">
+											<input type="hidden" name="action1" value="chate"> 
+											<input type="submit" value="聊天" class="btn btn-primary">
 										</div>		
 												</div>	
 											</div>
@@ -247,7 +250,7 @@ textarea {
 									</div>
 								</div>
 								<div class="but">
-								
+<!-- 								--------------------------需帳號--------------------------------- -->
 								<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<input type="hidden" name="action" value="getmyFriendCheck">
 									<input type="hidden" name="memId" value="weshare01">

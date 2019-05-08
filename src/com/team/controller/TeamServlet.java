@@ -116,11 +116,14 @@ public class TeamServlet extends HttpServlet {
 						return;			    
 					} else {		
 					
-						Double a = wrmoney * 0.8;
+						Integer a = (int) (wrmoney * 0.8);
+						
 						System.out.println("8折價"+a);
-						memblance = (int) (blance - a);
-						memBlock  = (wrmoney + memBlock) ; 
-						System.out.println("memblance="+ memblance);				
+						memblance =  blance - a;
+						memBlock  =  a + memBlock ; 
+						System.out.println("memblance="+ memblance);
+						wrmoney = a;
+						System.out.println("到資料庫"+wrmoney);
 					}
 					memberSvc.update1(memblance, memBlock, membe.getMemId()); 
 					//新增交易紀錄
@@ -235,12 +238,7 @@ public class TeamServlet extends HttpServlet {
 					}
 				System.out.println("5");
 					java.sql.Date teamMFD = null;
-					try {
-						teamMFD = java.sql.Date.valueOf(req.getParameter("temaMFD").trim());
-					} catch (IllegalArgumentException e) {
-						teamMFD = new java.sql.Date(System.currentTimeMillis());
-						errorMsgs.add("請輸入日期!");
-					}
+					
 
 					java.sql.Date teamEXP = null;
 					try {
@@ -269,7 +267,7 @@ public class TeamServlet extends HttpServlet {
 
 					/*************************** 2.開始新增資料 *****************************************/
 					TeamService teamSvc = new TeamService();
-					teamVO = teamSvc.addTeam(leaderID, inscID, teamMFD, teamEXP, 1);
+					teamVO = teamSvc.addTeam(leaderID, inscID, new Date(new GregorianCalendar().getTimeInMillis()), teamEXP, 1);
 					
 					InsCourseService inscourseSvc = new InsCourseService();
 					InsCourseVO incrouseVO = inscourseSvc.findOneById(inscID);
@@ -369,21 +367,26 @@ public class TeamServlet extends HttpServlet {
 				
 				JoinGroupService joinGroupSvc = new JoinGroupService();
 				JSONArray array1 = new JSONArray();
-				List<JoinGroupVO> list = joinGroupSvc.findByTeamId(teamVO.getTeamId());
-				MemberService memberSvc = new MemberService();
-				JSONObject obj = new JSONObject();
-				for(JoinGroupVO joinGroupVO:list) {
+				List<JoinGroupVO> listsize = joinGroupSvc.findByTeamId(teamVO.getTeamId());
+				req.setAttribute("listsize", listsize);
+				MemberService memberSvc = new MemberService();		
+				JSONObject obj;
+				for(JoinGroupVO joinGroupVO:listsize) {
 				MemberVO memberVO = memberSvc.getOneMember(joinGroupVO.getMemId());
 				try {
+					obj = new JSONObject();
 					obj.put("member_Email", memberVO.getMemEmail());
 					obj.put("member_Name", memberVO.getMemName());
+					array1.put(obj);
+					System.out.println(obj);
 					
 				} catch (JSONException e) {
 					
 					e.printStackTrace();
+					
 				}
-				array1.put(obj);
-				 System.out.println(obj);
+				
+				System.out.println(array1);
 				   res.setContentType("text/plain");
 				   res.setCharacterEncoding("UTF-8");
 				   PrintWriter out = res.getWriter();

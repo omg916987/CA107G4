@@ -4,10 +4,9 @@
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.friendnexus.model.*"%>
 
-<%MemberVO memberVO = (MemberVO) request.getAttribute("memId");%>
-<%
+<% MemberVO memberVO = (MemberVO) request.getSession().getAttribute("memberVO"); %>
 
-   
+<%  
 	MemberService memberSvc = new MemberService();
 	List<MemberVO> list = memberSvc.getAll();
 	pageContext.setAttribute("list", list);
@@ -112,7 +111,7 @@ textarea{
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
- <body onload="connect();" onunload="disconnect();">
+ <body>
 	<!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
 	<div class="header headerImg">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -157,6 +156,20 @@ textarea{
 	<div class="title TitleImg">
 		<h1 class="hader-title" style="text-align: center">建立您的&nbsp;好友關係</h1>
 	</div>
+	
+
+
+		<c:if test="${not empty errorMsgs}">
+			<h4 style="color: red; text-align: center;">請修正以下錯誤:</h4>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red; text-align: center;">${message}</li>
+				</c:forEach>
+			</ul>
+		</c:if>
+	
+
+	
 	<div class="container">
 			<div class="row">
 				<div class="col-3">
@@ -171,7 +184,7 @@ textarea{
 						</Form>
 				</div>
 				
-				<input class="btn btn-secondary" type="submit" value="聊天室">
+<!-- 				<input class="btn btn-secondary" type="submit" value="聊天室"> -->
 				
 			</div>
 			<div class="col-9">
@@ -225,7 +238,7 @@ textarea{
 										<h6 class="my-1">搜尋好友</h6>
 										<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<div class="input-group">
-								<input type="text" class="form-control" name="memName" placeholder="請輸入好友帳號">
+								<input type="text" class="form-control" name="memName" placeholder="請輸入姓名">
 								<div class="input-group-append">
 								<button type="submit" class="btn btn-secondary">尋找</button>
 								<input type="hidden" name="action" value="getOne_For_Display">
@@ -238,7 +251,7 @@ textarea{
 <!----------------------------------------------------------------------------------需登入帳號	--------------------------------------------------------------------------------------------->
 									<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<input type="hidden" name="action" value="getmyFriendCheck">
-									<input type="hidden" name="friendAcc" value="weshare03">
+									<input type="hidden" name="friendAcc" value="${memberVO.memId}">
 									<input class="btn btn-info" type="submit" value="確認好友列表"></div>
 								    </FORM>
 								    

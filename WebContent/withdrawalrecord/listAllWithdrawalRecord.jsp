@@ -123,7 +123,7 @@
 
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
 	<footer
-		class="section footer-classic context-dark bg-image fixed-bottom"
+		class="section footer-classic context-dark bg-image"
 		style="background: #74b49b;">
 		<div class="container">
 			<div class="row row-30">

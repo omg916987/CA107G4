@@ -129,7 +129,7 @@ public class FriendNexusServlet extends HttpServlet {
 
 				/*************************** 1.接收請求參數 ***************************************/
 				String friendAcc = new String(req.getParameter("friendAcc"));
-
+               
 				/*************************** 2.開始刪除資料 ***************************************/
 				FriendNexusService friendNexusSvc = new FriendNexusService();
 				friendNexusSvc.deletefriendNexusp(friendAcc);
@@ -159,7 +159,7 @@ public class FriendNexusServlet extends HttpServlet {
 				String str = req.getParameter("memName");
 				System.out.println(str);
 				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("請輸入好友ID");
+					errorMsgs.add("請輸入好友姓名");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -170,7 +170,7 @@ public class FriendNexusServlet extends HttpServlet {
 
 				String memName = null;
 				try {
-					memName = new String(str);
+					memName = new String(str.trim());
 				} catch (Exception e) {
 					errorMsgs.add("好友ID不正確");
 				}
@@ -183,7 +183,8 @@ public class FriendNexusServlet extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				MemberService memberSvc = new MemberService();
-				MemberVO memberVO = memberSvc.findMemName(memName);
+				MemberVO memberVO = memberSvc.findMemName(memName.trim());
+				System.out.println("姓名"+"memName");
 				if (memberVO == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -206,6 +207,8 @@ public class FriendNexusServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		
 		if ("getmyFriend".equals(action)) { // 來自listAllEmp.jsp 或 /dept/listEmps_ByDeptno.jsp 的請求
 
 			try {
@@ -244,7 +247,7 @@ public class FriendNexusServlet extends HttpServlet {
 				List<FriendNexusVO> friendNexusVO = friendNexusSvc.friendNexus0(friendAcc);
 				
                 
-			System.out.println(friendAcc);
+			    System.out.println(friendAcc);
 
 				req.setAttribute("friendNexusVO", friendNexusVO);
 

@@ -2,12 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.friendnexus.model.*"%>
+<%@ page import="com.member.model.*"%>
 
 
 
 <%
     FriendNexusService friendSvc = new FriendNexusService();
-	List<FriendNexusVO> list = friendSvc.friendNexus0("weshare03");
+	MemberVO memberVO=(MemberVO)request.getSession().getAttribute("memberVO");
+	List<FriendNexusVO> list = friendSvc.friendNexus0(memberVO.getMemId());
 	pageContext.setAttribute("list", list);
 	
 %>
@@ -187,7 +189,7 @@ textarea{
 											<div class="card-block px-2">
 												<div class="d-flex">	
 													<div>
-														<input type="hidden" name="friendAcc" value="weshare03">
+														<input type="hidden" name="friendAcc" value="${memberVO.memId}">
 														<input type="hidden" name="friendstatus" value="${friendNexusVO.friendstatus}">	
 														<input type="hidden" name="memId" value="${friendNexusVO.memId}">										
 														<a class="user_name">姓名:${memberSvc.getOneMember(friendNexusVO.memId).memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>

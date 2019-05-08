@@ -168,9 +168,9 @@ textarea {
 		<div class="form-row">
 
 			<div class="form-group col-md-6">
-				<label for="inputPassword4">請輸入課程編號</label> <input type="text"
-					class="form-control" id="inputPassword4" name="leaderID" value=""
-					placeholder="請輸入課程編號">
+				<label for="inputPassword4">請輸入會員帳號</label> <input type="text"
+					class="form-control" id="inputPassword4" readonly="readonly" name="leaderID" value="${memberVO.memId}"
+					placeholder="請輸入會員帳號">
 			</div>
 
 			<div class="form-group col-md-6">
@@ -180,10 +180,7 @@ textarea {
 			</div>
 		</div>
 		<div class="form-row">
-			<div class="form-group col-md-6">
-				<label for="date">成團日期</label> <input class="form-control"
-					type="date" id="teamMFD" name="temaMFD" page[end_date]="">
-			</div>
+			
                    
 			<div class="form-group col-md-6">
 				<label for="date">截團日期</label> <input class="form-control"

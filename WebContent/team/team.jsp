@@ -233,9 +233,9 @@
 					<FORM METHOD="get"
 						ACTION="<%=request.getContextPath()%>/team/team.do">
 						<div class="form-row">
-							<input type="hidden" name="action" value="findOneteam"> <input
-								type="submit" name="memId" value="weshare01"
-								class="btn btn-info submit" data-disable-with="find" />
+							<input type="hidden" name="action" value="findOneteam"> 
+							<button class="btn btn-info submit" type="submit" value="${param.memId}" data-disable-with="find" >查看我的揪團</button>
+							
 						</div>
 					</FORM>
 				</div>
@@ -298,7 +298,7 @@
 					<div class="row">
 					
 					<FORM METHOD="get" ACTION="team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
-							<input type="hidden" name="memId" value="weshare01">
+							<input type="hidden" name="memId" value="${param.memId}">
 							<input type="hidden" name="teamId" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
 							<input type="hidden" name="inscPrice"
 								value="${insCourseVO.inscPrice}"> <input type="hidden"

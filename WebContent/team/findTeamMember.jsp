@@ -7,6 +7,11 @@
 <%@ page import="com.joingroup.model.*"%>
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.inscourse.model.*"%>
+<%
+    List<JoinGroupVO> grouplist = (List<JoinGroupVO>) request.getAttribute("listsize");
+    pageContext.setAttribute("grouplist",grouplist);
+
+%>
 <!doctype html>
 <html lang="en">
 
@@ -41,10 +46,14 @@
   </thead>
   <tbody>
     <tr>
-    
+
      <td class="subjectName">item.member_Name</td>
       <td class="subjectEmail">item.member_Email</td>
-  
+      
+    </tr>
+    <tr>
+      <td class="subjectName">item.member_Name</td>
+      <td class="subjectEmail">item.member_Email</td>
     </tr>
   </tbody>
 </table>
