@@ -34,10 +34,12 @@ public class FriendNexusService {
 		return friendNexusVO;
 	}
 
-	public void deletefriendNexusp(String friendAcc) {
-		dao.delete(friendAcc);
+	public void deletefriendNexusp(String friendAcc,String memId) {
+		dao.delete(friendAcc, memId);
 	}
-
+	public void deletefriendNexuspMemid(String memId,String friendAcc) {
+		dao.delete(memId, friendAcc);
+	}
 //	public FriendNexusVO getOneFriendNexus(String memId) {
 //		return dao.findByPrimaryKey(memId);
 //	}

@@ -31,6 +31,10 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/G4.css ">
+
+<link href="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <style type="text/css">
 .friend {
 	margin-top: auto;
@@ -159,14 +163,18 @@ textarea{
 	
 
 
-		<c:if test="${not empty errorMsgs}">
-			<h4 style="color: red; text-align: center;">請修正以下錯誤:</h4>
-			<ul>
-				<c:forEach var="message" items="${errorMsgs}">
-					<li style="color: red; text-align: center;">${message}</li>
-				</c:forEach>
-			</ul>
-		</c:if>
+<c:if test="${not empty errorMsgs}">
+<c:forEach var="message" items="${errorMsgs}">
+<script>
+Swal.fire(
+		 '請檢查內容',
+		  '${message}',
+		  'error'
+)
+</script>
+</c:forEach>
+</c:if>  
+
 	
 
 	

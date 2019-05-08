@@ -18,7 +18,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.google.gson.Gson;
 
-
+import idv.david.websocketchat.jedis.JedisHandleMessage;
 import idv.david.websocketchat.model.ChatMessage;
 import idv.david.websocketchat.model.State;
 
@@ -53,30 +53,30 @@ public class FriendWS {
 		String sender = chatMessage.getSender();
 		String receiver = chatMessage.getReceiver();
 		System.out.println("8811");
-//		if ("history".equals(chatMessage.getType())) {
-//			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);
-//			String historyMsg = gson.toJson(historyData);
-//			ChatMessage cmHistory = new ChatMessage("history", sender, receiver, historyMsg);
-//			if (userSession != null && userSession.isOpen()) {
-//				userSession.getAsyncRemote().sendText(gson.toJson(cmHistory));
-//				return;
-//			}
-//		}
+		if ("history".equals(chatMessage.getType())) {
+			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);
+			String historyMsg = gson.toJson(historyData);
+			ChatMessage cmHistory = new ChatMessage("history", sender, receiver, historyMsg);
+			if (userSession != null && userSession.isOpen()) {
+				userSession.getAsyncRemote().sendText(gson.toJson(cmHistory));
+				return;
+			}
+		}
 		
 		
 		Session receiverSession = sessionsMap.get(receiver);
 		System.out.println("789654321");
 		if (receiverSession != null && receiverSession.isOpen()) {
 			receiverSession.getAsyncRemote().sendText(message);
-//			JedisHandleMessage.saveChatMessage(sender, receiver, message);
+			JedisHandleMessage.saveChatMessage(sender, receiver, message);
 		}
 		System.out.println("Message received: " + message);
 	}
 
-//	@OnError
-//	public void onError(Session userSession, Throwable e) {
-//		System.out.println("Error: " + e.toString());
-//	}
+	@OnError
+	public void onError(Session userSession, Throwable e) {
+		System.out.println("Error: " + e.toString());
+	}
 
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {

@@ -23,6 +23,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 	private static final String INSERT_FriendNexus = "INSERT INTO FRIENDNEXUS (memId,friendAcc,friendstatus) VALUES (?, ?, ?)";
 	private static final String GET_ONE_STMT = "SELECT * FROM FRIENDNEXUS where memId=?";
 	private static final String DELETE_friendacc = "DELETE FROM FRIENDNEXUS where friendacc =? AND memId= ?";
+	private static final String DELETE_memId = "DELETE FROM FRIENDNEXUS where memId =? AND friendacc= ?";
 	private static final String GET_ALL_STMT0 = "SELECT * FROM FRIENDNEXUS where FRIENDSTATUS='0' AND friendAcc= ?";
 	private static final String GET_ALL_STMT1 = "SELECT * FROM FRIENDNEXUS where FRIENDSTATUS='1' AND memId= ?";
 	private static final String GET_ALL_STMT = "SELECT memId,friendAcc,friendstatus FROM FriendNexus order by memId";
@@ -348,7 +349,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 
 	}
 	@Override
-	public void delete(String friendAcc) {
+	public void deletememId(String memId,String friendAcc) {
 		int updateCount_EMPs = 0;
 
 		Connection con = null;
@@ -364,7 +365,8 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 
 			// 先刪除員工
 			pstmt = con.prepareStatement(DELETE_friendacc);
-			pstmt.setString(1, friendAcc);
+			pstmt.setString(1, memId);
+			pstmt.setString(2, friendAcc);
 			updateCount_EMPs = pstmt.executeUpdate();
 			// 再刪除部門
 			
@@ -406,6 +408,71 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 					e.printStackTrace(System.err);
 				}
 			}
+		}
+	}
+			
+			@Override
+			public void delete(String friendAcc,String memId) {
+				int updateCount_EMPs = 0;
+
+				Connection con = null;
+				PreparedStatement pstmt = null;
+
+				try {
+
+					Class.forName(driver);
+					con = DriverManager.getConnection(url, userid, passwd);
+
+					// 1●設定於 pstm.executeUpdate()之前
+					con.setAutoCommit(false);
+
+					// 先刪除員工
+					pstmt = con.prepareStatement(DELETE_friendacc);
+					pstmt.setString(1, friendAcc);
+					pstmt.setString(2, memId);
+					updateCount_EMPs = pstmt.executeUpdate();
+					// 再刪除部門
+					
+
+					// 2●設定於 pstm.executeUpdate()之後
+					con.commit();
+					con.setAutoCommit(true);
+					
+					
+					// Handle any driver errors
+				} catch (ClassNotFoundException e) {
+					throw new RuntimeException("Couldn't load database driver. "
+							+ e.getMessage());
+					// Handle any SQL errors
+				} catch (SQLException se) {
+					if (con != null) {
+						try {
+							// 3●設定於當有exception發生時之catch區塊內
+							con.rollback();
+						} catch (SQLException excep) {
+							throw new RuntimeException("rollback error occured. "
+									+ excep.getMessage());
+						}
+					}
+					throw new RuntimeException("A database error occured. "
+							+ se.getMessage());
+				} finally {
+					if (pstmt != null) {
+						try {
+							pstmt.close();
+						} catch (SQLException se) {
+							se.printStackTrace(System.err);
+						}
+					}
+					if (con != null) {
+						try {
+							con.close();
+						} catch (Exception e) {
+							e.printStackTrace(System.err);
+						}
+					}
+			
+			
 		}
 
 	}
@@ -467,7 +534,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 //		System.out.println(FriendNexusVO3.getFriendstatus());
 //		System.out.println();
 //	}
-	dao.delete("weshare06");
+	dao.delete("weshare03", "weshare02");
 	System.out.println("---------------------");
 	}
 

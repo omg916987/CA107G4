@@ -158,14 +158,17 @@ textarea {
 
 
 
-	<c:if test="${not empty errorMsgs}">
-			<h4 style="color: red; text-align: center;">請修正以下錯誤:</h4>
-			<ul>
-				<c:forEach var="message" items="${errorMsgs}">
-					<li style="color: red; text-align: center;">${message}</li>
-				</c:forEach>
-			</ul>
-		</c:if>
+<c:if test="${not empty errorMsgs}">
+<c:forEach var="message" items="${errorMsgs}">
+<script>
+Swal.fire(
+		 '請檢查內容',
+		  '${message}',
+		  'error'
+)
+</script>
+</c:forEach>
+</c:if>  
 
 
 
@@ -204,7 +207,7 @@ textarea {
 										<div class="card-block px-2">
 											<div class="d-flex">
 												<div>
-													<input type="hidden" name="memId" value="weshare02">
+													
 													<input type="hidden" name="friendstatus"
 														value="${friendNexusVO.friendstatus}"> <input
 														type="hidden" name="friendAcc"
@@ -218,7 +221,7 @@ textarea {
 										<div class="btn1">
 											<input type="hidden" name="action" value="delete"> 
 											<input type="submit" value="刪除好友" class="btn btn-primary">
-											<input type="hidden" name="memId" value="delet">
+											<input type="hidden" name="memId" value="${memberVO.memId}">
 											<input type="hidden" name="action1" value="chate"> 
 											<input type="submit" value="聊天" class="btn btn-primary">
 										</div>		
@@ -255,7 +258,7 @@ textarea {
 									<input type="hidden" name="action" value="getmyFriendCheck">
 									<input type="hidden" name="memId" value="weshare01">
 									<input class="btn btn-info" type="submit" value="申請好友列表"></div>
-								    </FORM>
+								     /FORM>
 								</div>
 							</ul>
 						</div>

@@ -1,6 +1,7 @@
 package com.friendnexus.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class FriendNexusServlet extends HttpServlet {
 
 		if ("insert1".equals(action)) { // 來自addEmp.jsp的請求
 
-			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -41,29 +42,49 @@ public class FriendNexusServlet extends HttpServlet {
 				String memId = req.getParameter("memId");
 				String friendAcc = req.getParameter("friendAcc");
 //					Integer friendstatus = req.getParameter(friendstatus);
-
-				if (memId == friendAcc) {
-					errorMsgs.put("", "不能加自己為好友喔");
-				}
-				if (memId == null) {
+				if (memId == null||memId.isEmpty()) {
 					String url = "/friend/allfriend.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 					successView.forward(req, res);
+					return;
+				}	
+				if (memId.equals(friendAcc)) {
+					errorMsgs.add("不能加自己為好友喔");
+					
+				}
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/friend/allfriend.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
 				}
 
 				/*************************** 2.開始新增資料 ***************************************/
-				FriendNexusService friendnexusSvc = new FriendNexusService();
-				friendnexusSvc.addfriendNexus(memId, friendAcc, 0);
+			
+				try{
+					FriendNexusService friendnexusSvc = new FriendNexusService();
+					friendnexusSvc.addfriendNexus(memId, friendAcc, 0);
+				} catch (Exception e) {
+					errorMsgs.add("請勿重複申請好友喔");
+					RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/friend/allfriend.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
+				return;
+				
 
 				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.put("Exception", e.getMessage());
+			}
+			catch (Throwable e) {
+				errorMsgs.add( e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
 				failureView.forward(req, res);
+				return;
 			}
 		}
 
@@ -129,10 +150,14 @@ public class FriendNexusServlet extends HttpServlet {
 
 				/*************************** 1.接收請求參數 ***************************************/
 				String friendAcc = new String(req.getParameter("friendAcc"));
-               
+                String memId = new String(req.getParameter("memId"));
+                
+                System.out.println("friendAcc=" + friendAcc);
+                System.out.println("memId=" + friendAcc);
 				/*************************** 2.開始刪除資料 ***************************************/
 				FriendNexusService friendNexusSvc = new FriendNexusService();
-				friendNexusSvc.deletefriendNexusp(friendAcc);
+				friendNexusSvc.deletefriendNexusp(friendAcc, memId);
+				friendNexusSvc.deletefriendNexuspMemid(memId, friendAcc);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 				String url = "/friend/myfriend.jsp";
