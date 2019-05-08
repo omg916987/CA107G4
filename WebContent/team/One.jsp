@@ -240,9 +240,9 @@
 		</div>
 	</div>
 
-	<%@ include file="page1.file"%>
+	
 	<c:forEach var="insCourseVO" items="${insCourseVOList}"
-		begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+		>
 		<div class="container">
 			<div class="plan">
 				<div class="plan_iamge">
@@ -428,7 +428,7 @@ $(function () {
 				</div>
 			</div>
 	</c:forEach>
-	<%@ include file="page2.file"%>
+	
 				
 
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->

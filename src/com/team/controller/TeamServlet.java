@@ -3,6 +3,7 @@ package com.team.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +22,8 @@ import com.team.model.TeamVO;
 import com.withdrawalrecord.model.WithdrawalRecordService;
 import com.inscourse.model.InsCourseService;
 import com.inscourse.model.InsCourseVO;
+import com.inscoursetime.model.InsCourseTimeService;
+import com.inscoursetime.model.InsCourseTimeVO;
 import com.joingroup.model.JoinGroupService;
 import com.joingroup.model.JoinGroupVO;
 
@@ -98,7 +101,6 @@ public class TeamServlet extends HttpServlet {
 					MemberVO membe = memberSvc.getOneMember(req.getParameter("memId"));
 				
 					
-					
 					joinGroupSvc.getAll();
 					int memblance =0;
 					int blance = membe.getMemBalance();
@@ -112,8 +114,11 @@ public class TeamServlet extends HttpServlet {
 						RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/withdrawalrecord.jsp");
 						failureView.forward(req, res);
 						return;			    
-					} else {			
-						memblance = blance - wrmoney;
+					} else {		
+					
+						Double a = wrmoney * 0.8;
+						System.out.println("8折價"+a);
+						memblance = (int) (blance - a);
 						memBlock  = (wrmoney + memBlock) ; 
 						System.out.println("memblance="+ memblance);				
 					}

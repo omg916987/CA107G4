@@ -27,6 +27,12 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <title>WeShare | 最棒的教育共享平台</title>
+<style type="text/css">
+
+
+
+
+</style>
 </head>
 <body>
 	<!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
@@ -72,7 +78,14 @@
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 	<div class="container">
 	<div class="p-4">
-		<h3>交易紀錄</h3>
+		<h3>交易紀錄</h3>	
+		<FORM METHOD=GET ACTION="<%=request.getContextPath()%>/withdrawalrecord/withdrawalrecord.do" name="form1">
+		         <input type="hidden" name="action" value="findByKey">
+				 <input type="text" name="wrnum" > 
+				
+				
+				<input type="submit" value="送出">
+			</FORM>
 		<table class="table table-bordered track_tbl">
 			<thead>
 				<tr>
@@ -83,12 +96,11 @@
 					<th>交易日期</th>
 				</tr>
 			</thead>
+		
 
 			<%@ include file="page1.file"%>
 			<c:forEach var="withdrawalRecordVO" items="${list}"
 				begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-
-
 				<tbody>
 					<tr class="active">
 						<td class="track_dot"><span class="track_line"></span></td>
@@ -183,5 +195,11 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		
+		
+		
+		
+		
+		
 </body>
 </html>

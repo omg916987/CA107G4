@@ -380,12 +380,13 @@ $(document).ready(function(){
 	            	    "teamId": "${joinGroupVO.teamId}"},
 	          dataType:"json",
 	          
-	            success: function(data,item) {
+	            success:window.onload=function(data) {
 	            	
-	            
+	            	
 	            	$.each(data,function(i,item){
-	            		document.getElementsByClassName('subjectName')[i].innerHTML=item.member_Name;
-		            	document.getElementsByClassName('subjectEmail')[i].innerHTML=item.member_Email;
+	            		document.getElementsByClassName('subjectName')[i+1].innerHTML= item.member_Name;
+		            	document.getElementsByClassName('subjectEmail')[i+1].innerHTML = item.member_Email;
+		            	
 	            	});     	
 	            },
 	            error: function() {

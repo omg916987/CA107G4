@@ -1,17 +1,23 @@
 package com.inscoursetime.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 	static InsCourseTimeJDBCDAO dao=new InsCourseTimeJDBCDAO();
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 	
@@ -26,7 +32,13 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 	
 	//查詢
 	private static final String GET_ALL_STMT = "SELECT * FROM InsCourseTime";
-	private static final String GET_ONE_STMT = "SELECT * FROM InsCourseTime where inscId = ?";
+	private static final String GET_ONE_STMT = "SELECT * FROM InsCourseTime where inscTimeId = ?";
+	private static final String GET_DATE_STMT = "SELECT * FROM INSCOURSETIME WHERE INSCMFD >= TO_DATE(?,'yyyy-mm-dd')\r\n" + 
+			"AND INSCMFD < TO_DATE(?,'yyyy-mm-dd') AND INSCID = ?";
+	private static final String GET_DATE_MI_STMT = "SELECT * FROM INSCOURSETIME WHERE INSCMFD >= TO_DATE(?,'YYYY-MM-DD HH24:MI')\r\n" + 
+			"AND INSCMFD < TO_DATE(?,'YYYY-MM-DD HH24:MI') AND INSCID = ?";
+	//複合式查詢
+    private static final String CASE_WHEN_STMT = "SELECT * FROM InsCourseTime where (case when inscId=? then 1 else 0 end+ case when inscTimeId=? then 1 else 0 end)>=1";
 
 	@Override
 	public void insert(InsCourseTimeVO insCourseTimeVO) {
@@ -43,7 +55,6 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			pstmt.setTimestamp(3, insCourseTimeVO.getInscEXP());
 
 			pstmt.executeUpdate();
-			System.out.println("已新增一筆資料");
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
@@ -131,8 +142,6 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			pstmt = con.prepareStatement(DELETE);
 			pstmt.setString(1, inscTimeId);
 			pstmt.executeUpdate();
-		
-			System.out.println("已刪除一筆資料");
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
@@ -224,6 +233,67 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 		return insCourseTimeVO;
 
 	}
+	
+	@Override
+	public List<InsCourseTimeVO> findByKey(String xxxId) {
+		List<InsCourseTimeVO> list = new ArrayList<InsCourseTimeVO>();
+		InsCourseTimeVO insCourseTimeVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(CASE_WHEN_STMT);
+			pstmt.setString(1, xxxId);
+			pstmt.setString(2, xxxId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				insCourseTimeVO = new InsCourseTimeVO();
+				insCourseTimeVO.setInscTimeId(rs.getString("inscTimeId"));
+				insCourseTimeVO.setInscId(rs.getString("inscId"));
+				insCourseTimeVO.setInscMFD(rs.getTimestamp("inscMFD"));
+				insCourseTimeVO.setInscEXP(rs.getTimestamp("inscEXP"));
+				list.add(insCourseTimeVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+
+	}
 
 	@Override
 	public List<InsCourseTimeVO> getAll() {
@@ -240,6 +310,8 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
+			
+		
 
 			while (rs.next()) {
 				// empVO 也稱為 Domain objects
@@ -286,6 +358,140 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 		return list;
 	}
 
+	
+
+	@Override
+	public List<InsCourseTimeVO> findDate(java.sql.Date startTime, java.sql.Date endTime, String inscId) {
+		List<InsCourseTimeVO> list = new ArrayList<InsCourseTimeVO>();
+		InsCourseTimeVO insCourseTimeVO = null; 
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_DATE_STMT);
+
+			pstmt.setDate(1,startTime);
+			pstmt.setDate(2,endTime);
+			pstmt.setString(3,inscId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVO 也稱為 Domain objects
+				insCourseTimeVO = new InsCourseTimeVO();
+				insCourseTimeVO.setInscTimeId(rs.getString("inscTimeId"));
+				insCourseTimeVO.setInscId(rs.getString("inscId"));
+				insCourseTimeVO.setInscMFD(rs.getTimestamp("inscMFD"));
+				insCourseTimeVO.setInscEXP(rs.getTimestamp("inscEXP"));
+				list.add(insCourseTimeVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
+	@Override
+	public List<InsCourseTimeVO> findDate(String startTime, String endTime, String inscId) {
+		List<InsCourseTimeVO> list = new ArrayList<InsCourseTimeVO>();
+		InsCourseTimeVO insCourseTimeVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_DATE_STMT);
+
+			pstmt.setString(1,startTime);
+			pstmt.setString(2,endTime);
+			pstmt.setString(3,inscId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVO 也稱為 Domain objects
+				insCourseTimeVO = new InsCourseTimeVO();
+				insCourseTimeVO.setInscTimeId(rs.getString("inscTimeId"));
+				insCourseTimeVO.setInscId(rs.getString("inscId"));
+				insCourseTimeVO.setInscMFD(rs.getTimestamp("inscMFD"));
+				insCourseTimeVO.setInscEXP(rs.getTimestamp("inscEXP"));
+				list.add(insCourseTimeVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
 	public static void main(String[] args) {
 		// 新增
 //		InsCourseTimeVO insCourseTimeVO1 = new InsCourseTimeVO();
@@ -305,13 +511,13 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 //		dao.delete("TT00007");
 		
 		// 查詢單筆
-		InsCourseTimeVO insCourseTimeVO3 = dao.findByPrimaryKey("IC00002");
+		InsCourseTimeVO insCourseTimeVO3 = dao.findByPrimaryKey("TT00001");
 		System.out.print(insCourseTimeVO3.getInscTimeId() + ",");
 		System.out.print(insCourseTimeVO3.getInscId() + ",");
 		System.out.print(insCourseTimeVO3.getInscMFD() + ",");
 		System.out.println(insCourseTimeVO3.getInscEXP() + ",");
 		System.out.println("---------------------");
-		
+	
 		// 查詢全部
 //		List<InsCourseTimeVO> list = dao.getAll();
 //		for (InsCourseTimeVO insCourseTimeVO4 : list) {
@@ -321,7 +527,134 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 //			System.out.println(insCourseTimeVO4.getInscEXP() + ",");
 //			System.out.println("---------------------");
 //		}
+		
+		// 查詢時段
+//		List<InsCourseTimeVO> list =dao.findDate("2019-04-20","2019-04-20", "IC00001");
+//		for (InsCourseTimeVO insCourseTimeVO4 : list) {
+//			System.out.print(insCourseTimeVO4.getInscTimeId() + ",");
+//			System.out.print(insCourseTimeVO4.getInscId() + ",");
+//			System.out.print(insCourseTimeVO4.getInscMFD() + ",");
+//			System.out.println(insCourseTimeVO4.getInscEXP() + ",");
+//			System.out.println("---------------------");
+//	
+		
+		
+		// 簡易複合查詢
+//		List<InsCourseTimeVO> list = dao.findByKey("IC00001");
+//		for (InsCourseTimeVO insCourseTimeVO4 : list) {
+//			System.out.print(insCourseTimeVO4.getInscTimeId() + ",");
+//			System.out.print(insCourseTimeVO4.getInscId() + ",");
+//			System.out.print(insCourseTimeVO4.getInscMFD() + ",");
+//			System.out.println(insCourseTimeVO4.getInscEXP() + ",");
+//			System.out.println("---------------------");
+		
+		}
 
+	@Override
+	public InsCourseTimeVO findDateMinute(String startTime, String endTime, String inscId) {
+		InsCourseTimeVO insCourseTimeVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_DATE_MI_STMT);
+
+			pstmt.setString(1, startTime);
+			pstmt.setString(2, endTime);
+			pstmt.setString(3, inscId);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo 也稱為 Domain objects
+				insCourseTimeVO = new InsCourseTimeVO();
+				insCourseTimeVO.setInscTimeId(rs.getString("inscTimeId"));
+				insCourseTimeVO.setInscId(rs.getString("inscId"));
+				insCourseTimeVO.setInscMFD(rs.getTimestamp("inscMFD"));
+				insCourseTimeVO.setInscEXP(rs.getTimestamp("inscEXP"));
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return insCourseTimeVO;
 	}
+
+	@Override
+	public void delete(String inscTimeId, Connection con) {
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = con.prepareStatement(DELETE);
+			pstmt.setString(1, inscTimeId);
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} 
+		catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-emp");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	
+		
+		
+	}
+
+
+
+
 
 }

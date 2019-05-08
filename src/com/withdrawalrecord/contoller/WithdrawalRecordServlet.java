@@ -131,7 +131,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
+System.out.println("有近來");
 //					try {
 			/*************************** 1.接收請求參數 ****************************************/
 			String wrnum = new String(req.getParameter("wrnum"));
