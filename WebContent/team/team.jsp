@@ -298,7 +298,7 @@
 					<div class="row">
 					
 					<FORM METHOD="get" ACTION="team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
-							<input type="hidden" name="memId" value="${param.memId}">
+							<input type="hidden" name="memId" value="${memberVO.memId}">
 							<input type="hidden" name="teamId" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
 							<input type="hidden" name="inscPrice"
 								value="${insCourseVO.inscPrice}"> <input type="hidden"

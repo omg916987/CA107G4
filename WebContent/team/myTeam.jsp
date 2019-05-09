@@ -262,13 +262,13 @@
 						<span class="badge badge-info">揪團編號</span>
 					</div>
 				</div>
-<%-- 				<button type="button" id="${joinGroupVO.teamId}"class="btn btn-secondary" data-toggle="modal" data-target="#createModal1"> 成員 --%>
-              
-<!--           </button> -->
+<!-- 				按鈕在這--------------------------------------------------------------------- -->
+<button type="button" id="${joinGroupVO.teamId}"class="btn btn-secondary" data-toggle="modal" data-target="#createModal1">成員 </button>
+     
               <div class="button-group">
               <div class="row">   
                 <FORM METHOD="get" ACTION="team.do" name="delete">      
-                        <input type="hidden" name="memId" value="weshare01">
+                        <input type="hidden" name="memId" value="${memberVO.memId}">
                         <input type="hidden" name="teamId" value="${joinGroupVO.teamId}">	 	
 						<input type="hidden" name="action" value="delete"> 
  					<input type="submit" value="退出揪團"
@@ -340,8 +340,7 @@
 			//自訂預設值
 
 			  $(document).ready(function(){
-				
-				  
+
 				  $("#${teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID}").click(function(){
 					 
 					  $.ajax({
@@ -368,35 +367,38 @@
 
 
 //自訂預設值
-// $(document).ready(function(){
-	
-	 
-// 	  $("#${joinGroupVO.teamId}").click(function(){
-		 
-// 		  $.ajax({
-// 	            type: "get", //傳送方式
-<%-- 	            url:  "<%=request.getContextPath()%>/team/team.do", --%>
-// 	            data:  {"action": "include2",
-// 	            	    "teamId": "${joinGroupVO.teamId}"},
-// 	          dataType:"json",
+$(document).ready(function(){
+
+	  $("#${joinGroupVO.teamId}").click(function(){
+		  $.ajax({
+	            type: "get", //傳送方式
+	            url: "<%=request.getContextPath()%>/team/team.do",
+	            data:  { "action": "include2",
+	            	     "teamId": "${joinGroupVO.teamId}"},
+	          dataType:"json",
 	          
-// 	            success:function(data) {
+	            success:function(data) {
 	            		
-// 	            	console.info(data);
-// 	            	$.each(data,function(i,item){
+	            	console.info(data);
+	            	$('#detail').empty();
+	            	$.each(data,function(i,item){
 	            		
-// 	            		document.getElementsByClassName('subjectName')[i+1].innerHTML= item.member_Name;
-// 		            	document.getElementsByClassName('subjectEmail')[i+1].innerHTML = item.member_Email;
+	            		$('#detail').append('<tr><td class="subjectName2">'+item.member_Name+'</td><td class="subjectEmail2">'+item.member_Email+'</td></tr>');
+// 	            		console.log(item.member_Name)
+// 	            		console.log(document.getElementsByClassName('subjectName2')[i])
+// 	            		debugger
+// 	            		document.getElementsByClassName('subjectName2')[i].innerHTML= item.member_Name;
+// 		            	document.getElementsByClassName('subjectEmail2')[i].innerHTML = item.member_Email;
 		            
 // 		            	console.info(item);
-// 	            	});     	
-// 	            },
-// 	            error: function() {
-// 	                alert("有錯誤")
-// 	            }
-// 	        })
-// 	    })        
-// 	});
+	            	});     	
+	            },
+	            error: function() {
+	                alert("有錯誤")
+	            }
+	        })
+	    })        
+	});
 
 </script>
 	</c:forEach>
@@ -407,40 +409,6 @@
 
 
 
-
-<script type="text/javascript">
-
-
-$(document).ready(function(){
-	
-	 
-	  $("#${joinGroupVO.teamId}").click(function(){
-		 
-		  $.ajax({
-	            type: "get", //傳送方式
-	            url:  "<%=request.getContextPath()%>/team/team.do",
-	            data:  {"action": "include2",
-	            	    "teamId": "${joinGroupVO.teamId}"},
-	          dataType:"json",
-	          
-	            success:function(data) {
-	            		
-	            	console.info(data);
-	            	$.each(data,function(i,item){
-	            		
-	            		document.getElementsByClassName('subjectName')[i].innerHTML= item.member_Name;
-		            	document.getElementsByClassName('subjectEmail')[i].innerHTML = item.member_Email;
-		            
-		            	console.info(item);
-	            	});     	
-	            },
-	            error: function() {
-	                alert("有錯誤")
-	            }
-	        })
-	    })        
-	});
-</script>
 
 
 

@@ -237,7 +237,7 @@ textarea{
 									
 									
 										<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do" name="form1" id="form1">
-						<input type="hidden" name="memId" value="weshare01">
+						<input type="hidden" name="memId" value="${param.memId}">
 					    <input type="hidden" name="action" value="getmyFriend">
 						<input class="btn btn-info" type="submit" value="我的好友列表">
 						</Form>

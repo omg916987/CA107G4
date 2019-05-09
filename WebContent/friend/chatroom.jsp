@@ -290,6 +290,7 @@
    				};
    			webSocket.send(JSON.stringify(jsonObj));
    		    text.value = '';
+   		   
    		}
 //           }	
      };

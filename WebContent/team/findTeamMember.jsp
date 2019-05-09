@@ -44,16 +44,12 @@
   
     </tr>
   </thead>
-  <tbody>
+  <tbody id ="detail">
     <tr>
 
-     <td class="subjectName">item.member_Name</td>
-      <td class="subjectEmail">item.member_Email</td>
+     <td class="subjectName2">item.member_Name</td>
+      <td class="subjectEmail2">item.member_Email</td>
       
-    </tr>
-    <tr>
-      <td class="subjectName">item.member_Name</td>
-      <td class="subjectEmail">item.member_Email</td>
     </tr>
   </tbody>
 </table>

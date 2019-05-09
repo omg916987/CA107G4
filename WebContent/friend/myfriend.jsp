@@ -256,9 +256,9 @@ Swal.fire(
 <!-- 								--------------------------需帳號--------------------------------- -->
 								<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<input type="hidden" name="action" value="getmyFriendCheck">
-									<input type="hidden" name="memId" value="weshare01">
+									<input type="hidden" name="friendAcc" value="${memberVO.memId}">
 									<input class="btn btn-info" type="submit" value="申請好友列表"></div>
-								     /FORM>
+								     </FORM>
 								</div>
 							</ul>
 						</div>
