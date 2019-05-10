@@ -38,7 +38,7 @@ public class FriendWS {
 		Collection<Session> sessions = sessionsMap.values();
 		for (Session session : sessions) {
 			if (session.isOpen()) {
-				session.getAsyncRemote().sendText(stateMessageJson);
+				session.getAsyncRemote().sendText(stateMessageJson); 
 			}
 		}
 
@@ -57,26 +57,30 @@ public class FriendWS {
 		System.out.println("reciever="+receiver);
 		
 		
-		if ("history".equals(chatMessage.getType())) {
-			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);
+		if ("chat".equals(chatMessage.getType())) {
+			System.out.println("chat有近來這邊");
+			List<String> chatData = JedisHandleMessage.getHistoryMsg(sender, receiver);
 			if (userSession != null && userSession.isOpen()) {
-				for(int i=0;i<historyData.size();i++) {
-					String historyMsg = historyData.get(i);
+				for(int i=0;i<chatData.size();i++) {
+					String chatMsg = chatData.get(i);
 					synchronized(userSession) {
 						try {
-							userSession.getBasicRemote().sendText(historyMsg);
+							userSession.getBasicRemote().sendText(chatMsg);
+							System.out.println("msg="+chatMsg);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							System.out.println("12345687985");
 							e.printStackTrace();
 						}
 					}
 				}
+				System.out.println("passHistory----------------------------");
 				return;
 			}
 		}
 		
-		
-		
+		System.out.println("passHistory----------------------------");
+		userSession.getAsyncRemote().sendText(message);
+		System.out.println("passHistory----------------------------");
 		Session receiverSession = sessionsMap.get(receiver);
 	System.out.println("receiverSession="+receiver);
 		if (receiverSession != null && receiverSession.isOpen()) {

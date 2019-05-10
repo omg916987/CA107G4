@@ -3,8 +3,9 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 
-<%MemberVO member1VO = (MemberVO) request.getAttribute("memId");%>
+<%MemberVO memberVO = (MemberVO) request.getSession().getAttribute("memberVO");%>
 
+<%MemberVO friendVO = (MemberVO) request.getSession().getAttribute("friendVO");%>
 
 
 
@@ -32,45 +33,37 @@
 .friend {
 	margin-top: auto;
 }
-
 .title.TitleImg {
 	background-size: cover;
 	background-image:url(<%=request.getContextPath()%>/friend/img/hero-image-wrapper.png);
 	padding: 40px;
 	margin-top: 76px;
 }
-
 .col-8 {;
 	border: 1px solid;
 	height: 800px;
 	width: 900px;
 }
-
 h1 {
 	margin-top: 0;
 	margin-bottom: .5rem;
 	color: white;
 }
-
 .container {
 	margin-top: 3%;
 }
-
 img {
 	width: 60px;
 }
-
 .row1 {
 	margin-left: 250px;
 	margin-top: -55px;
 }
-
 p {
 	margin-top: 0;
 	margin-bottom: 1rem;
 	margin-left: 3px;
 }
-
 .flex-wrap {
 	-ms-flex-wrap: wrap !important;
 	flex-wrap: wrap !important;
@@ -78,31 +71,24 @@ p {
 	background-color: #f4f9f4;
 	color: brown;
 }
-
 .row {
 	margin-bottom: 15px;
 }
-
 .col-4 {
 	margin-top: 30px;
 }
-
 h6 {
 	margin-left: 2px;
 }
-
 textarea {
 	height: 200px;
 	width: 700px;
 }
-
-
 .btn1 {
     margin-left: 260px;
     margin-top: -60px;;
 	
 }
-
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -156,8 +142,8 @@ textarea {
 	<div class="row">
 		<div class="col-3">
 			<div class="list-group" id="list-tab" role="tablist">
-
-				<input class="btn btn-secondary" type="submit" value="返回推薦的好友">
+<a class="btn btn-secondary" href="<%=request.getContextPath()%>/friend/allfriend.jsp" role="button">返回推薦的好友</a>
+				
 			</div>
 		</div>
 		<div class="col-9">
@@ -172,7 +158,7 @@ textarea {
 								<div class="card flex-row flex-wrap">
 									<div class="card-header border-0">
 										<img 
-											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${member1VO.memId}"
+											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendVO.memId}"
 											width="100" height="50">
 									</div>
 									<FORM METHOD="get"
@@ -181,16 +167,17 @@ textarea {
 										<div class="card-block px-2">
 											<div class="d-flex">
 												<div>
-													<input type="hidden" name="memId" value="weshare02">
-													<input type="hidden" name="friendstatus"
-														value="${friendNexusVO.friendstatus}"> <input
-														type="hidden" name="friendAcc"
-														value="${friendNexusVO.friendAcc}"> 
-														<div class="wrod">
-													<a class="user_name">姓名:${member1VO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
-													<a class="user_name">ID:${member1VO.memId}</a><br>
-													<a class="user_name">專長:${courseSvc.findOneById(member1VO.memSkill).courseName}&nbsp;</a><br>
-								                    <a class="user_name">想學的課:${courseSvc.findOneById(member1VO.memWantSkill).courseName}&nbsp;</a>
+<!-- 												自己 -->
+													<input type="hidden" name="memId" value="${memberVO.memId}">
+													<input type="hidden" name="friendstatus" value="${friendNexusVO.friendstatus}"> 
+														
+<!-- 														朋友帳號 -->
+													<input type="hidden" name="friendAcc" value="${friendVO.memId}"> 
+													<div class="wrod">
+													<a class="user_name">姓名:${friendVO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
+													<a class="user_name">ID:${friendVO.memId}</a><br>
+													<a class="user_name">專長:${courseSvc.findOneById(friendVO.memSkill).courseName}&nbsp;</a><br>
+								                    <a class="user_name">想學的課:${courseSvc.findOneById(friendVO.memWantSkill).courseName}&nbsp;</a>
 												</div>
 										<div class="btn1">
 											<input type="hidden" name="action" value="insert1"> 
@@ -218,17 +205,24 @@ textarea {
 								<div class="card p-2">
 									<h6 class="my-1">搜尋好友</h6>
 									<div class="input-group">
-										<input type="text" class="form-control" placeholder="請輸入好友帳號">
-										<div class="input-group-append">
-											<button type="submit" class="btn btn-secondary">尋找</button>
+									<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+									<div class="input-group">
+								<input type="text" class="form-control" name="memName" placeholder="請輸入姓名">
+								<div class="input-group-append">
+								<button type="submit" class="btn btn-secondary">尋找</button>
+								<input type="hidden" name="action" value="getOne_For_Display">
 										</div>
 									</div>
 								</div>
-								<div class="but">
-									<input type="hidden" name="action" value="friend"> <input
-										class="btn btn-info" type="button" value="申請好友列表">
-								</div>
+								
 							</ul>
+							<div class="but">
+									<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+									<input type="hidden" name="action" value="getmyFriendCheck">
+									<input type="hidden" name="friendAcc" value="${friendVO.memId}">
+									<input class="btn btn-info" type="submit" value="確認好友列表"></div>
+								    </FORM>
+								</div>
 						</div>
 					</div>
 				</div>
@@ -248,7 +242,7 @@ textarea {
 					<p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
 					<!-- Rights-->
 					<p class="rights">
-						<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>©
+						<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>©
 							All Rights Reserved. .</span>
 					</p>
 				</div>

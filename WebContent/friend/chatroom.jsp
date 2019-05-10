@@ -5,6 +5,7 @@
 
 
 
+
 <jsp:useBean id="courseSvc" scope="page"
 	class="com.course.model.CourseService" />
 
@@ -41,7 +42,7 @@
     
     </style>
     </head>
-     <body onload="connect();" onunload="disconnect();" >
+     <body onload="connect();" onunload="disconnect();">
     <!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->	
     <div class="header headerImg">
       <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> <img src="images/icon/logo.png" width="80" height="60" alt=""/><a class="navbar-brand" href="#">教育共享平台</a>
@@ -112,7 +113,8 @@
               	       
 
                     </script>
-                    
+                 <c:set var="friendmemId" value="${friendNexusVO.friendAcc}"></c:set>
+                  
                     </c:forEach> 
                 </div>
             </div>
@@ -222,8 +224,8 @@
       var webSocket;
       webSocket = new WebSocket(endPointURL);
       
-      var me = 'weshare01';
-      var friend= 'weshare02';
+      var memberMap = new Map();
+  	  var receiver;
       
       
       var intername;
@@ -233,9 +235,7 @@
            
          	})  
       
-      
-      
-      
+
       
       var chat = document.getElementById('chatbox');
       function connect() {
@@ -251,7 +251,7 @@
         	  
               var jsonObj = JSON.parse(event.data);
               var message = jsonObj.sender + ": " + jsonObj.message + "\r\n";
-              chat.innerHTML += '<li class="other"><img src="' + '/CA107G4/member/DBGifReader.do?memId=weshare03' + '"><span>' + message +'</span></li>';
+              chat.innerHTML += '<li class="other"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${friendmemId}' + '"><span>' + message +'</span></li>';
               $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
           };
           
@@ -276,7 +276,7 @@
                  alert('請輸入訊息');
                  return;	
              } else{           
-         	     chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=weshare01' + '"><span> '+ text.value +'</span> </li>';
+         	     chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ text.value +'</span> </li>';
 //          	  <img src="' + 'images/own_head.jpg' + '">
               $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
                chat.scrollTop = chat.scrollHeight;
@@ -284,13 +284,13 @@
                 text.style.background = "#fff";
                 var jsonObj = {
    					 "type": "chat",
-    					   "sender" : "${memberVO.memId}",
+    					   "sender" : "${memberVO.memName}",
     					   "receiver": intername,
     					   "message" : text.value
    				};
    			webSocket.send(JSON.stringify(jsonObj));
    		    text.value = '';
-   		   
+   		    text.focus();
    		}
 //           }	
      };
@@ -327,7 +327,10 @@
  	
  	
 	 
- 	
+ 	jQuery(document).ready(function(){
+ 	   	$(".bg").click();
+ 	})
+ 			
  	
  	
 

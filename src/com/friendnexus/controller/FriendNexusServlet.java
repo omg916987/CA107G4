@@ -220,7 +220,7 @@ public class FriendNexusServlet extends HttpServlet {
 					return;// 程式中斷
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("memberVO", memberVO);
+				req.setAttribute("friendVO", memberVO);
 				String url = "/friend/findOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交listOneEmp.jsp
 				successView.forward(req, res);
