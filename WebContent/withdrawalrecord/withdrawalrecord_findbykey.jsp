@@ -29,6 +29,17 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
+<style>
+.btn-info {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    margin-left: 940px;
+}
+</style>
+
+
+
 <body>
 
 	<!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
@@ -71,9 +82,18 @@
 			</div>
 		</nav>
 	</div>
-	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
+	<!-------------------------------
+	
+	------------------------------------------headerEnd------------------------------------------------------------------------->
+	
 	<div class="container">
+	
+
+
+
 	<div class="p-4">
+	<a class="btn btn-info" href="/CA107G4/withdrawalrecord/withdrawalrecord.jsp" role="button">返回儲值頁面</a>
+
 		<h3>個人交易紀錄</h3>
 
 		<c:if test="${not empty errorMsgs}">
@@ -99,7 +119,8 @@
 				</tr>
 			</thead>
 
-			<%@ include file="page11.file"%>
+			<%@ include file="page11.file"%> 
+			
 			<c:forEach var="withdrawalRecordVO" items="${list}"
 				begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
@@ -118,14 +139,14 @@
 			</c:forEach>
 		</table>
 		<%@ include file="page22.file"%>
-	
 	</div>
-</div>
+	</div>
+
 
 
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
 	<footer
-		class="section footer-classic context-dark bg-image fixed-bottom"
+		class="section footer-classic context-dark bg-image "
 		style="background: #74b49b;">
 		<div class="container">
 			<div class="row row-30">

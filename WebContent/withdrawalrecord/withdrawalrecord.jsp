@@ -109,7 +109,7 @@
 		<div class="row">
 			<div class="col-md-3 order-md-2 mb-4">
 
-				<FORM METHOD="GET" ACTION="withdrawalrecord.do" name="form1">
+				<FORM METHOD="post" ACTION="withdrawalrecord.do" name="form1">
 					<h4 class="d-flex justify-content-between align-items-center mb-3">
 						<span class="text-muted">查詢您的訂單</span>
 					</h4>

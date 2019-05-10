@@ -57,35 +57,35 @@ public class FriendWS {
 		System.out.println("reciever="+receiver);
 		
 		
-//		if ("history".equals(chatMessage.getType())) {
-//			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);
-//			if (userSession != null && userSession.isOpen()) {
-//				for(int i=0;i<historyData.size();i++) {
-//					String historyMsg = historyData.get(i);
-//					synchronized(userSession) {
-//						try {
-//							userSession.getBasicRemote().sendText(historyMsg);
-//						} catch (IOException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//					}
-//				}
-//				return;
-//			}
-//		}
+		if ("history".equals(chatMessage.getType())) {
+			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);
+			if (userSession != null && userSession.isOpen()) {
+				for(int i=0;i<historyData.size();i++) {
+					String historyMsg = historyData.get(i);
+					synchronized(userSession) {
+						try {
+							userSession.getBasicRemote().sendText(historyMsg);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				return;
+			}
+		}
 		
 		
 		
-//		Session receiverSession = sessionsMap.get(receiver);
-//	System.out.println("receiverSession="+receiver);
-//		if (receiverSession != null && receiverSession.isOpen()) {
-//			System.out.println("come here");
-//			receiverSession.getAsyncRemote().sendText(message);
-//			System.out.println("sendmsg----------------------------");
-//			JedisHandleMessage.saveChatMessage(sender, receiver, message);
-//			System.out.println("saving Msg----------------------------");
-//		}
+		Session receiverSession = sessionsMap.get(receiver);
+	System.out.println("receiverSession="+receiver);
+		if (receiverSession != null && receiverSession.isOpen()) {
+			System.out.println("come here");
+		receiverSession.getAsyncRemote().sendText(message);
+			System.out.println("sendmsg----------------------------");
+			JedisHandleMessage.saveChatMessage(sender, receiver, message);
+			System.out.println("saving Msg----------------------------");
+		}
 		System.out.println("Message received: " + message);
 	}
 

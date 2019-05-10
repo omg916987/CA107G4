@@ -11,7 +11,8 @@
 
 <%
 	JoinGroupService joinGroupSvc = new JoinGroupService();
-	List<JoinGroupVO> list = joinGroupSvc.findByPrimaryKey("weshare01");
+    MemberVO memberVO=(MemberVO)request.getSession().getAttribute("memberVO");
+	List<JoinGroupVO> list = joinGroupSvc.findByPrimaryKey(memberVO.getMemId());
 	pageContext.setAttribute("list", list);
 	
 	TeamService teamSvc1 = new TeamService();
@@ -111,11 +112,7 @@
 	margin-left: 900px;
 	margin-top: -40px;
 }
-.page2 {
-	text-align: center;
-	width: 500px;
-	margin: auto;
-}
+
 .form-row {
 	margin-left: 5px;
 	margin-top: 5px;

@@ -223,7 +223,8 @@ Swal.fire(
 											<input type="submit" value="刪除好友" class="btn btn-primary">
 											<input type="hidden" name="memId" value="${memberVO.memId}">
 											<input type="hidden" name="action1" value="chate"> 
-											<input type="submit" value="聊天" class="btn btn-primary">
+											
+											<a class="btn btn-primary" href="<%=request.getContextPath()%>/friend/chatroom.jsp" role="button">聊天</a>
 										</div>		
 												</div>	
 											</div>

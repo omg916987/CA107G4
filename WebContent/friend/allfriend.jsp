@@ -7,7 +7,7 @@
 <% MemberVO memberVO = (MemberVO) request.getSession().getAttribute("memberVO"); %>
 
 <%  
-	MemberService memberSvc = new MemberService();
+	MemberService memberSvc = new MemberService(); 
 	List<MemberVO> list = memberSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
@@ -160,24 +160,20 @@ textarea{
 	<div class="title TitleImg">
 		<h1 class="hader-title" style="text-align: center">建立您的&nbsp;好友關係</h1>
 	</div>
-	
 
 
-<c:if test="${not empty errorMsgs}">
-<c:forEach var="message" items="${errorMsgs}">
-<script>
-Swal.fire(
-		 '請檢查內容',
-		  '${message}',
-		  'error'
-)
-</script>
-</c:forEach>
-</c:if>  
 
-	
+	<c:if test="${not empty errorMsgs}">
+		<c:forEach var="message" items="${errorMsgs}">
+			<script>
+				Swal.fire('請檢查內容', '${message}', 'error')
+			</script>
+		</c:forEach>
+	</c:if>
 
-	
+
+
+
 	<div class="container">
 			<div class="row">
 				<div class="col-3">
@@ -188,8 +184,10 @@ Swal.fire(
 					    <input type="hidden" name="action" value="getmyFriend">
 						<input class="btn btn-secondary" type="submit" value="我的好友列表">
 						<input type="hidden" name="action" value="getmyFriend">
-						<input class="btn btn-secondary" type="submit" value="聊天室">
+						
+						<a class="btn btn-secondary" href="<%=request.getContextPath()%>/friend/chatroom.jsp" role="button">聊天室</a>
 						</Form>
+						
 				</div>
 				
 <!-- 				<input class="btn btn-secondary" type="submit" value="聊天室"> -->
@@ -203,11 +201,11 @@ Swal.fire(
 						<div class="row">
 							<div class="col-8">
 								<%@ include file="page1.file"%>
-								<c:forEach var="memberVO" items="${list}" begin="<%=pageIndex%>"
+								<c:forEach var="friendVO" items="${list}" begin="<%=pageIndex%>"
 									end="<%=pageIndex+rowsPerPage-1%>">
 									<div class="card flex-row flex-wrap">
 										<div class="card-header border-0">
-											<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}"
+											<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendVO.memId}"
 												width="100" height="50">
 										</div>
 										<FORM METHOD="get"
@@ -216,11 +214,11 @@ Swal.fire(
 											<div class="card-block px-2">
 												<div class="d-flex">
 													<div>
-														<input type="hidden" name="memId" value="weshare02">
-														<a class="user_name">姓名:${memberVO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
-													<br> <input type="hidden" name="friendAcc" value="${memberVO.memId}">
-														<a class="user_name">專長:&nbsp;${courseSvc.findOneById(memberVO.memSkill).courseName}</a><br>
-														<a class="user_name">想學的課:&nbsp;${courseSvc.findOneById(memberVO.memWantSkill).courseName}</a>
+														<input type="hidden" name="memId" value="${memberVO.memId}">
+														<a class="user_name">姓名:${friendVO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
+													<br> <input type="hidden" name="friendAcc" value="${friendVO.memId}">
+														<a class="user_name">專長:&nbsp;${courseSvc.findOneById(friendVO.memSkill).courseName}</a><br>
+														<a class="user_name">想學的課:&nbsp;${courseSvc.findOneById(friendVO.memWantSkill).courseName}</a>
 													</div>
 												</div>
 												<div class="row1">

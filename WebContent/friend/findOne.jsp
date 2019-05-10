@@ -3,7 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 
-<%MemberVO memberVO = (MemberVO) request.getAttribute("memId");%>
+<%MemberVO member1VO = (MemberVO) request.getAttribute("memId");%>
 
 
 
@@ -172,7 +172,7 @@ textarea {
 								<div class="card flex-row flex-wrap">
 									<div class="card-header border-0">
 										<img 
-											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}"
+											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${member1VO.memId}"
 											width="100" height="50">
 									</div>
 									<FORM METHOD="get"
@@ -187,10 +187,10 @@ textarea {
 														type="hidden" name="friendAcc"
 														value="${friendNexusVO.friendAcc}"> 
 														<div class="wrod">
-													<a class="user_name">姓名:${memberVO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
-													<a class="user_name">ID:${memberVO.memId}</a><br>
-													<a class="user_name">專長:${courseSvc.findOneById(memberVO.memSkill).courseName}&nbsp;</a><br>
-								                    <a class="user_name">想學的課:${courseSvc.findOneById(memberVO.memWantSkill).courseName}&nbsp;</a>
+													<a class="user_name">姓名:${member1VO.memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
+													<a class="user_name">ID:${member1VO.memId}</a><br>
+													<a class="user_name">專長:${courseSvc.findOneById(member1VO.memSkill).courseName}&nbsp;</a><br>
+								                    <a class="user_name">想學的課:${courseSvc.findOneById(member1VO.memWantSkill).courseName}&nbsp;</a>
 												</div>
 										<div class="btn1">
 											<input type="hidden" name="action" value="insert1"> 
