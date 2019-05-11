@@ -48,9 +48,62 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    .input_icon a:nth-child(2){}
 }
-    
-    
+
+.input_icon a:nth-child(1){
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon13.png) no-repeat center center;
+}
+
+.input_icon a:nth-child(1):hover{
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon13_1.png) no-repeat center center;
+}
+
+.input_icon a:nth-child(2){
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon13.png) no-repeat center center;
+}
+
+.input_icon a:nth-child(2):hover{
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon13_1.png) no-repeat center center;
+}
+
+.input_icon a:nth-child(3){
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon15.png) no-repeat center center;
+}
+
+.input_icon a:nth-child(3):hover{
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon15_1.png) no-repeat center center;
+}
+
+.input_icon a:nth-child(4){
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon16.png) no-repeat center center;
+}
+
+.input_icon a:nth-child(4):hover{
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon16_1.png) no-repeat center center;
+}
+
+.input_icon a:nth-child(6){
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon17.png) no-repeat center center;
+	float: right;
+}
+
+.input_icon a:nth-child(6):hover{
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon17_1.png) no-repeat center center;
+}
+
+.input_icon a:nth-child(5){
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon18.png) no-repeat center center;
+	float: right;
+}
+
+.input_icon a:nth-child(5):hover{
+	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon18_1.png) no-repeat center center;
+}
+
+
+
     
     </style>
     </head>
@@ -146,15 +199,43 @@
                         </ul>
                     </div>
                 </div>
+                
 
                 <div class="windows_input" id="talkbox">
+                 
                     <div class="input_icon">
-                        <a href="javascript:;"></a>
-                        <a href="javascript:;"></a>
-                        <a href="javascript:;"></a>
-                        <a href="javascript:;"></a>
-                        <a href="javascript:;"></a>
-                        <a href="javascript:;"></a>
+                    <div class="emjon">
+					<ul>
+						<li><img src="img/em_02.jpg"/></li>
+						<li><img src="img/em_05.jpg"/></li>
+						<li><img src="img/em_07.jpg"/></li>
+						<li><img src="img/em_12.jpg"/></li>
+						<li><img src="img/em_14.jpg"/></li>
+						<li><img src="img/em_16.jpg"/></li>
+						<li><img src="img/em_20.jpg"/></li>
+						<li><img src="img/em_23.jpg"/></li>
+						<li><img src="img/em_25.jpg"/></li>
+						<li><img src="img/em_30.jpg"/></li>
+						<li><img src="img/em_31.jpg"/></li>
+						<li><img src="img/em_33.jpg"/></li>
+						<li><img src="img/em_37.jpg"/></li>
+						<li><img src="img/em_38.jpg"/></li>
+						<li><img src="img/em_40.jpg"/></li>
+						<li><img src="img/em_45.jpg"/></li>
+						<li><img src="img/em_47.jpg"/></li>
+						<li><img src="img/em_48.jpg"/></li>
+						<li><img src="img/em_52.jpg"/></li>
+						<li><img src="img/em_54.jpg"/></li>
+						<li><img src="img/em_55.jpg"/></li>
+					</ul>
+				</div>
+                        <a href="javascript:;" class="ExP"></a>
+<!--                          <a href="javascript:;"></a> -->
+<!--                          <a href="javascript:;"></a> -->
+<!--                          <a href="javascript:;"></a> -->
+<!--                         <a href="javascript:;"></a> -->
+<!--                         <a href="javascript:;"></a> -->
+				</div>
                     </div>
                     <div class="input_box">
                     
@@ -162,8 +243,8 @@
                         <textarea name="" rows="" cols="" id="input_box" onkeydown="if (event.keyCode == 13) sendMessage();"></textarea>
                         <input type="hidden" class="button" id="sendMessage" value="送出" onclick="sendMessage();"/>
                         
-                         <input type="button" value="sendFile" onclick="sendFile()"/> 
-  		                 <input type="file" id="file" />
+<!--                          <input type="button" value="sendFile" onclick="sendFile()"/>  -->
+<!--   		                 <input type="file" id="file" /> -->
 
                   </div>
                 </div>
@@ -263,8 +344,19 @@
         	  
               var jsonObj = JSON.parse(event.data);
               var message = jsonObj.sender + ": " + jsonObj.message + "\r\n";
-              chat.innerHTML += '<li class="other"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${friendmemId}' + '"><span>' + message +'</span></li>';
-              $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
+              
+              
+              if(jsonObj.sender==='${memberVO.memId}'){
+            	  
+            	  chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ message +'</span> </li>';
+            	  $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
+      	  
+            	 
+              }else{
+            	  chat.innerHTML += '<li class="other"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${friendmemId}' + '"><span>' + message +'</span></li>';
+                  $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
+              }
+              
           };
           
           
@@ -296,13 +388,13 @@
                 text.style.background = "#fff";
                 var jsonObj = {
    					 "type": "chat",
-    					   "sender" : "${memberVO.memName}",
+    					   "sender" : "${memberVO.memId}",
     					   "receiver": intername,
     					   "message" : text.value
    				};
    			webSocket.send(JSON.stringify(jsonObj));
    		    text.value = '';
-   		    text.focus();
+   		 
    		}
 //           }	
      };
@@ -341,11 +433,47 @@
 	 
  	jQuery(document).ready(function(){
  	   	$(".bg").click();
+ 	   receiver = $(this).attr('id');
+ 	  var chatWith= memberMap.get(receiver);
+		sendMessage($(this).attr('id'));
  	})
  			
- 	
- 	
+ 	jQuery(document).ready(function() {
+   
 
+   $(".bg").click(function() {
+    $(this).addClass('bg');
+    var intername = $(this).children(
+      '.user_text').children(
+      '.infor').text();
+    
+    var jsonObj = {
+     "type" : "chat",
+     "sender" : "${memberVO.memId}",
+     "receiver" : intername,
+     "message" : "歷史訊息"
+    };
+
+    webSocket.send(JSON.stringify(jsonObj));
+
+   });
+  })
+ 	
+$('.ExP').on('mouseenter',function(){
+		$('.emjon').show();
+	})
+	$('.emjon').on('mouseleave',function(){
+		$('.emjon').hide();
+	})
+	$('.emjon li').on('click',function(){
+		var imgSrc=$(this).children('img').attr('src');
+		
+		chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ imgSrc +'</span> </li>';
+		$('.newsList').append(chat);
+		$('.emjon').hide();
+		$('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
+		
+	})
  	
  </script>
   	

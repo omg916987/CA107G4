@@ -508,54 +508,36 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 	margin-right:8px;
 }
 
-.input_icon a:nth-child(1){
-	background: url(../img/icon/icon13.png) no-repeat center center;
+.emjon{
+	width: 360px;
+	height: 200px;
+	border: 1px solid #ccc;
+	position: absolute;
+	left:850px;
+	top:550px;
+	display: none;
+	background: #fff;
 }
-
-.input_icon a:nth-child(1):hover{
-	background: url(../img/icon/icon13_1.png) no-repeat center center;
+.emjon ul{
+	list-style: none;
+	margin:0;
 }
-
-.input_icon a:nth-child(2){
-	background: url(../img/icon/icon14.png) no-repeat center center;
+.emjon ul li{
+	width: 50px;
+	height: 30px;
+	margin: 5px;
+	float: left;
+	
 }
-
-.input_icon a:nth-child(2):hover{
-	background: url(../img/icon/icon14_1.png) no-repeat center center;
+.emjon ul li:hover{
+box-shadow:5px 5px 5px #888888;
+transform: scale(1.2);
+	
 }
-
-.input_icon a:nth-child(3){
-	background: url(../img/icon/icon15.png) no-repeat center center;
-}
-
-.input_icon a:nth-child(3):hover{
-	background: url(../img/icon/icon15_1.png) no-repeat center center;
-}
-
-.input_icon a:nth-child(4){
-	background: url(../img/icon/icon16.png) no-repeat center center;
-}
-
-.input_icon a:nth-child(4):hover{
-	background: url(../img/icon/icon16_1.png) no-repeat center center;
-}
-
-.input_icon a:nth-child(6){
-	background: url(../img/icon/icon17.png) no-repeat center center;
-	float: right;
-}
-
-.input_icon a:nth-child(6):hover{
-	background: url(../img/icon/icon17_1.png) no-repeat center center;
-}
-
-.input_icon a:nth-child(5){
-	background: url(../img/icon/icon18.png) no-repeat center center;
-	float: right;
-}
-
-.input_icon a:nth-child(5):hover{
-	background: url(../img/icon/icon18_1.png) no-repeat center center;
+.emjon ul li img{
+	width: 100%;
+	height: 100%;
+	
 }
 
 .input_icon a img{

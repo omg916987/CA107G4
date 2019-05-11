@@ -224,7 +224,7 @@ Swal.fire(
 											<input type="hidden" name="memId" value="${memberVO.memId}">
 											<input type="hidden" name="action1" value="chate"> 
 											
-											<a class="btn btn-primary" href="<%=request.getContextPath()%>/friend/chatroom.jsp" role="button">聊天</a>
+											<a class="btn btn-primary" href="<%=request.getContextPath()%>/front-end/friend/chatroom.jsp" role="button">聊天</a>
 										</div>		
 												</div>	
 											</div>

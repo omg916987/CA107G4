@@ -1,3 +1,5 @@
+
+    
 package idv.david.websocketchat.controller;
 
 import java.io.IOException;
@@ -36,11 +38,11 @@ public class FriendWS {
 		State stateMessage = new State("open", userName, userNames);
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
-//		for (Session session : sessions) {
-//			if (session.isOpen()) {
-//				session.getAsyncRemote().sendText(stateMessageJson); 
-//			}
-//		}
+		for (Session session : sessions) {
+			if (session.isOpen()) {
+				session.getAsyncRemote().sendText(stateMessageJson);
+			}
+		}
 
 		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
 				userName, userNames);
@@ -50,52 +52,40 @@ public class FriendWS {
 	@OnMessage
 	public void onMessage(Session userSession, String message) {
 		ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
-		System.out.println("gson------------------------------");
-		String sender = chatMessage.getSender();	
+		String sender = chatMessage.getSender();
 		String receiver = chatMessage.getReceiver();
 		
-		System.out.println("reciever="+receiver);
-		System.out.println("sender="+sender);
-		
-//		if ("chat".equals(chatMessage.getType())) {
-//			List<String> chatData = JedisHandleMessage.getHistoryMsg(sender, receiver);
-//			String chatMsg = gson.toJson(chatData);
-//			ChatMessage cmHistory = new ChatMessage("chat", sender, receiver, chatMsg);
-//			if (userSession != null && userSession.isOpen()) {
-//				userSession.getAsyncRemote().sendText(gson.toJson(cmHistory));
-//				return;
-//			}
-//		}
-		
 		if ("chat".equals(chatMessage.getType())) {
-			System.out.println("chat有近來這邊");
-			List<String> chatData = JedisHandleMessage.getHistoryMsg(sender, receiver);
-			if (userSession != null && userSession.isOpen()) {
-				for(int i=0;i<chatData.size();i++) {
-					String chatMsg = chatData.get(i);
-					synchronized(userSession) {
-						try {
-							userSession.getBasicRemote().sendText(chatMsg);
-							System.out.println("msg="+chatMsg);
-						} catch (IOException e) {
-							
-							e.printStackTrace();
-						}
+		System.out.println("有近來");
+		System.out.println("sender="+sender);
+		System.out.println("receiver="+receiver);
+		List<String> chatData = JedisHandleMessage.getHistoryMsg(sender, receiver);
+		if (userSession != null && userSession.isOpen()) {
+			System.out.println("aaa");
+			System.out.println(chatData.size());
+			for(int i=0;i<chatData.size();i++) {
+				System.out.println("ccc");
+				
+				String chatMsg = chatData.get(i);
+				synchronized(userSession) {
+					try {
+						System.out.println("bbb");
+						userSession.getBasicRemote().sendText(chatMsg);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
-				System.out.println("passHistory1----------------------------");
-				return;
 			}
+			return;
 		}
+	}	
 		
-		System.out.println("passHistory2----------------------------");
-		userSession.getAsyncRemote().sendText(message);
-		System.out.println("passHistory3----------------------------");
+		
 		Session receiverSession = sessionsMap.get(receiver);
-	System.out.println("receiverSession="+receiver);
+		System.out.println("有近來2");
 		if (receiverSession != null && receiverSession.isOpen()) {
-			System.out.println("come here");
-		receiverSession.getAsyncRemote().sendText(message);
+			receiverSession.getAsyncRemote().sendText(message);
 			System.out.println("sendmsg----------------------------");
 			JedisHandleMessage.saveChatMessage(sender, receiver, message);
 			System.out.println("saving Msg----------------------------");
@@ -134,3 +124,4 @@ public class FriendWS {
 		System.out.println(text);
 	}
 }
+
