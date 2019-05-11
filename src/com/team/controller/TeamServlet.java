@@ -55,8 +55,8 @@ public class TeamServlet extends HttpServlet {
 
 				InsCourseService insCourseSvc = new InsCourseService();
 
-				List<InsCourseVO> insCourseVOList = insCourseSvc.findClassName(str);
-
+				List<InsCourseVO> insCourseVOList = insCourseSvc.findClassName(str.trim());
+				
 				if (insCourseVOList.size() == 0) {
 					errorMsgs.add("查無資料");
 				}
@@ -69,7 +69,7 @@ public class TeamServlet extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("insCourseVOList", insCourseVOList);
 				// 資料庫取出的empVO物件,存入req
-				String url = "/team/One.jsp";
+				String url = "/front-end/team/One.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 				System.out.println("1234");
@@ -77,7 +77,7 @@ public class TeamServlet extends HttpServlet {
 			} catch (Exception e) {
 				System.out.println("HI");
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/team/One.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/team/One.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -110,7 +110,7 @@ public class TeamServlet extends HttpServlet {
 
 					if (blance < memBlock) {
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/withdrawalrecord/withdrawalrecord.jsp");
+								.getRequestDispatcher("/front-end/withdrawalrecord/withdrawalrecord.jsp");
 						failureView.forward(req, res);
 						return;
 					} else {
@@ -133,18 +133,18 @@ public class TeamServlet extends HttpServlet {
 					System.out.println("新增完成");
 
 					/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-					String url = "/team/myTeam.jsp";
+					String url = "/front-end/team/myTeam.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);
 				} else {
 					errorMsgs.add("您已經有相同的揪團了");
-					RequestDispatcher failureView = req.getRequestDispatcher("/team/team.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/team/team.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/team/myTeam.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/team/myTeam.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -159,18 +159,18 @@ public class TeamServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				/*************************** 2.開始查詢資料 ****************************************/
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/team/myTeam.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/team/myTeam.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 //				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				session.setAttribute("memberVO", memId); // 資料庫取出的memberVO物件,存入req
-				String url = "/team/myTeam.jsp";
+				String url = "/front-end/team/team.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/team/myTeam.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/team/myTeam.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -191,7 +191,7 @@ public class TeamServlet extends HttpServlet {
 				JoinGroupVO joinGroupVO = joinGroupSvc.deleteJoinGroup(memId, teamId);
 				joinGroupSvc.deleteJoinGroup(memId, teamId);
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/team/myTeam.jsp";
+				String url = "/front-end/team/myTeam.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
@@ -252,7 +252,7 @@ public class TeamServlet extends HttpServlet {
 				System.out.println(teamEXP);
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("teamVO", teamVO); // 含有輸入格式錯誤的withdrawalRecordVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/team/addTeam.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/team/addTeam.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -274,7 +274,7 @@ public class TeamServlet extends HttpServlet {
 
 				req.setAttribute("teamVO", teamVO);
 
-				String url = "/team/team.jsp";
+				String url = "/front-end/team/team.jsp";
 
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
@@ -282,7 +282,7 @@ public class TeamServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/team/addTeam.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/team/addTeam.jsp");
 				failureView.forward(req, res);
 			}
 		}

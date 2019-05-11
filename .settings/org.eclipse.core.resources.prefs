@@ -1,7 +1,7 @@
 eclipse.preferences.version=1
-encoding//WebContent/friend/css/main.css=UTF-8
-encoding//WebContent/withdrawalrecord/page1.file=UTF-8
-encoding//WebContent/withdrawalrecord/page2.file=UTF-8
+encoding//WebContent/front-end/css/main.css=UTF-8
+encoding//WebContent/front-end/withdrawalrecord/page1.file=UTF-8
+encoding//WebContent/front-end/withdrawalrecord/page2.file=UTF-8
 encoding//src/com/team/controller/TeamServlet.java=UTF-8
 encoding//src/com/team/model=UTF-8
 encoding//src/com/withdrawalrecord/contoller=MS950

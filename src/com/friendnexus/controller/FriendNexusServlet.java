@@ -43,7 +43,7 @@ public class FriendNexusServlet extends HttpServlet {
 				String friendAcc = req.getParameter("friendAcc");
 //					Integer friendstatus = req.getParameter(friendstatus);
 				if (memId == null||memId.isEmpty()) {
-					String url = "/friend/allfriend.jsp";
+					String url = "/front-end/friend/allfriend.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 					successView.forward(req, res);
 					return;
@@ -55,7 +55,7 @@ public class FriendNexusServlet extends HttpServlet {
 				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/friend/allfriend.jsp");
+							.getRequestDispatcher("/front-end/friend/allfriend.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -67,12 +67,12 @@ public class FriendNexusServlet extends HttpServlet {
 					friendnexusSvc.addfriendNexus(memId, friendAcc, 0);
 				} catch (Exception e) {
 					errorMsgs.add("請勿重複申請好友喔");
-					RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/friend/allfriend.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/friend/allfriend.jsp";
+				String url = "/front-end/friend/allfriend.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 				return;
@@ -82,7 +82,7 @@ public class FriendNexusServlet extends HttpServlet {
 			}
 			catch (Throwable e) {
 				errorMsgs.add( e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/friend/allfriend.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -127,7 +127,7 @@ public class FriendNexusServlet extends HttpServlet {
 				friendnexusSvc.addfriendNexus(friendAcc, memId,1);
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("friendNexusVO", friendNexusVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/friend/friendCheck.jsp";
+				String url = "/front-end/friend/friendCheck.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -160,14 +160,14 @@ public class FriendNexusServlet extends HttpServlet {
 				friendNexusSvc.deletefriendNexuspMemid(memId, friendAcc);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/friend/myfriend.jsp";
+				String url = "/front-end/friend/myfriend.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs1.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/friend/myfriend.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/friend/myfriend.jsp");
 				failureView.forward(req, res);
 			}
 
@@ -188,7 +188,7 @@ public class FriendNexusServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/friend/allfriend.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -201,7 +201,7 @@ public class FriendNexusServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/friend/allfriend.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -215,20 +215,20 @@ public class FriendNexusServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/friend/allfriend.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("friendVO", memberVO);
-				String url = "/friend/findOne.jsp";
+				String url = "/front-end/friend/findOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/friend/allfriend.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/friend/allfriend.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -251,7 +251,7 @@ public class FriendNexusServlet extends HttpServlet {
 
 ////				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/	
 
-				RequestDispatcher successView = req.getRequestDispatcher("/friend/myfriend.jsp"); // 成功轉交
+				RequestDispatcher successView = req.getRequestDispatcher("/front-end/friend/myfriend.jsp"); // 成功轉交
 																									// loginSuccess.jsp
 				successView.forward(req, res);
 				System.out.println("走完了");
@@ -280,7 +280,7 @@ public class FriendNexusServlet extends HttpServlet {
 
 ////				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/	
 
-				RequestDispatcher successView = req.getRequestDispatcher("/friend/friendCheck.jsp"); // 成功轉交
+				RequestDispatcher successView = req.getRequestDispatcher("/front-end/friend/friendCheck.jsp"); // 成功轉交
 																									// loginSuccess.jsp
 				successView.forward(req, res);
 				System.out.println("走完了");

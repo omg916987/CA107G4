@@ -27,17 +27,24 @@
     <url-pattern>/member/viewAllMember.jsp</url-pattern>
     <url-pattern>/teacher/addTeacher.jsp</url-pattern>
     <url-pattern>/coursereservation/allCourseUser.jsp</url-pattern>
-    <url-pattern>/friend/chatroom.jsp</url-pattern>
-    <url-pattern>/withdrawalrecord/withdrawalrecord.jsp</url-pattern>
-    <url-pattern>/withdrawalrecord/withdrawalrecord_findbykey.jsp</url-pattern>
-    <url-pattern>/withdrawalrecord/page22.file</url-pattern>
-    <url-pattern>/team/team.jsp</url-pattern>
-    <url-pattern>/team/addTeam.jsp</url-pattern>
-    <url-pattern>/team/myTeam.jsp</url-pattern>
-    <url-pattern>/friend/allfriend.jsp</url-pattern>
-    <url-pattern>/friend/myfriend.jsp</url-pattern>
-    <url-pattern>/friend/findOne.jsp</url-pattern>	
-    <url-pattern>/friend/friendCheck.jsp</url-pattern>	
+    
+    
+    
+    
+    
+    
+    
+    <url-pattern>/front-end/friend/chatroom.jsp</url-pattern>
+    <url-pattern>/front-end/withdrawalrecord/withdrawalrecord.jsp</url-pattern>
+    <url-pattern>/front-end/withdrawalrecord/withdrawalrecord_findbykey.jsp</url-pattern>
+    <url-pattern>/front-end/withdrawalrecord/page22.file</url-pattern>
+    <url-pattern>/front-end/team/team.jsp</url-pattern>
+    <url-pattern>/front-end/team/addTeam.jsp</url-pattern>
+    <url-pattern>/front-end/team/myTeam.jsp</url-pattern>
+    <url-pattern>/front-end/friend/allfriend.jsp</url-pattern>
+    <url-pattern>/front-end/friend/myfriend.jsp</url-pattern>
+    <url-pattern>/front-end/friend/findOne.jsp</url-pattern>	
+    <url-pattern>/front-end/friend/friendCheck.jsp</url-pattern>	
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>

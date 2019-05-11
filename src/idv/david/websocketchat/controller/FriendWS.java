@@ -36,11 +36,11 @@ public class FriendWS {
 		State stateMessage = new State("open", userName, userNames);
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
-		for (Session session : sessions) {
-			if (session.isOpen()) {
-				session.getAsyncRemote().sendText(stateMessageJson); 
-			}
-		}
+//		for (Session session : sessions) {
+//			if (session.isOpen()) {
+//				session.getAsyncRemote().sendText(stateMessageJson); 
+//			}
+//		}
 
 		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
 				userName, userNames);
@@ -51,11 +51,21 @@ public class FriendWS {
 	public void onMessage(Session userSession, String message) {
 		ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
 		System.out.println("gson------------------------------");
-		String sender = chatMessage.getSender();
-		System.out.println("sender="+sender);
+		String sender = chatMessage.getSender();	
 		String receiver = chatMessage.getReceiver();
-		System.out.println("reciever="+receiver);
 		
+		System.out.println("reciever="+receiver);
+		System.out.println("sender="+sender);
+		
+//		if ("chat".equals(chatMessage.getType())) {
+//			List<String> chatData = JedisHandleMessage.getHistoryMsg(sender, receiver);
+//			String chatMsg = gson.toJson(chatData);
+//			ChatMessage cmHistory = new ChatMessage("chat", sender, receiver, chatMsg);
+//			if (userSession != null && userSession.isOpen()) {
+//				userSession.getAsyncRemote().sendText(gson.toJson(cmHistory));
+//				return;
+//			}
+//		}
 		
 		if ("chat".equals(chatMessage.getType())) {
 			System.out.println("chat有近來這邊");
@@ -68,19 +78,19 @@ public class FriendWS {
 							userSession.getBasicRemote().sendText(chatMsg);
 							System.out.println("msg="+chatMsg);
 						} catch (IOException e) {
-							System.out.println("12345687985");
+							
 							e.printStackTrace();
 						}
 					}
 				}
-				System.out.println("passHistory----------------------------");
+				System.out.println("passHistory1----------------------------");
 				return;
 			}
 		}
 		
-		System.out.println("passHistory----------------------------");
+		System.out.println("passHistory2----------------------------");
 		userSession.getAsyncRemote().sendText(message);
-		System.out.println("passHistory----------------------------");
+		System.out.println("passHistory3----------------------------");
 		Session receiverSession = sessionsMap.get(receiver);
 	System.out.println("receiverSession="+receiver);
 		if (receiverSession != null && receiverSession.isOpen()) {

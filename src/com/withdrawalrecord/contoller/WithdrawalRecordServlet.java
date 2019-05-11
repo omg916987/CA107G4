@@ -39,7 +39,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/withdrawalrecord/select_page.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -47,7 +47,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 					errorMsgs.add("課程編號格式錯誤");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/withdrawalrecord/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -75,21 +75,21 @@ public class WithdrawalRecordServlet extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/withdrawalrecord/select_page.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 //
 //				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("withdrawalRecordVO", withdrawalRecordVO); // 資料庫取出的withdrawalRecordVO物件,存入req
-				String url = "/withdrawalrecord/findykey.jsp";
+				String url = "/front-end/withdrawalrecord/findykey.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
 //				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/withdrawalrecord/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -112,14 +112,14 @@ public class WithdrawalRecordServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("withdrawalRecordVO", withdrawalRecordVO); // 資料庫取出的withdrawalRecordVO物件,存入req
-				String url = "/withdrawalrecord/addWithdrawalRecord.jsp";
+				String url = "/front-end/withdrawalrecord/addWithdrawalRecord.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 addWithdrawalRecord.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/addWithdrawalRecord.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/addWithdrawalRecord.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -144,7 +144,7 @@ System.out.println("有近來");
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("list", list); // 資料庫取出的withdrawalRecordVO物件,存入req
-			String url = "/withdrawalrecord/withdrawalrecord_findbykey.jsp";
+			String url = "/front-end/withdrawalrecord/withdrawalrecord_findbykey.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 addWithdrawalRecord.jsp
 			successView.forward(req, res);
 
@@ -192,7 +192,7 @@ System.out.println("有近來");
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("withdrawalRecordVO", withdrawalRecordVO); // 含有輸入格式錯誤的withdrawalRecordVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/withdrawalrecord.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/withdrawalrecord/withdrawalrecord.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -226,7 +226,7 @@ System.out.println("有近來");
 				req.setAttribute("withdrawalRecordVO",withdrawalRecordVO1);
 				
 				
-				String url = "/withdrawalrecord/withdrawalrecord_findbykey.jsp";
+				String url = "/front-end/withdrawalrecord/withdrawalrecord_findbykey.jsp";
 			    
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
@@ -234,7 +234,7 @@ System.out.println("有近來");
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/withdrawalrecord.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/withdrawalrecord/withdrawalrecord.jsp");
 				failureView.forward(req, res);
 			}
 		}
