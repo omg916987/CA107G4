@@ -8,5 +8,6 @@ encoding//src/com/withdrawalrecord/contoller=UTF-8
 encoding//src/com/withdrawalrecord/contoller/WithdrawalRecordServlet.java=UTF-8
 encoding//src/com/withdrawalrecord/model=UTF-8
 encoding//src/com/withdrawalrecord/model/WithdrawalRecordJDBCDAO.java=UTF-8
+encoding//src/idv/david/websocketchat/jedis/ImageUtil.java=UTF-8
 encoding/<project>=UTF-8
 encoding/WebContent=UTF-8

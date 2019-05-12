@@ -39,7 +39,7 @@ public class FriendWS {
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
 		for (Session session : sessions) {
-			if (session.isOpen()) {
+			if(session != null && session.isOpen()) {
 				session.getAsyncRemote().sendText(stateMessageJson);
 			}
 		}

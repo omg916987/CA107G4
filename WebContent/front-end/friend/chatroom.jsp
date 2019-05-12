@@ -102,7 +102,37 @@
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon18_1.png) no-repeat center center;
 }
 
-
+.emjon{
+	width: 360px;
+	height: 200px;
+	border: 1px solid #ccc;
+	position: absolute;
+	
+	top:470px;
+	display: none;
+	background: #fff;
+}
+.emjon ul{
+	list-style: none;
+	margin:0;
+}
+.emjon ul li{
+	width: 50px;
+	height: 30px;
+	margin: 5px;
+	float: left;
+	
+}
+.emjon ul li:hover{
+box-shadow:5px 5px 5px #888888;
+transform: scale(1.2);
+	
+}
+.emjon ul li img{
+	width: 100%;
+	height: 100%;
+	
+}
 
     
     </style>
@@ -230,14 +260,13 @@
 					</ul>
 				</div>
                         <a href="javascript:;" class="ExP"></a>
-<!--                          <a href="javascript:;"></a> -->
-<!--                          <a href="javascript:;"></a> -->
-<!--                          <a href="javascript:;"></a> -->
-<!--                         <a href="javascript:;"></a> -->
-<!--                         <a href="javascript:;"></a> -->
+                         <a href="javascript:;"></a>
+                         <a href="javascript:;"></a>
+                         <a href="javascript:;"></a>
+                        <a href="javascript:;"></a>
+                        <a href="javascript:;"></a>
 				</div>
-                    </div>
-                    <div class="input_box">
+				<div class="input_box">
                     
                     <!-- 輸入框在這 -->
                         <textarea name="" rows="" cols="" id="input_box" onkeydown="if (event.keyCode == 13) sendMessage();"></textarea>
@@ -245,8 +274,10 @@
                         
 <!--                          <input type="button" value="sendFile" onclick="sendFile()"/>  -->
 <!--   		                 <input type="file" id="file" /> -->
-
-                  </div>
+ <input type="file" id="sendPicture" class="button" value="圖片" onchange="sendPicture();"/>
+                  </div>	
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -306,7 +337,7 @@
 
       <script type="text/javascript">
       
-      
+      var messageType;
       
       var MyPoint = "/FriendWS/${memberVO.memId}";
       var host = window.location.host;
@@ -358,7 +389,7 @@
               }
               
           };
-          
+       
           
           
           
@@ -451,7 +482,7 @@
      "type" : "chat",
      "sender" : "${memberVO.memId}",
      "receiver" : intername,
-     "message" : "歷史訊息"
+     "message" : "123456789"
     };
 
     webSocket.send(JSON.stringify(jsonObj));
@@ -466,13 +497,23 @@ $('.ExP').on('mouseenter',function(){
 		$('.emjon').hide();
 	})
 	$('.emjon li').on('click',function(){
-		var imgSrc=$(this).children('img').attr('src');
-		
-		chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ imgSrc +'</span> </li>';
+		var text =$(this).children('img').attr('src');
+		sendMessage($(this).attr('id'));
+		chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span class=""><img src="' + text + '"></span> </li>';
 		$('.newsList').append(chat);
 		$('.emjon').hide();
 		$('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
-		
+		chat.scrollTop = chat.scrollHeight;
+		talk.style.background = "#fff";
+        text.style.background = "#fff";
+        var jsonObj = {
+				 "type": "chat",
+				   "sender" : "${memberVO.memId}",
+				   "receiver": intername,
+				   "message" : text.value
+			};
+		webSocket.send(JSON.stringify(jsonObj));
+	    text.value = '';
 	})
  	
  </script>
