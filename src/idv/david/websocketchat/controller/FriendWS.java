@@ -32,17 +32,19 @@ public class FriendWS {
 	@OnOpen
 	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
 		/* save the new user in the map */
+		
+		userSession.setMaxTextMessageBufferSize(200000);
 		sessionsMap.put(userName, userSession);
 		/* Sends all the connected users to the new user */
 		Set<String> userNames = sessionsMap.keySet();
 		State stateMessage = new State("open", userName, userNames);
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
-		for (Session session : sessions) {
-			if(session != null && session.isOpen()) {
-				session.getAsyncRemote().sendText(stateMessageJson);
-			}
-		}
+//		for (Session session : sessions) {
+//			if(session != null && session.isOpen()) {
+//				session.getAsyncRemote().sendText(stateMessageJson);
+//			}
+//		}
 
 		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
 				userName, userNames);
@@ -55,7 +57,7 @@ public class FriendWS {
 		String sender = chatMessage.getSender();
 		String receiver = chatMessage.getReceiver();
 		
-		if ("chat".equals(chatMessage.getType())) {
+		if ("history".equals(chatMessage.getType())) {
 		System.out.println("有近來");
 		System.out.println("sender="+sender);
 		System.out.println("receiver="+receiver);
@@ -82,15 +84,34 @@ public class FriendWS {
 	}	
 		
 		
+		if ("Sticker".equals(chatMessage.getType())) {
+			Session receiverSession = sessionsMap.get(receiver);
+			System.out.println("有近來2");
+			JedisHandleMessage.saveChatMessage(sender, receiver, message);
+			System.out.println("-----------已存取------------");
+			if (receiverSession != null &&receiverSession.isOpen()) {
+				receiverSession.getAsyncRemote().sendText(message);
+			
+			}
+			System.out.println("Message received: " + message);
+			}
+		
+		
+		
+		
+		
+		
+		if ("chat".equals(chatMessage.getType())) {
 		Session receiverSession = sessionsMap.get(receiver);
 		System.out.println("有近來2");
-		if (receiverSession != null && receiverSession.isOpen()) {
+		JedisHandleMessage.saveChatMessage(sender, receiver, message);
+		System.out.println("-----------已存取------------");
+		if (receiverSession != null &&receiverSession.isOpen()) {
 			receiverSession.getAsyncRemote().sendText(message);
-			System.out.println("sendmsg----------------------------");
-			JedisHandleMessage.saveChatMessage(sender, receiver, message);
-			System.out.println("saving Msg----------------------------");
+		
 		}
 		System.out.println("Message received: " + message);
+		}
 	}
 
 	@OnError

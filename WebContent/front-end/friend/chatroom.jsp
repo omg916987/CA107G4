@@ -51,57 +51,44 @@
     
     .input_icon a:nth-child(2){}
 }
-
 .input_icon a:nth-child(1){
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon13.png) no-repeat center center;
 }
-
 .input_icon a:nth-child(1):hover{
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon13_1.png) no-repeat center center;
 }
-
 .input_icon a:nth-child(2){
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon13.png) no-repeat center center;
 }
-
 .input_icon a:nth-child(2):hover{
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon13_1.png) no-repeat center center;
 }
-
 .input_icon a:nth-child(3){
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon15.png) no-repeat center center;
 }
-
 .input_icon a:nth-child(3):hover{
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon15_1.png) no-repeat center center;
 }
-
 .input_icon a:nth-child(4){
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon16.png) no-repeat center center;
 }
-
 .input_icon a:nth-child(4):hover{
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon16_1.png) no-repeat center center;
 }
-
 .input_icon a:nth-child(6){
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon17.png) no-repeat center center;
 	float: right;
 }
-
 .input_icon a:nth-child(6):hover{
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon17_1.png) no-repeat center center;
 }
-
 .input_icon a:nth-child(5){
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon18.png) no-repeat center center;
 	float: right;
 }
-
 .input_icon a:nth-child(5):hover{
 	background: url(<%=request.getContextPath()%>/front-end/friend/img/icon/icon18_1.png) no-repeat center center;
 }
-
 .emjon{
 	width: 360px;
 	height: 200px;
@@ -206,7 +193,6 @@ transform: scale(1.2);
               		
               	})      
               	       
-
                     </script>
                  <c:set var="friendmemId" value="${friendNexusVO.friendAcc}"></c:set>
                   
@@ -274,7 +260,7 @@ transform: scale(1.2);
                         
 <!--                          <input type="button" value="sendFile" onclick="sendFile()"/>  -->
 <!--   		                 <input type="file" id="file" /> -->
- <input type="file" id="sendPicture" class="button" value="圖片" onchange="sendPicture();"/>
+                      <input type="file" id="sendPicture" class="button" value="圖片" onchange="sendPicture();"/>
                   </div>	
                     </div>
                     
@@ -290,7 +276,7 @@ transform: scale(1.2);
             <div class="pr-xl-4"><a href="index.html"></a>
               <p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
               <!-- Rights-->
-              <p class="rights"><span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>© All Rights Reserved.
+              <p class="rights"><span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>© All Rights Reserved.
                 .</span></p>
             </div>
           </div>
@@ -344,7 +330,6 @@ transform: scale(1.2);
       var path = window.location.pathname;
       var webCtx = path.substring(0, path.indexOf('/', 1));
       var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
-
       var webSocket;
       webSocket = new WebSocket(endPointURL);
       
@@ -353,13 +338,11 @@ transform: scale(1.2);
       
       
       var intername;
-
  	  $('.office_text li').on('click',function(){
           intername=$(this).children('.user_text').children('.infor').text();
            
          	})  
       
-
       
       var chat = document.getElementById('chatbox');
       function connect() {
@@ -370,21 +353,20 @@ transform: scale(1.2);
               document.getElementById('connect').disabled = true;
               document.getElementById('disconnect').disabled = false;
           };
-
           webSocket.onmessage = function(event) {
         	  
               var jsonObj = JSON.parse(event.data);
-              var message = jsonObj.sender + ": " + jsonObj.message + "\r\n";
+              var message = jsonObj.message + "\r\n";
               
               
               if(jsonObj.sender==='${memberVO.memId}'){
             	  
-            	  chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ message +'</span> </li>';
+            	  chat.innerHTML += '<li class="me"><span> '+ message +'</span> </li>';
             	  $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
       	  
             	 
               }else{
-            	  chat.innerHTML += '<li class="other"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${friendmemId}' + '"><span>' + message +'</span></li>';
+            	  chat.innerHTML += '<li class="other"><span>' + message +'</span></li>';
                   $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
               }
               
@@ -393,7 +375,6 @@ transform: scale(1.2);
           
           
           
-
           webSocket.onclose = function(event) {
               updateStatus("WebSocket Disconnected");
           };
@@ -418,7 +399,7 @@ transform: scale(1.2);
                 talk.style.background = "#fff";
                 text.style.background = "#fff";
                 var jsonObj = {
-   					 "type": "chat",
+   					       "type":"chat",
     					   "sender" : "${memberVO.memId}",
     					   "receiver": intername,
     					   "message" : text.value
@@ -427,8 +408,34 @@ transform: scale(1.2);
    		    text.value = '';
    		 
    		}
-//           }	
-     };
+             
+         };
+             function readFile() {
+                 if (this.files && this.files[0]) {
+                         var FR = new FileReader();  
+                         FR.addEventListener("load", function(e) {
+                        	     
+                                 var message="<img src="+e.target.result+">";
+                                 chat.innerHTML += '<li class="me"><img class="aaa" src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ message +'</span> </li>';
+                                 var jsonObj = {
+                                         "type" : "chat",
+                                         "sender" : "${memberVO.memId}",
+                  					   "receiver": intername,
+                                         "message" : message
+                                 };
+                                 //                         The JSON.stringify() method converts a JavaScript object or value to a JSON string, 
+                                 webSocket.send(JSON.stringify(jsonObj));
+                         });
+                         FR.readAsDataURL(this.files[0]);
+                 }
+         }
+
+         document.getElementById("sendPicture").addEventListener("change", readFile);
+             
+             
+         
+             
+  
      function disconnect() {
  		webSocket.close();
  		document.getElementById('sendMessage').disabled = true;
@@ -445,19 +452,12 @@ transform: scale(1.2);
 		$('.newsList').html('');
 	})
 		$("#input_box").keypress(function(e){
-
 			  code = (e.keyCode ? e.keyCode : e.which);
-
 			  if (code == 13)
-
 			  {
-
 			      //targetForm是表單的ID
-
 			      $("sendMessage").submit();
-
 			  }
-
 			});
  	
  	
@@ -466,30 +466,30 @@ transform: scale(1.2);
  	   	$(".bg").click();
  	   receiver = $(this).attr('id');
  	  var chatWith= memberMap.get(receiver);
-		sendMessage($(this).attr('id'));
+//  	 sendMessage($(this).attr('id'));
  	})
- 			
+//  	歷史訊息		
  	jQuery(document).ready(function() {
    
-
    $(".bg").click(function() {
-    $(this).addClass('bg');
-    var intername = $(this).children(
-      '.user_text').children(
-      '.infor').text();
-    
+    $(this).addClass('bg');  
     var jsonObj = {
-     "type" : "chat",
+     "type" : "history",
      "sender" : "${memberVO.memId}",
-     "receiver" : intername,
-     "message" : "123456789"
+     "receiver" : intername,  
     };
-
     webSocket.send(JSON.stringify(jsonObj));
-
    });
   })
- 	
+  
+  
+  
+  
+  
+  
+  
+  
+//  	貼圖
 $('.ExP').on('mouseenter',function(){
 		$('.emjon').show();
 	})
@@ -498,7 +498,7 @@ $('.ExP').on('mouseenter',function(){
 	})
 	$('.emjon li').on('click',function(){
 		var text =$(this).children('img').attr('src');
-		sendMessage($(this).attr('id'));
+		
 		chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span class=""><img src="' + text + '"></span> </li>';
 		$('.newsList').append(chat);
 		$('.emjon').hide();
@@ -507,10 +507,10 @@ $('.ExP').on('mouseenter',function(){
 		talk.style.background = "#fff";
         text.style.background = "#fff";
         var jsonObj = {
-				 "type": "chat",
+				   "type": "Sticker",
 				   "sender" : "${memberVO.memId}",
 				   "receiver": intername,
-				   "message" : text.value
+				   "message" : text
 			};
 		webSocket.send(JSON.stringify(jsonObj));
 	    text.value = '';

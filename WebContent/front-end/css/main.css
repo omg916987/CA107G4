@@ -300,6 +300,7 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 
 .user_head img{
 	width: 40px;
+	border-radius: 50%;
 }
 
 .user_text{
@@ -580,9 +581,9 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 
 .me img{
 	float: right;
-    width: 34px;
+   
     height: 34px;
-    border-radius: 2px; 
+    border-radius: 50%;
 }
 
 .me span { 
@@ -610,6 +611,13 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
     position: relative;
 }
 
+.me span img {
+    float: right;
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 2px;
+}
+
 .me span:before{
     content: " ";
     position: absolute;
@@ -624,8 +632,8 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 /*other*/
 .other img{
 	float: right;
-    width: 34px;
-    height: 34px;
+    max-width: 200px;
+    max-height: 200px;
     border-radius: 2px; 
 }
 
