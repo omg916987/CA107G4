@@ -18,6 +18,9 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 
 import idv.david.websocketchat.jedis.JedisHandleMessage;
@@ -56,63 +59,45 @@ public class FriendWS {
 		ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
 		String sender = chatMessage.getSender();
 		String receiver = chatMessage.getReceiver();
+		System.out.println("有觸發");
 		
-		if ("history".equals(chatMessage.getType())) {
-		System.out.println("有近來");
-		System.out.println("sender="+sender);
-		System.out.println("receiver="+receiver);
-		List<String> chatData = JedisHandleMessage.getHistoryMsg(sender, receiver);
-		if (userSession != null && userSession.isOpen()) {
-			System.out.println("aaa");
-			System.out.println(chatData.size());
-			for(int i=0;i<chatData.size();i++) {
-				System.out.println("ccc");
-				
-				String chatMsg = chatData.get(i);
-				synchronized(userSession) {
-					try {
-						System.out.println("bbb");
-						userSession.getBasicRemote().sendText(chatMsg);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-			return;
-		}
-	}	
-		
-		
-		if ("Sticker".equals(chatMessage.getType())) {
-			Session receiverSession = sessionsMap.get(receiver);
-			System.out.println("有近來2");
-			JedisHandleMessage.saveChatMessage(sender, receiver, message);
-			System.out.println("-----------已存取------------");
-			if (receiverSession != null &&receiverSession.isOpen()) {
-				receiverSession.getAsyncRemote().sendText(message);
+if ("history".equals(chatMessage.getType())) {
+			System.out.println("拿紀錄");
+			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);// get the old info from redis
 			
+
+			if (userSession != null && userSession.isOpen()) {
+				userSession.getAsyncRemote().sendText(historyData.toString());
+
+				return;
 			}
-			System.out.println("Message received: " + message);
-			}
-		
-		
-		
-		
-		
-		
-		if ("chat".equals(chatMessage.getType())) {
-		Session receiverSession = sessionsMap.get(receiver);
-		System.out.println("有近來2");
-		JedisHandleMessage.saveChatMessage(sender, receiver, message);
-		System.out.println("-----------已存取------------");
-		if (receiverSession != null &&receiverSession.isOpen()) {
-			receiverSession.getAsyncRemote().sendText(message);
-		
 		}
-		System.out.println("Message received: " + message);
-		}
+		
+	
+if ("chat".equals(chatMessage.getType())) {
+	JSONArray array = new JSONArray();
+	JedisHandleMessage.saveChatMessage(sender, receiver, message);
+
+	// send to session which receiver belongs to
+	Session receiverSession = sessionsMap.get(receiver);
+	Session senderSession = sessionsMap.get(sender);
+	array.put(new JSONObject(message));
+	if (senderSession != null && senderSession.isOpen()) {
+		
+		senderSession.getAsyncRemote().sendText(array.toString());
+
 	}
+
+	if (receiverSession != null && receiverSession.isOpen()) {
+		
+
+		receiverSession.getAsyncRemote().sendText(array.toString());
+
+	}
+}
+
+// save in redis no need to save history
+}
 
 	@OnError
 	public void onError(Session userSession, Throwable e) {
@@ -136,7 +121,7 @@ public class FriendWS {
 			String stateMessageJson = gson.toJson(stateMessage);
 			Collection<Session> sessions = sessionsMap.values();
 			for (Session session : sessions) {
-				session.getAsyncRemote().sendText(stateMessageJson);
+//				session.getAsyncRemote().sendText(stateMessageJson);
 			}
 		}
 

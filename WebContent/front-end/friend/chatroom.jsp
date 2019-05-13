@@ -120,6 +120,18 @@ transform: scale(1.2);
 	height: 100%;
 	
 }
+.me img{
+	float: right;
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+}
+.other img{
+	float: left;
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+}
 
     
     </style>
@@ -222,7 +234,7 @@ transform: scale(1.2);
                     <div class="input_icon">
                     <div class="emjon">
 					<ul>
-						<li><img src="img/em_02.jpg"/></li>
+						<li><img src="<img src="' + img/em_02.jpg + '">"/></li>
 						<li><img src="img/em_05.jpg"/></li>
 						<li><img src="img/em_07.jpg"/></li>
 						<li><img src="img/em_12.jpg"/></li>
@@ -347,39 +359,44 @@ transform: scale(1.2);
       var chat = document.getElementById('chatbox');
       function connect() {
           // create a websocket
-          webSocket.onopen = function(event) {
-             
-              document.getElementById('sendMessage').disabled = false;
-              document.getElementById('connect').disabled = true;
-              document.getElementById('disconnect').disabled = false;
-          };
+         webSocket = new WebSocket(endPointURL);
+
+		webSocket.onopen = function(event) {
+			if (webSocket.readyState === 1) {
+
+				showhistory();
+			}
+
+		};
           webSocket.onmessage = function(event) {
         	  
-              var jsonObj = JSON.parse(event.data);
-              var message = jsonObj.message + "\r\n";
+            
+              var message;
+              var jsonArray = JSON.parse(event.data);
+              $.each(jsonArray,function(i, item) {
+                  message = jsonArray[i].message + "\r\n";
+                  
+                  
               
-              
-              if(jsonObj.sender==='${memberVO.memId}'){
+              if(jsonArray[i].sender =='${memberVO.memId}'){
             	  
             	  chat.innerHTML += '<li class="me"><span> '+ message +'</span> </li>';
             	  $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
       	  
             	 
               }else{
-            	  chat.innerHTML += '<li class="other"><span>' + message +'</span></li>';
+            	  chat.innerHTML += '<li class="other"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${friendmemId}' + '"><span>' + message +'</span></li>';
                   $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
               }
               
-          };
+          });
        
           
           
           
-          webSocket.onclose = function(event) {
-              updateStatus("WebSocket Disconnected");
-          };
+         
+      };
       }
-      
       
   	 function sendMessage() {
   		
@@ -392,7 +409,7 @@ transform: scale(1.2);
                  alert('請輸入訊息');
                  return;	
              } else{           
-         	     chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ text.value +'</span> </li>';
+         	     chat.innerHTML + '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ text.value +'</span> </li>';
 //          	  <img src="' + 'images/own_head.jpg' + '">
               $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
                chat.scrollTop = chat.scrollHeight;
@@ -416,7 +433,7 @@ transform: scale(1.2);
                          FR.addEventListener("load", function(e) {
                         	     
                                  var message="<img src="+e.target.result+">";
-                                 chat.innerHTML += '<li class="me"><img class="aaa" src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ message +'</span> </li>';
+                                 chat.innerHTML + '<li class="me"><img class="aaa" src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ message +'</span> </li>';
                                  var jsonObj = {
                                          "type" : "chat",
                                          "sender" : "${memberVO.memId}",
@@ -461,6 +478,19 @@ transform: scale(1.2);
 			});
  	
  	
+ 	
+ 	  $('.office_text li').on('click',function(){
+    	  
+    	  $('.bg').removeClass('bg');
+    	  $(this).addClass('bg');
+    	  var intername=$(this).children('.user_text').children('.intername').text();
+    	
+  		$('.headName').text(intername);
+  		$('.content').html('');
+  		
+  	})      
+ 	
+ 	
 	 
  	jQuery(document).ready(function(){
  	   	$(".bg").click();
@@ -499,22 +529,38 @@ $('.ExP').on('mouseenter',function(){
 	$('.emjon li').on('click',function(){
 		var text =$(this).children('img').attr('src');
 		
-		chat.innerHTML += '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span class=""><img src="' + text + '"></span> </li>';
-		$('.newsList').append(chat);
-		$('.emjon').hide();
-		$('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
-		chat.scrollTop = chat.scrollHeight;
-		talk.style.background = "#fff";
-        text.style.background = "#fff";
-        var jsonObj = {
-				   "type": "Sticker",
+		
+		
+		
+		
+		
+		
+		chat.innerHTML + '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span class=""><img src="' + text + '"></span> </li>';
+		var jsonObj = {
+				   "type": "chat",
 				   "sender" : "${memberVO.memId}",
 				   "receiver": intername,
 				   "message" : text
 			};
 		webSocket.send(JSON.stringify(jsonObj));
 	    text.value = '';
+		$('.newsList').append(chat);
+		$('.emjon').hide();
+		$('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
+		chat.scrollTop = chat.scrollHeight;
+		talk.style.background = "#fff";
+        text.style.background = "#fff";
+
 	})
+	
+	
+	
+	function disconnect() {
+		webSocket.close();
+		
+	}
+	
+	
  	
  </script>
   	

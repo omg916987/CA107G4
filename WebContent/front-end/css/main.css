@@ -581,8 +581,8 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 
 .me img{
 	float: right;
-   
-    height: 34px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
 }
 
@@ -613,8 +613,8 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 
 .me span img {
     float: right;
-    max-width: 200px;
-    max-height: 200px;
+    height: 40px;
+    width: 40px;
     border-radius: 2px;
 }
 
@@ -632,8 +632,8 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 /*other*/
 .other img{
 	float: right;
-    max-width: 200px;
-    max-height: 200px;
+    height: 34px;
+    width: 34px;
     border-radius: 2px; 
 }
 
