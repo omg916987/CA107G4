@@ -31,26 +31,28 @@ import idv.david.websocketchat.model.State;
 public class FriendWS {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	Gson gson = new Gson();
-
 	@OnOpen
 	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
 		/* save the new user in the map */
-		
+		System.out.println("請進");
 		userSession.setMaxTextMessageBufferSize(200000);
 		sessionsMap.put(userName, userSession);
+		System.out.println("sessionsMap="+sessionsMap);
 		/* Sends all the connected users to the new user */
 		Set<String> userNames = sessionsMap.keySet();
+		System.out.println(userNames);
 		State stateMessage = new State("open", userName, userNames);
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
 		for (Session session : sessions) {
-			if(session != null && session.isOpen()) {
+			System.out.println(sessions);
+			if(session.isOpen()) {
 				session.getAsyncRemote().sendText(stateMessageJson);
+				System.out.println(stateMessageJson);
 			}
 		}
 
-		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
-				userName, userNames);
+		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),userName, userNames);
 		System.out.println(text);
 	}
 
@@ -68,7 +70,7 @@ public class FriendWS {
 
 			if (userSession != null && userSession.isOpen()) {
 				userSession.getAsyncRemote().sendText(historyData.toString());
-
+System.out.println("有回傳");
 				return;
 			}
 		}
@@ -76,6 +78,7 @@ public class FriendWS {
 	
 if ("chat".equals(chatMessage.getType())) {
 	JSONArray array = new JSONArray();
+	System.out.println(array);
 	JedisHandleMessage.saveChatMessage(sender, receiver, message);
   System.out.println("已存取");
 	// send to session which receiver belongs to
@@ -112,6 +115,7 @@ if ("chat".equals(chatMessage.getType())) {
 			if (sessionsMap.get(userName).equals(userSession)) {
 				userNameClose = userName;
 				sessionsMap.remove(userName);
+				System.out.println("到此一遊2");
 				break;
 			}
 		}

@@ -132,6 +132,15 @@ transform: scale(1.2);
     width: 34px;
     border-radius: 50%;
 }
+.user_head {
+    background: #999;
+    height: 40px;
+    width: 40px;
+    border-radius: 2px;
+    float: left;
+    overflow: hidden;
+    border-radius: 50%;
+}
 
     
     </style>
@@ -329,7 +338,7 @@ transform: scale(1.2);
       var webCtx = path.substring(0, path.indexOf('/', 1));
       var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
       var webSocket;
-      webSocket = new WebSocket(endPointURL);
+     
       
       var memberMap = new Map();
   	  var receiver;
@@ -344,40 +353,37 @@ transform: scale(1.2);
          webSocket = new WebSocket(endPointURL);
 
 		webSocket.onopen = function(event) {
-			if (webSocket.readyState === 1) {
-
-				
-			}
+		
 
 		};
           webSocket.onmessage = function(event) {
-        	  
-            
+    
               var message;
               var jsonArray = JSON.parse(event.data);
               $.each(jsonArray,function(i, item) {
                   message = jsonArray[i].message + "\r\n";
+     
                   
                   
-              
+                  
+                  
+                  
+                 
+                  if(jsonArray[i].sender == undefined){
+                	 remove(jsonArray[i].sender);	  
+                  }
+                  
               if(jsonArray[i].sender =='${memberVO.memId}'){
-            	  
             	  chat.innerHTML += '<li class="me"><span> '+ message +'</span> </li>';
             	  $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
-      	  
-            	 
               }else{
             	  chat.innerHTML += '<li class="other"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${friendmemId}' + '"><span>' + message +'</span></li>';
                   $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
               }
-              
           });
-       
-              webSocket.onclose = function(event) {
+                webSocket.onclose = function(event) {
       			updateStatus("WebSocket Disconnected");
-      		};
-          
-          
+      		};  
          
       };
       }
@@ -385,16 +391,14 @@ transform: scale(1.2);
   	 function sendMessage() {
   		
          var text = document.getElementById('input_box');
-       
-//          var btn = document.getElementById('sendMessage');
          var talk = document.getElementById('talkbox');
- //        btn.onclick = function () {
+
              if (text.value == '') {     	 
                  alert('請輸入訊息');
                  return;	
              } else{           
          	     chat.innerHTML + text.value +'</span> </li>';
-//          	  <img src="' + 'images/own_head.jpg' + '">
+
               $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
                chat.scrollTop = chat.scrollHeight;
                 talk.style.background = "#fff";
@@ -461,19 +465,12 @@ transform: scale(1.2);
 			      $("sendMessage").submit();
 			  }
 			});
- 	
- 	
- 	 
- 	
- 	
 	  $('.office_text li').on('click',function(){
          intername=$(this).children('.user_text').children('.infor').text();
          
         	})  
-
-	
  	jQuery(document).ready(function() {
- 		
+//  		connect();
    $(".bg").click(function() {
     $(this).addClass('bg'); 
     
@@ -487,23 +484,15 @@ transform: scale(1.2);
     webSocket.send(JSON.stringify(jsonObj));
    });
   })
-  
-  
-  	  
-  
-  
-  
-  
-  
 //  	貼圖
-$('.ExP').on('mouseenter',function(){
-		$('.emjon').show();
-	})
-	$('.emjon').on('mouseleave',function(){
-		$('.emjon').hide();
-	})
-	$('.emjon li').on('click',function(){
-		var text =$(this).children('img').attr('src');
+// $('.ExP').on('mouseenter',function(){
+// 		$('.emjon').show();
+// 	})
+// 	$('.emjon').on('mouseleave',function(){
+// 		$('.emjon').hide();
+// 	})
+// 	$('.emjon li').on('click',function(){
+// 		var text =$(this).children('img').attr('src');
 		
 		
 		
@@ -511,23 +500,23 @@ $('.ExP').on('mouseenter',function(){
 		
 		
 		
-		chat.innerHTML + '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span class=""><img src="' + text + '"></span> </li>';
-		var jsonObj = {
-				   "type": "chat",
-				   "sender" : "${memberVO.memId}",
-				   "receiver": intername,
-				   "message" : text
-			};
-		webSocket.send(JSON.stringify(jsonObj));
-	    text.value = '';
-		$('.newsList').append(chat);
-		$('.emjon').hide();
-		$('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
-		chat.scrollTop = chat.scrollHeight;
-		talk.style.background = "#fff";
-        text.style.background = "#fff";
+// 		chat.innerHTML + '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span class=""><img src="' + text + '"></span> </li>';
+// 		var jsonObj = {
+// 				   "type": "chat",
+// 				   "sender" : "${memberVO.memId}",
+// 				   "receiver": intername,
+// 				   "message" : text
+// 			};
+// 		webSocket.send(JSON.stringify(jsonObj));
+// 	    text.value = '';
+// 		$('.newsList').append(chat);
+// 		$('.emjon').hide();
+// 		$('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
+// 		chat.scrollTop = chat.scrollHeight;
+// 		talk.style.background = "#fff";
+//         text.style.background = "#fff";
 
-	})
+// 	})
 	
 	
 	

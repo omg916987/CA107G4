@@ -7,7 +7,7 @@ public class FriendNexusService {
 	private FriendNexusDAO_interface dao;
 
 	public FriendNexusService() {
-		dao = new FriendNexusDAO();
+		dao = new FriendNexusJDBCDAO();
 	}
 
 	public FriendNexusVO addfriendNexus(String memId, String friendAcc, Integer friendstatus) {
