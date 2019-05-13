@@ -7,7 +7,7 @@ public class JoinGroupService {
 	private JoinGroupDAO_interface dao;
 
 	public JoinGroupService() {
-		dao = new JoinGroupJDBCDAO();
+		dao = new JoinGroupDAO();
 	}
 	
 	public JoinGroupVO addJoinGroupVO(String memId,String teamId) {

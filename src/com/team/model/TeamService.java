@@ -10,7 +10,7 @@ public class TeamService {
 	private TeamDAO_interface dao;
 
 	public TeamService() {
-		dao = new TeamJDBCDAO();
+		dao = new TeamDAO();
 	}
 
 	public TeamVO addTeam(String leaderID, String inscID, java.sql.Date teamMFD, java.sql.Date teamEXP,
