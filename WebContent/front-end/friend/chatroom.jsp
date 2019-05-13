@@ -191,21 +191,7 @@ transform: scale(1.2);
                             </div> 
                         </li>
                     </ul>
-          <script type="text/javascript">   
-          
-          
-                  $('.office_text li').on('click',function(){
-                	  
-                	  $('.bg').removeClass('bg');
-                	  $(this).addClass('bg');
-                	  var intername=$(this).children('.user_text').children('.intername').text();
-                	
-              		$('.headName').text(intername);
-              		$('.content').html('');
-              		
-              	})      
-              	       
-                    </script>
+
                  <c:set var="friendmemId" value="${friendNexusVO.friendAcc}"></c:set>
                   
                     </c:forEach> 
@@ -234,7 +220,7 @@ transform: scale(1.2);
                     <div class="input_icon">
                     <div class="emjon">
 					<ul>
-						<li><img src="<img src="' + img/em_02.jpg + '">"/></li>
+						<li><img src="img/em_02.jpg"/></li>
 						<li><img src="img/em_05.jpg"/></li>
 						<li><img src="img/em_07.jpg"/></li>
 						<li><img src="img/em_12.jpg"/></li>
@@ -347,13 +333,9 @@ transform: scale(1.2);
       
       var memberMap = new Map();
   	  var receiver;
+  	  var intername;
       
-      
-      var intername;
- 	  $('.office_text li').on('click',function(){
-          intername=$(this).children('.user_text').children('.infor').text();
-           
-         	})  
+     
       
       
       var chat = document.getElementById('chatbox');
@@ -364,7 +346,7 @@ transform: scale(1.2);
 		webSocket.onopen = function(event) {
 			if (webSocket.readyState === 1) {
 
-				showhistory();
+				
 			}
 
 		};
@@ -391,7 +373,9 @@ transform: scale(1.2);
               
           });
        
-          
+              webSocket.onclose = function(event) {
+      			updateStatus("WebSocket Disconnected");
+      		};
           
           
          
@@ -409,7 +393,7 @@ transform: scale(1.2);
                  alert('請輸入訊息');
                  return;	
              } else{           
-         	     chat.innerHTML + '<li class="me"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ text.value +'</span> </li>';
+         	     chat.innerHTML + text.value +'</span> </li>';
 //          	  <img src="' + 'images/own_head.jpg' + '">
               $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
                chat.scrollTop = chat.scrollHeight;
@@ -439,6 +423,7 @@ transform: scale(1.2);
                                          "sender" : "${memberVO.memId}",
                   					   "receiver": intername,
                                          "message" : message
+                                         
                                  };
                                  //                         The JSON.stringify() method converts a JavaScript object or value to a JSON string, 
                                  webSocket.send(JSON.stringify(jsonObj));
@@ -478,31 +463,22 @@ transform: scale(1.2);
 			});
  	
  	
- 	
- 	  $('.office_text li').on('click',function(){
-    	  
-    	  $('.bg').removeClass('bg');
-    	  $(this).addClass('bg');
-    	  var intername=$(this).children('.user_text').children('.intername').text();
-    	
-  		$('.headName').text(intername);
-  		$('.content').html('');
-  		
-  	})      
+ 	 
  	
  	
-	 
- 	jQuery(document).ready(function(){
- 	   	$(".bg").click();
- 	   receiver = $(this).attr('id');
- 	  var chatWith= memberMap.get(receiver);
-//  	 sendMessage($(this).attr('id'));
- 	})
-//  	歷史訊息		
+	  $('.office_text li').on('click',function(){
+         intername=$(this).children('.user_text').children('.infor').text();
+         
+        	})  
+
+	
  	jQuery(document).ready(function() {
-   
+ 		
    $(".bg").click(function() {
-    $(this).addClass('bg');  
+    $(this).addClass('bg'); 
+    
+    $('.headName').text(intername);
+	$('.content').html('');
     var jsonObj = {
      "type" : "history",
      "sender" : "${memberVO.memId}",
@@ -513,7 +489,7 @@ transform: scale(1.2);
   })
   
   
-  
+  	  
   
   
   

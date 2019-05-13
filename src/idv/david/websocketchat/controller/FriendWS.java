@@ -43,11 +43,11 @@ public class FriendWS {
 		State stateMessage = new State("open", userName, userNames);
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
-//		for (Session session : sessions) {
-//			if(session != null && session.isOpen()) {
-//				session.getAsyncRemote().sendText(stateMessageJson);
-//			}
-//		}
+		for (Session session : sessions) {
+			if(session != null && session.isOpen()) {
+				session.getAsyncRemote().sendText(stateMessageJson);
+			}
+		}
 
 		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
 				userName, userNames);
@@ -61,7 +61,7 @@ public class FriendWS {
 		String receiver = chatMessage.getReceiver();
 		System.out.println("有觸發");
 		
-if ("history".equals(chatMessage.getType())) {
+          if ("history".equals(chatMessage.getType())) {
 			System.out.println("拿紀錄");
 			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);// get the old info from redis
 			
@@ -77,7 +77,7 @@ if ("history".equals(chatMessage.getType())) {
 if ("chat".equals(chatMessage.getType())) {
 	JSONArray array = new JSONArray();
 	JedisHandleMessage.saveChatMessage(sender, receiver, message);
-
+  System.out.println("已存取");
 	// send to session which receiver belongs to
 	Session receiverSession = sessionsMap.get(receiver);
 	Session senderSession = sessionsMap.get(sender);
@@ -121,7 +121,7 @@ if ("chat".equals(chatMessage.getType())) {
 			String stateMessageJson = gson.toJson(stateMessage);
 			Collection<Session> sessions = sessionsMap.values();
 			for (Session session : sessions) {
-//				session.getAsyncRemote().sendText(stateMessageJson);
+				session.getAsyncRemote().sendText(stateMessageJson);
 			}
 		}
 
