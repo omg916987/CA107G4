@@ -66,7 +66,7 @@ public class FriendWS {
           if ("history".equals(chatMessage.getType())) {
 			System.out.println("拿紀錄");
 			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);// get the old info from redis
-			
+			System.out.println(historyData);
 
 			if (userSession != null && userSession.isOpen()) {
 				userSession.getAsyncRemote().sendText(historyData.toString());
@@ -77,6 +77,7 @@ System.out.println("有回傳");
 		
 	
 if ("chat".equals(chatMessage.getType())) {
+	System.out.println("有進來chat");
 	JSONArray array = new JSONArray();
 	System.out.println(array);
 	JedisHandleMessage.saveChatMessage(sender, receiver, message);

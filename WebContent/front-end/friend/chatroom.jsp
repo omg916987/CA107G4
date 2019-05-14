@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/amazeui.min.css" />
    
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/main.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <title>WeShare | 最棒的教育共享平台</title>
     <style type="text/css">
@@ -120,18 +122,8 @@ transform: scale(1.2);
 	height: 100%;
 	
 }
-.me img{
-	float: right;
-    height: 34px;
-    width: 34px;
-    border-radius: 50%;
-}
-.other img{
-	float: left;
-    height: 34px;
-    width: 34px;
-    border-radius: 50%;
-}
+
+
 .user_head {
     background: #999;
     height: 40px;
@@ -140,6 +132,20 @@ transform: scale(1.2);
     float: left;
     overflow: hidden;
     border-radius: 50%;
+}
+.me span img {
+    float: right;
+    max-height: 200px;
+    max-width: 200px;
+    border-radius: 2px;
+}
+.aaa{
+    float: left;
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+
+
 }
 
     
@@ -367,24 +373,49 @@ transform: scale(1.2);
                   
                   
                   
-                  
+//                   chat.innerHTML += '<li class="me"><span><img src= '+ message +'></span></li>';
                  
                   if(jsonArray[i].sender == undefined){
                 	 remove(jsonArray[i].sender);	  
                   }
+                  console.info(jsonArray[i]) 
+                  if(jsonArray[i].tOrm == "image" && jsonArray[i].sender =='${memberVO.memId}'){
+                	  
+                	  chat.innerHTML += '<li class="me"><span><img src= '+ message +'></span></li>';
+                	  $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
+                  } else{
+                	  if(jsonArray[i].tOrm == "image"){
+                		  chat.innerHTML += '<li class="other"><img class="aaa" src="' + '/CA107G4/member/DBGifReader.do?memId=${friendmemId}' + '"><span><img src= '+ message +'></span></li>';
+                          $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
+                	  }  
+                  } 
                   
-              if(jsonArray[i].sender =='${memberVO.memId}'){
-            	  chat.innerHTML += '<li class="me"><span> '+ message +'</span> </li>';
-            	  $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
-              }else{
-            	  chat.innerHTML += '<li class="other"><img src="' + '/CA107G4/member/DBGifReader.do?memId=${friendmemId}' + '"><span>' + message +'</span></li>';
-                  $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
-              }
-          });
-                webSocket.onclose = function(event) {
-      			updateStatus("WebSocket Disconnected");
-      		};  
+                  
+                  if(jsonArray[i].sender =='${memberVO.memId}' && jsonArray[i].tOrm == "text"){
+                	  chat.innerHTML += '<li class="me"><span> '+ message +'</span> </li>';
+                	  $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
+                  }else{
+                	  if(jsonArray[i].tOrm == "text"){
+                		  chat.innerHTML += '<li class="other"><img class="aaa" src="' + '/CA107G4/member/DBGifReader.do?memId=${friendmemId}' + '"><span>' + message +'</span></li>';
+                          $('.windows_body').scrollTop($('.windows_body')[0].scrollHeight );
+                	  }
+                	 
+                  }
+              });
+                    webSocket.onclose = function(event) {
+          			updateStatus("WebSocket Disconnected");
+          		};  
          
+      		
+      		
+      		
+      		
+      		
+      		
+      		
+      		
+      		
+      		
       };
       }
       
@@ -407,7 +438,8 @@ transform: scale(1.2);
    					       "type":"chat",
     					   "sender" : "${memberVO.memId}",
     					   "receiver": intername,
-    					   "message" : text.value
+    					   "message" : text.value,
+    					   "tOrm" : "text"
    				};
    			webSocket.send(JSON.stringify(jsonObj));
    		    text.value = '';
@@ -420,14 +452,14 @@ transform: scale(1.2);
                          var FR = new FileReader();  
                          FR.addEventListener("load", function(e) {
                         	     
-                                 var message="<img src="+e.target.result+">";
-                                 chat.innerHTML + '<li class="me"><img class="aaa" src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span> '+ message +'</span> </li>';
+                                 var message= e.target.result;
+                                 chat.innerHTML + '<li class="me"><img class="aaa" src="' + '/CA107G4/member/DBGifReader.do?memId=${memberVO.memId}' + '"><span>"<img src= '+ message +'></span> </li>';
                                  var jsonObj = {
                                          "type" : "chat",
                                          "sender" : "${memberVO.memId}",
-                  					   "receiver": intername,
-                                         "message" : message
-                                         
+                  					     "receiver": intername,
+                                         "message" : message,
+                                         "tOrm" : "image"
                                  };
                                  //                         The JSON.stringify() method converts a JavaScript object or value to a JSON string, 
                                  webSocket.send(JSON.stringify(jsonObj));
