@@ -3,6 +3,7 @@
 package idv.david.websocketchat.controller;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -31,28 +32,28 @@ import idv.david.websocketchat.model.State;
 public class FriendWS {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	Gson gson = new Gson();
+
 	@OnOpen
 	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
 		/* save the new user in the map */
-		System.out.println("請進");
-		userSession.setMaxTextMessageBufferSize(200000);
+
+		int maxBufferSize = 500 * 1024;
+		userSession.setMaxTextMessageBufferSize(maxBufferSize);
+		userSession.setMaxBinaryMessageBufferSize(maxBufferSize);
 		sessionsMap.put(userName, userSession);
-		System.out.println("sessionsMap="+sessionsMap);
 		/* Sends all the connected users to the new user */
 		Set<String> userNames = sessionsMap.keySet();
-		System.out.println(userNames);
 		State stateMessage = new State("open", userName, userNames);
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
 		for (Session session : sessions) {
-			System.out.println(sessions);
-			if(session.isOpen()) {
+			if(session != null && session.isOpen()) {
 				session.getAsyncRemote().sendText(stateMessageJson);
-				System.out.println(stateMessageJson);
 			}
 		}
 
-		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),userName, userNames);
+		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
+				userName, userNames);
 		System.out.println(text);
 	}
 
@@ -62,46 +63,61 @@ public class FriendWS {
 		String sender = chatMessage.getSender();
 		String receiver = chatMessage.getReceiver();
 		System.out.println("有觸發");
-		
-          if ("history".equals(chatMessage.getType())) {
+
+		if ("history".equals(chatMessage.getType())) {
 			System.out.println("拿紀錄");
 			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);// get the old info from redis
-			System.out.println(historyData);
 
 			if (userSession != null && userSession.isOpen()) {
-				userSession.getAsyncRemote().sendText(historyData.toString());
-System.out.println("有回傳");
+				for(String str : historyData) {
+					ChatMessage cm = gson.fromJson(str, ChatMessage.class);
+					if("image".equals(cm.gettOrm()))
+						try {
+							userSession.getBasicRemote().sendBinary(ByteBuffer.wrap(str.getBytes()));
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					else
+						try {
+							userSession.getBasicRemote().sendText(str);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+				
+				}
+
+
 				return;
 			}
 		}
-		
-	
-if ("chat".equals(chatMessage.getType())) {
-	System.out.println("有進來chat");
-	JSONArray array = new JSONArray();
-	System.out.println(array);
-	JedisHandleMessage.saveChatMessage(sender, receiver, message);
-  System.out.println("已存取");
-	// send to session which receiver belongs to
-	Session receiverSession = sessionsMap.get(receiver);
-	Session senderSession = sessionsMap.get(sender);
-	array.put(new JSONObject(message));
-	if (senderSession != null && senderSession.isOpen()) {
-		
-		senderSession.getAsyncRemote().sendText(array.toString());
 
+		if ("chat".equals(chatMessage.getType())) {
+			
+			JedisHandleMessage.saveChatMessage(sender, receiver, message);
+
+			// send to session which receiver belongs to
+			Session receiverSession = sessionsMap.get(receiver);
+			Session senderSession = sessionsMap.get(sender);
+			
+			if("image".equals(chatMessage.gettOrm())) {
+				if (senderSession != null && senderSession.isOpen()) {
+					senderSession.getAsyncRemote().sendBinary(ByteBuffer.wrap(message.getBytes()));
+				}
+				if (receiverSession != null && receiverSession.isOpen()) {
+					receiverSession.getAsyncRemote().sendBinary(ByteBuffer.wrap(message.getBytes()));
+				}		
+			}else {
+				if (senderSession != null && senderSession.isOpen()) {
+					senderSession.getAsyncRemote().sendText(message);
+				}
+				if (receiverSession != null && receiverSession.isOpen()) {
+					receiverSession.getAsyncRemote().sendText(message);
+				}
+			}
+			
+		}
+		System.out.println("Message received: " + message);
 	}
-
-	if (receiverSession != null && receiverSession.isOpen()) {
-		
-
-		receiverSession.getAsyncRemote().sendText(array.toString());
-
-	}
-}
-
-// save in redis no need to save history
-}
 
 	@OnError
 	public void onError(Session userSession, Throwable e) {
@@ -116,7 +132,6 @@ if ("chat".equals(chatMessage.getType())) {
 			if (sessionsMap.get(userName).equals(userSession)) {
 				userNameClose = userName;
 				sessionsMap.remove(userName);
-				System.out.println("到此一遊2");
 				break;
 			}
 		}
